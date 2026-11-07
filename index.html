@@ -1,0 +1,2124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Crystal Glass Keyboard Pro — Ultra Glassmorphic Mobile IME & Avro Engine</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&family=Hind+Siliguri:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --kb-blur: 18px;
+      --kb-alpha: 0.20;
+      --kb-radius: 13px;
+      --kb-border-alpha: 0.42;
+      --kb-key-height: 50px;
+      --kb-glow: rgba(56, 189, 248, 0.55);
+    }
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      font-family: 'Inter', 'Hind Siliguri', sans-serif;
+      background: #040711;
+      color: #f8fafc;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    .no-select-zone, .no-select-zone * {
+      user-select: none !important;
+      -webkit-user-select: none !important;
+      -webkit-touch-callout: none !important;
+    }
+    /* Ultra-pure Optical Crystal Glass Key */
+    .glass-key {
+      position: relative;
+      background: linear-gradient(
+        160deg,
+        rgba(255, 255, 255, calc(var(--kb-alpha) + 0.10)) 0%,
+        rgba(255, 255, 255, calc(var(--kb-alpha) * 0.35)) 55%,
+        rgba(255, 255, 255, calc(var(--kb-alpha) * 0.75)) 100%
+      );
+      backdrop-filter: blur(var(--kb-blur)) saturate(200%);
+      -webkit-backdrop-filter: blur(var(--kb-blur)) saturate(200%);
+      border-radius: var(--kb-radius);
+      border: 1px solid rgba(255, 255, 255, var(--kb-border-alpha));
+      border-top: 1.5px solid rgba(255, 255, 255, calc(var(--kb-border-alpha) + 0.28));
+      border-bottom: 1.5px solid rgba(0, 0, 0, 0.45);
+      box-shadow:
+        0 6px 16px rgba(0, 0, 0, 0.34),
+        inset 0 1px 2px rgba(255, 255, 255, 0.60),
+        inset 0 -2px 6px rgba(255, 255, 255, 0.10);
+      transition: transform 0.08s cubic-bezier(0.2, 0.9, 0.3, 1), background 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+      overflow: hidden;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .glass-key::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -35%;
+      width: 70%;
+      height: 44%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0) 100%);
+      transform: skewX(-24deg);
+      pointer-events: none;
+    }
+    .glass-key.active-press, .glass-key:active {
+      transform: scale(0.92) translateY(1.5px);
+      background: linear-gradient(145deg, rgba(56, 189, 248, 0.44) 0%, rgba(99, 102, 241, 0.30) 100%);
+      border-color: rgba(186, 230, 253, 0.95);
+      box-shadow:
+        0 0 22px var(--kb-glow),
+        inset 0 0 12px rgba(255, 255, 255, 0.72);
+    }
+    .glass-key-special {
+      background: linear-gradient(
+        160deg,
+        rgba(148, 163, 184, calc(var(--kb-alpha) + 0.08)) 0%,
+        rgba(30, 41, 59, calc(var(--kb-alpha) + 0.05)) 100%
+      );
+    }
+    .glass-key-enter {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.68) 0%, rgba(99, 102, 241, 0.72) 50%, rgba(217, 70, 239, 0.68) 100%);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.88);
+      border-color: rgba(165, 243, 252, 0.82);
+      box-shadow:
+        0 6px 22px rgba(56, 189, 248, 0.45),
+        inset 0 1px 4px rgba(255, 255, 255, 0.80);
+    }
+    .glass-key-backspace {
+      background: linear-gradient(145deg, rgba(244, 63, 94, 0.34) 0%, rgba(136, 19, 55, 0.22) 100%);
+      border-color: rgba(253, 164, 175, 0.52);
+    }
+    .key-main-char {
+      color: #ffffff;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.88), 0 0 12px rgba(255, 255, 255, 0.32);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.01em;
+    }
+    .key-sub-char {
+      color: rgba(226, 232, 240, 0.88);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95);
+      font-weight: 600;
+      font-size: 10px;
+      line-height: 1;
+    }
+    .glass-drawer {
+      background: linear-gradient(165deg, rgba(15, 23, 42, 0.82) 0%, rgba(9, 13, 28, 0.88) 100%);
+      backdrop-filter: blur(26px) saturate(200%);
+      -webkit-backdrop-filter: blur(26px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    }
+    .thin-scroll::-webkit-scrollbar {
+      height: 4px;
+      width: 4px;
+    }
+    .thin-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.28);
+      border-radius: 9999px;
+    }
+    /* Custom Toggle Switch */
+    .ios-switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 22px;
+    }
+    .ios-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .ios-slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      transition: .2s;
+      border-radius: 999px;
+    }
+    .ios-slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: .2s;
+      border-radius: 50%;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+    input:checked + .ios-slider {
+      background: linear-gradient(90deg, #06b6d4, #6366f1);
+      border-color: rgba(165, 243, 252, 0.6);
+    }
+    input:checked + .ios-slider:before {
+      transform: translateX(18px);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#040711] text-slate-100">
+
+  <!-- Top Navigation Bar -->
+  <header class="w-full border-b border-white/10 bg-slate-950/85 backdrop-blur-xl sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 via-indigo-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-cyan-500/25 font-extrabold text-white text-lg">
+          ⌨
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
+            Crystal Glass Keyboard
+            <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/30">Ultra Pro v3.0</span>
+          </h1>
+          <p class="text-xs text-slate-400">Pure Glass Keys • 15 Live Shader Animations • English + Gboard Avro Phonetic • Clean Layout</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5 bg-slate-900/90 p-1 rounded-xl border border-white/10">
+        <button id="tabBtnLive" type="button" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow">
+          📱 Live Keyboard Studio
+        </button>
+        <button id="tabBtnCode" type="button" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition">
+          💻 Full Source Code (Android + Web)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-3 sm:px-4 py-4">
+
+    <!-- ==================== VIEW 1: LIVE INTERACTIVE KEYBOARD ==================== -->
+    <section id="viewLiveSection" class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+
+      <!-- Left Column: Phone Frame & Live Keyboard -->
+      <div class="lg:col-span-7 flex flex-col items-center">
+        <div class="w-full max-w-[445px] rounded-[36px] p-2.5 bg-gradient-to-b from-slate-700/80 via-slate-900 to-slate-950 shadow-2xl border border-white/15 relative">
+          <!-- Speaker Notch -->
+          <div class="w-28 h-4 bg-black rounded-full mx-auto mb-2 flex items-center justify-center gap-2">
+            <span class="w-8 h-1 rounded-full bg-slate-800"></span>
+            <span class="w-2 h-2 rounded-full bg-cyan-500/50"></span>
+          </div>
+
+          <div class="rounded-[28px] overflow-hidden bg-slate-950 border border-white/10 flex flex-col">
+
+            <!-- App Input Preview Area -->
+            <div class="p-3.5 bg-gradient-to-b from-slate-900/95 to-slate-950 border-b border-white/10">
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span id="activeModeIndicator" class="text-xs font-semibold text-slate-200">Mode: English (US)</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span id="statusBadge" class="text-[11px] px-2 py-0.5 rounded-full bg-white/10 text-cyan-300 font-medium">
+                    Haptics On
+                  </span>
+                  <button id="btnClearEditor" type="button" class="text-[11px] px-2.5 py-0.5 rounded-md bg-rose-500/20 text-rose-300 border border-rose-400/30 hover:bg-rose-500/30 font-medium">
+                    Clear
+                  </button>
+                </div>
+              </div>
+
+              <!-- Textarea & Live Composing Buffer Badge -->
+              <div class="relative">
+                <textarea id="typingOutput" rows="3" placeholder="Type with pure glass keys... Switch to 'Avro' on the keyboard to type phonetic Bangla (e.g. ami -> আমি)..." class="w-full rounded-xl bg-slate-950/90 border border-cyan-400/30 focus:border-cyan-400 focus:outline-none p-3 text-sm sm:text-base text-white placeholder-slate-500 resize-none shadow-inner"></textarea>
+
+                <!-- Avro Composing Floating Pill -->
+                <div id="avroBufferBadge" class="hidden absolute top-2 right-2 px-2.5 py-0.5 rounded-md bg-indigo-600/90 border border-indigo-300/50 text-white font-mono text-xs shadow-lg">
+                  <span id="avroRawText"></span> → <span id="avroPreviewText" class="font-bold text-cyan-200"></span>
+                </div>
+
+                <!-- Toast Notification -->
+                <div id="toastBanner" class="hidden absolute bottom-2.5 right-2.5 px-3 py-1 rounded-lg bg-cyan-400 text-slate-950 font-bold text-xs shadow-lg">
+                  Copied!
+                </div>
+              </div>
+
+              <!-- Sent Sticker Preview -->
+              <div id="sentStickerPreview" class="hidden mt-2 p-2 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <span id="sentStickerGraphic" class="text-2xl">🚀</span>
+                  <span id="sentStickerTitle" class="text-xs text-cyan-200 font-semibold">Sticker Sent</span>
+                </div>
+                <button id="btnDismissSticker" type="button" class="text-xs text-slate-400 hover:text-white px-1.5">✕</button>
+              </div>
+
+              <!-- Smart Word / Avro Phonetic Candidate Strip -->
+              <div id="suggestionStrip" class="mt-2 flex items-center gap-1.5 overflow-x-auto thin-scroll py-1">
+              </div>
+            </div>
+
+            <!-- ==================== THE CRYSTAL GLASS KEYBOARD ==================== -->
+            <div id="keyboardRoot" class="relative w-full select-none no-select-zone overflow-hidden" style="min-height: 320px;">
+              <!-- High-FPS Under-Keyboard Animated Shader Canvas -->
+              <canvas id="kbAnimCanvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+
+              <!-- Keyboard Foreground Container -->
+              <div class="relative z-10 flex flex-col justify-between p-1.5 sm:p-2 gap-1.5">
+
+                <!-- Top Bar: Sleek Menu Trigger + Custom Emoji Bar -->
+                <div class="flex items-center gap-1.5">
+                  <button id="btnToggleMenu" type="button" title="Open Keyboard Hub (Themes, Stickers, Clipboard, Config)" class="glass-key glass-key-special h-9 w-10 rounded-xl flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5 text-cyan-300" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h12"/>
+                    </svg>
+                  </button>
+
+                  <!-- Quick Mode Pill (EN / Avro) -->
+                  <button id="btnTopModeSwitch" type="button" class="glass-key glass-key-special h-9 px-2.5 rounded-xl flex items-center justify-center gap-1 shrink-0 text-xs font-bold text-cyan-200">
+                    <span id="topModeLabel">EN</span>
+                  </button>
+
+                  <!-- Emoji Bar (Default On) -->
+                  <div id="emojiBarContainer" class="flex-1 flex items-center gap-1 overflow-x-auto thin-scroll py-0.5">
+                  </div>
+
+                  <!-- Hint when Emoji Bar is hidden -->
+                  <div id="emojiBarHiddenHint" class="hidden flex-1 text-right pr-2">
+                    <span class="text-[11px] text-slate-300/75">Emoji Bar Hidden</span>
+                  </div>
+                </div>
+
+                <!-- ==================== REDESIGNED PREMIUM GLASS MENU HUB ==================== -->
+                <div id="menuHubDrawer" class="hidden glass-drawer rounded-2xl p-3 mb-1 transition-all">
+                  <!-- Sleek Segmented Pill Navigation -->
+                  <div class="flex items-center justify-between gap-1.5 pb-2.5 mb-2.5 border-b border-white/15">
+                    <div class="grid grid-cols-4 gap-1 flex-1 bg-slate-950/60 p-1 rounded-xl border border-white/10">
+                      <button type="button" data-drawer-tab="themes" class="drawer-tab-btn py-1.5 px-2 rounded-lg text-[11px] font-bold bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow flex items-center justify-center gap-1">
+                        <span>🌈</span><span>Themes</span>
+                      </button>
+                      <button type="button" data-drawer-tab="stickers" class="drawer-tab-btn py-1.5 px-2 rounded-lg text-[11px] font-bold text-slate-300 hover:text-white flex items-center justify-center gap-1">
+                        <span>🎨</span><span>Stickers</span>
+                      </button>
+                      <button type="button" data-drawer-tab="clipboard" class="drawer-tab-btn py-1.5 px-2 rounded-lg text-[11px] font-bold text-slate-300 hover:text-white flex items-center justify-center gap-1">
+                        <span>📋</span><span>Clips</span>
+                      </button>
+                      <button type="button" data-drawer-tab="settings" class="drawer-tab-btn py-1.5 px-2 rounded-lg text-[11px] font-bold text-slate-300 hover:text-white flex items-center justify-center gap-1">
+                        <span>⚙️</span><span>Config</span>
+                      </button>
+                    </div>
+                    <button id="btnCloseDrawer" type="button" class="w-8 h-8 rounded-xl bg-rose-500/25 hover:bg-rose-500/40 border border-rose-400/30 text-rose-200 text-xs font-bold flex items-center justify-center shrink-0">
+                      ✕
+                    </button>
+                  </div>
+
+                  <!-- TAB 1: 15 LIVE ANIMATED THEMES -->
+                  <div id="drawerPanelThemes" class="space-y-2.5 text-xs max-h-56 overflow-y-auto thin-scroll pr-1">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[11px] font-semibold text-cyan-300">15 Live Under-Glass Shader Animations</span>
+                      <span id="activeThemeNameBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-slate-200">Cyber Aurora</span>
+                    </div>
+                    <div id="themeButtonsGrid" class="grid grid-cols-3 gap-1.5"></div>
+                  </div>
+
+                  <!-- TAB 2: 48+ RICH STICKER PACKS WITH CATEGORIES -->
+                  <div id="drawerPanelStickers" class="hidden space-y-2 max-h-56 overflow-y-auto thin-scroll pr-1">
+                    <div class="flex items-center gap-1 overflow-x-auto thin-scroll pb-1">
+                      <button type="button" data-sticker-cat="all" class="sticker-cat-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-cyan-500/30 text-cyan-200 border border-cyan-400/40">All (48)</button>
+                      <button type="button" data-sticker-cat="reactions" class="sticker-cat-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white/5 text-slate-300">🔥 Reactions</button>
+                      <button type="button" data-sticker-cat="love" class="sticker-cat-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white/5 text-slate-300">💖 Love & Vibe</button>
+                      <button type="button" data-sticker-cat="cyber" class="sticker-cat-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white/5 text-slate-300">🚀 Cyber & Gaming</button>
+                      <button type="button" data-sticker-cat="party" class="sticker-cat-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white/5 text-slate-300">🎉 Celebration</button>
+                    </div>
+                    <div id="stickerGridContainer" class="grid grid-cols-4 gap-1.5"></div>
+                  </div>
+
+                  <!-- TAB 3: CLIPBOARD & PIN MANAGER -->
+                  <div id="drawerPanelClipboard" class="hidden space-y-2 text-xs max-h-56 overflow-y-auto thin-scroll pr-1">
+                    <div class="flex gap-1.5">
+                      <input id="inputNewClip" type="text" placeholder="Save or pin a new clip..." class="flex-1 rounded-xl bg-slate-900/90 border border-white/20 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-cyan-400" />
+                      <button id="btnAddClip" type="button" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-bold">+ Pin</button>
+                    </div>
+                    <div id="clipboardListContainer" class="space-y-1.5"></div>
+                  </div>
+
+                  <!-- TAB 4: PRO CONFIGURATION & SLIDERS -->
+                  <div id="drawerPanelSettings" class="hidden space-y-2.5 text-xs max-h-56 overflow-y-auto thin-scroll pr-1">
+                    <!-- Toggles Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                      <div class="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10">
+                        <div>
+                          <p class="font-semibold text-white text-[11px]">Long-Press Sub-Symbol</p>
+                          <p class="text-[10px] text-slate-400">Hold key for bottom/top symbol</p>
+                        </div>
+                        <label class="ios-switch">
+                          <input id="toggleLongPressSub" type="checkbox" checked />
+                          <span class="ios-slider"></span>
+                        </label>
+                      </div>
+
+                      <div class="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10">
+                        <div>
+                          <p class="font-semibold text-white text-[11px]">Emoji Bar Row</p>
+                          <p class="text-[10px] text-slate-400">Show top quick emoji bar</p>
+                        </div>
+                        <label class="ios-switch">
+                          <input id="toggleEmojiBar" type="checkbox" checked />
+                          <span class="ios-slider"></span>
+                        </label>
+                      </div>
+
+                      <div class="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10">
+                        <div>
+                          <p class="font-semibold text-white text-[11px]">Number Row (1–0)</p>
+                          <p class="text-[10px] text-slate-400">Show dedicated number bar</p>
+                        </div>
+                        <label class="ios-switch">
+                          <input id="toggleNumberBar" type="checkbox" checked />
+                          <span class="ios-slider"></span>
+                        </label>
+                      </div>
+
+                      <div class="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10">
+                        <div>
+                          <p class="font-semibold text-white text-[11px]">Ctrl & Ctrl+C Keys</p>
+                          <p class="text-[10px] text-slate-400">Show shortcut keys on bottom row</p>
+                        </div>
+                        <label class="ios-switch">
+                          <input id="toggleCtrlButton" type="checkbox" checked />
+                          <span class="ios-slider"></span>
+                        </label>
+                      </div>
+
+                      <div class="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10">
+                        <div>
+                          <p class="font-semibold text-white text-[11px]">Haptic Vibration & Click</p>
+                          <p class="text-[10px] text-slate-400">Tactile response on key press</p>
+                        </div>
+                        <label class="ios-switch">
+                          <input id="toggleHaptic" type="checkbox" checked />
+                          <span class="ios-slider"></span>
+                        </label>
+                      </div>
+
+                      <div class="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10">
+                        <div>
+                          <p class="font-semibold text-white text-[11px]">Touch Ripple Burst</p>
+                          <p class="text-[10px] text-slate-400">Interactive light wave on tap</p>
+                        </div>
+                        <label class="ios-switch">
+                          <input id="toggleTouchRipple" type="checkbox" checked />
+                          <span class="ios-slider"></span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <!-- Pro Hardware & Optical Glass Sliders -->
+                    <div class="p-2.5 rounded-xl bg-white/5 border border-white/10 space-y-2">
+                      <p class="text-[11px] font-bold text-cyan-300 uppercase tracking-wider">Optical Glass & Animation Tuning</p>
+
+                      <div class="flex items-center justify-between gap-2">
+                        <span class="text-[11px] text-slate-300">Glass Frost Blur</span>
+                        <input id="rangeGlassBlur" type="range" min="4" max="28" value="18" class="w-32 accent-cyan-400" />
+                      </div>
+
+                      <div class="flex items-center justify-between gap-2">
+                        <span class="text-[11px] text-slate-300">Crystal Transparency</span>
+                        <input id="rangeGlassAlpha" type="range" min="8" max="45" value="20" class="w-32 accent-cyan-400" />
+                      </div>
+
+                      <div class="flex items-center justify-between gap-2">
+                        <span class="text-[11px] text-slate-300">Animation Speed</span>
+                        <input id="rangeAnimSpeed" type="range" min="2" max="25" value="10" class="w-32 accent-cyan-400" />
+                      </div>
+
+                      <div class="flex items-center justify-between gap-2">
+                        <span class="text-[11px] text-slate-300">Key Corner Radius</span>
+                        <input id="rangeKeyRadius" type="range" min="6" max="22" value="13" class="w-32 accent-cyan-400" />
+                      </div>
+
+                      <div class="flex items-center justify-between gap-2">
+                        <span class="text-[11px] text-slate-300">Key Height</span>
+                        <input id="rangeKeyHeight" type="range" min="42" max="58" value="50" class="w-32 accent-cyan-400" />
+                      </div>
+                    </div>
+
+                    <!-- Custom Emoji & Number Row Editors -->
+                    <div class="p-2 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
+                      <label for="inputCustomEmojis" class="font-bold text-cyan-300 block text-[11px]">Customize Emoji Bar (comma-separated):</label>
+                      <div class="flex gap-1.5">
+                        <input id="inputCustomEmojis" type="text" value="😍,🔥,😂,🥰,👍,🙏,✨,❤️,😎,🎉,🚀,⚡,💎,👑" class="flex-1 rounded-lg bg-slate-900/90 border border-white/20 px-2 py-1 text-white text-xs" />
+                        <button id="btnSaveCustomEmojis" type="button" class="px-2.5 py-1 rounded-lg bg-cyan-500 text-slate-950 font-bold">Save</button>
+                      </div>
+                    </div>
+
+                    <div class="p-2 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
+                      <label for="inputCustomNumbers" class="font-bold text-cyan-300 block text-[11px]">Customize Number Bar (10 keys):</label>
+                      <div class="flex gap-1.5">
+                        <input id="inputCustomNumbers" type="text" value="1,2,3,4,5,6,7,8,9,0" class="flex-1 rounded-lg bg-slate-900/90 border border-white/20 px-2 py-1 text-white text-xs" />
+                        <button id="btnSaveCustomNumbers" type="button" class="px-2.5 py-1 rounded-lg bg-indigo-500 text-white font-bold">Apply</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Number Row (Default below Emoji Bar) -->
+                <div id="numberBarRow" class="grid grid-cols-10 gap-1"></div>
+
+                <!-- Main Keyboard Keys Container -->
+                <div id="mainKeysContainer" class="flex flex-col gap-1.5"></div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: External Studio Control Deck -->
+      <div class="lg:col-span-5 space-y-4">
+        <div class="rounded-2xl bg-slate-900/90 border border-white/10 p-4 shadow-xl space-y-3.5">
+          <div class="flex items-center justify-between">
+            <h2 class="text-base font-bold text-white flex items-center gap-2">
+              🎛️ Live Keyboard Control Deck
+            </h2>
+            <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 font-semibold">v3.0 Pro Engine</span>
+          </div>
+
+          <!-- Language / Input Method Switcher (English vs Gboard Avro Phonetic) -->
+          <div class="p-3 rounded-xl bg-slate-950/90 border border-white/10 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-cyan-300">⌨️ Input Method (Gboard Style)</span>
+              <span id="sideLangBadge" class="text-[11px] text-slate-400">Default: English (US)</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <button id="btnSelectEnglish" type="button" class="py-2 px-3 rounded-xl font-bold text-xs border border-cyan-400 bg-cyan-500/25 text-white shadow">
+                🇺🇸 English (QWERTY)
+              </button>
+              <button id="btnSelectAvro" type="button" class="py-2 px-3 rounded-xl font-bold text-xs border border-white/15 bg-white/5 text-slate-300 hover:text-white">
+                🇧🇩 Avro Phonetic (অভ্র)
+              </button>
+            </div>
+            <p class="text-[11px] text-slate-400 leading-relaxed">
+              In <strong>Avro Phonetic</strong> mode, the keyboard stays English QWERTY and converts your English typing into Bangla phonetically in real time (e.g., type <code class="text-cyan-300">ami banglay gan gai</code> → <span class="text-white">আমি বাংলায় গান গাই</span>) just like Gboard!
+            </p>
+          </div>
+
+          <!-- 15 Live Under-Glass Animations Selector -->
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-bold text-cyan-300">🌈 15 Live Under-Keyboard Animations:</label>
+              <span class="text-[10px] text-slate-400">Tap any preset</span>
+            </div>
+            <div class="grid grid-cols-3 gap-1.5 max-h-56 overflow-y-auto thin-scroll pr-1" id="externalThemeSwitcher"></div>
+          </div>
+
+          <!-- Clean Key Behavior Summary -->
+          <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 space-y-1.5 text-xs">
+            <p class="font-bold text-white">✨ Clean Glass Keys & Hidden Power Shortcuts</p>
+            <ul class="text-[11px] text-slate-300 space-y-1 list-disc pl-4">
+              <li><strong>Zero Clutter Labels:</strong> No "Copy", "Paste", "Clear", or "Send" text printed on the keys.</li>
+              <li><strong>Hold <kbd class="px-1 py-0.5 rounded bg-white/10 text-cyan-300">V</kbd> to Paste:</strong> Works silently at all times without cluttering the V key.</li>
+              <li><strong>Hold Any Key for Sub-Symbol:</strong> Holding <kbd class="px-1 py-0.5 rounded bg-white/10 text-cyan-300">Q</kbd> types <kbd class="px-1 py-0.5 rounded bg-white/10 text-cyan-300">!</kbd>, holding <kbd class="px-1 py-0.5 rounded bg-white/10 text-cyan-300">W</kbd> types <kbd class="px-1 py-0.5 rounded bg-white/10 text-cyan-300">@</kbd> (configurable in Menu).</li>
+            </ul>
+          </div>
+
+          <div class="pt-1 flex flex-wrap gap-2">
+            <button id="btnOpenMenuQuick" type="button" class="flex-1 py-2 px-3 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/40 text-cyan-200 font-bold text-xs transition">
+              ☰ Open Keyboard Hub
+            </button>
+            <button id="btnJumpToCode" type="button" class="flex-1 py-2 px-3 rounded-xl bg-indigo-500/25 hover:bg-indigo-500/35 border border-indigo-400/40 text-indigo-200 font-bold text-xs transition">
+              💻 View & Copy Source Code
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== VIEW 2: FULL SOURCE CODE (ANDROID IME + WEB) ==================== -->
+    <section id="viewCodeSection" class="hidden space-y-4">
+      <div class="rounded-2xl bg-slate-900 border border-white/10 p-4 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 class="text-base sm:text-lg font-bold text-white">📦 Complete Android System-Wide Keyboard Source Code (v3.0)</h2>
+            <p class="text-xs text-slate-400">Includes English QWERTY, Gboard-style Avro Phonetic Engine, 15 Shader Animations, Clean Glass Keys, and Haptic Feedback.</p>
+          </div>
+          <button id="btnCopyActiveCode" type="button" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-bold text-xs shadow-lg hover:opacity-95">
+            📋 Copy Current File Code
+          </button>
+        </div>
+
+        <div class="flex flex-wrap gap-1.5 pt-1 border-b border-white/10 pb-2.5">
+          <button type="button" data-code-file="kotlin_service" class="code-file-tab px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-500 text-slate-950">
+            1. GlassKeyboardService.kt (Core IME + Avro + 15 Shaders)
+          </button>
+          <button type="button" data-code-file="kotlin_settings" class="code-file-tab px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-200">
+            2. SettingsActivity.kt
+          </button>
+          <button type="button" data-code-file="manifest_xml" class="code-file-tab px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-200">
+            3. AndroidManifest.xml
+          </button>
+          <button type="button" data-code-file="method_xml" class="code-file-tab px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-200">
+            4. res/xml/method.xml
+          </button>
+        </div>
+
+        <pre id="codeDisplayBlock" class="w-full max-h-[540px] overflow-auto rounded-xl bg-slate-950 p-4 text-xs font-mono text-cyan-200 border border-white/10 leading-relaxed"></pre>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // ==================== STATE & HIGH-END CONFIGURATION ====================
+    const state = {
+      showEmojiBar: true,
+      showNumberBar: true,
+      longPressSubSymbol: true,
+      showCtrlKeys: true,
+      hapticEnabled: true,
+      touchRippleEnabled: true,
+      glassBlurPx: 18,
+      glassAlphaPct: 20,
+      animSpeed: 10,
+      keyRadiusPx: 13,
+      keyHeightPx: 50,
+      activeTheme: 0,
+      inputMode: 'EN', // 'EN' (English US) or 'AVRO' (Gboard-style Avro Phonetic)
+      layoutMode: 'ALPHA', // 'ALPHA', 'SYM1', 'SYM2'
+      isShift: false,
+      isCaps: false,
+      isCtrlHeld: false,
+      drawerOpen: false,
+      activeStickerCat: 'all',
+      avroBuffer: '',
+      emojis: ['😍', '🔥', '😂', '🥰', '👍', '🙏', '✨', '❤️', '😎', '🎉', '🚀', '⚡', '💎', '👑'],
+      numbers: [
+        { main: '1', sub: '!' }, { main: '2', sub: '@' }, { main: '3', sub: '#' },
+        { main: '4', sub: '$' }, { main: '5', sub: '%' }, { main: '6', sub: '^' },
+        { main: '7', sub: '&' }, { main: '8', sub: '*' }, { main: '9', sub: '(' },
+        { main: '0', sub: ')' }
+      ],
+      clipboard: [
+        { id: 'c1', text: 'Crystal Glass Keyboard Pro v3.0 ✨', pinned: true },
+        { id: 'c2', text: 'আমি বাংলায় গান গাই (Typed via Avro Phonetic)', pinned: true },
+        { id: 'c3', text: 'https://developer.android.com/guide/topics/text/creating-input-method', pinned: false }
+      ],
+      ripples: []
+    };
+
+    // ==================== 15 DISTINCT MULTI-LAYER ANIMATION THEMES ====================
+    const themes = [
+      { id: 0,  name: 'Cyber Aurora',     mode: 'aurora',    c1: '#040914', c2: '#0b2545', colors: ['#06b6d4', '#3b82f6', '#8b5cf6', '#10b981'] },
+      { id: 1,  name: 'Matrix Rain',      mode: 'matrix',    c1: '#020d07', c2: '#052617', colors: ['#10b981', '#34d399', '#059669', '#6ee7b7'] },
+      { id: 2,  name: 'Neon Synthwave',   mode: 'synthgrid', c1: '#120424', c2: '#2e0854', colors: ['#ec4899', '#8b5cf6', '#06b6d4', '#f43f5e'] },
+      { id: 3,  name: 'Galaxy Nebula',    mode: 'vortex',    c1: '#070417', c2: '#1e1040', colors: ['#a855f7', '#ec4899', '#6366f1', '#38bdf8'] },
+      { id: 4,  name: 'Liquid Plasma',    mode: 'plasma',    c1: '#1a0618', c2: '#3b092c', colors: ['#f43f5e', '#fb923c', '#d946ef', '#8b5cf6'] },
+      { id: 5,  name: 'Fireflies Gold',   mode: 'fireflies', c1: '#120d04', c2: '#291d06', colors: ['#fbbf24', '#f59e0b', '#fde047', '#fb923c'] },
+      { id: 6,  name: 'Ocean Ripples',    mode: 'waves',     c1: '#03111c', c2: '#073452', colors: ['#0ea5e9', '#2dd4bf', '#38bdf8', '#6366f1'] },
+      { id: 7,  name: 'Prism Laser',      mode: 'lasers',    c1: '#060714', c2: '#131633', colors: ['#22d3ee', '#f472b6', '#a78bfa', '#34d399'] },
+      { id: 8,  name: 'Sakura Petals',    mode: 'petals',    c1: '#170712', c2: '#361029', colors: ['#f472b6', '#fb7185', '#f9a8d4', '#e879f9'] },
+      { id: 9,  name: 'Starfield Warp',   mode: 'starwarp',  c1: '#02040a', c2: '#091326', colors: ['#e2e8f0', '#38bdf8', '#818cf8', '#f8fafc'] },
+      { id: 10, name: 'Electric Storm',   mode: 'storm',     c1: '#050814', c2: '#111c38', colors: ['#38bdf8', '#818cf8', '#c084fc', '#e0f2fe'] },
+      { id: 11, name: 'Magma Core',       mode: 'plasma',    c1: '#1c0505', c2: '#450a0a', colors: ['#ef4444', '#f97316', '#eab308', '#dc2626'] },
+      { id: 12, name: 'Arctic Frost',     mode: 'snow',      c1: '#04101c', c2: '#0c2d48', colors: ['#7dd3fc', '#bae6fd', '#38bdf8', '#e0f2fe'] },
+      { id: 13, name: 'Quantum Hex',      mode: 'hexpulse',  c1: '#070a17', c2: '#141e3d', colors: ['#6366f1', '#06b6d4', '#a855f7', '#14b8a6'] },
+      { id: 14, name: 'RGB Chroma Wave',  mode: 'chroma',    c1: '#08080c', c2: '#141420', colors: ['#ff0055', '#00ff88', '#00ccff', '#ffcc00'] }
+    ];
+
+    // ==================== 48+ RICH STICKERS ACROSS 4 PACKS ====================
+    const stickersList = [
+      // Reactions (12)
+      { emoji: '🔥✨', title: 'Lit Fire', cat: 'reactions' },
+      { emoji: '💯👑', title: '100% Boss', cat: 'reactions' },
+      { emoji: '😂🤣', title: 'ROFL', cat: 'reactions' },
+      { emoji: '🤯⚡', title: 'Mind Blown', cat: 'reactions' },
+      { emoji: '😎👌', title: 'Super Cool', cat: 'reactions' },
+      { emoji: '🙌✨', title: 'Respect', cat: 'reactions' },
+      { emoji: '🤔💭', title: 'Thinking', cat: 'reactions' },
+      { emoji: '😴💤', title: 'Sleepy', cat: 'reactions' },
+      { emoji: '🥳🍻', title: 'Cheers', cat: 'reactions' },
+      { emoji: '👀🍿', title: 'Watching', cat: 'reactions' },
+      { emoji: '🫡🎖️', title: 'Salute', cat: 'reactions' },
+      { emoji: '🥶❄️', title: 'Ice Cold', cat: 'reactions' },
+      // Love & Vibe (12)
+      { emoji: '💖🌸', title: 'Pure Love', cat: 'love' },
+      { emoji: '🥰💫', title: 'Adore You', cat: 'love' },
+      { emoji: '❤️‍🔥🌹', title: 'Passionate', cat: 'love' },
+      { emoji: '🤗💞', title: 'Warm Hug', cat: 'love' },
+      { emoji: '😘💋', title: 'Blow Kiss', cat: 'love' },
+      { emoji: '✨🦋', title: 'Good Vibes', cat: 'love' },
+      { emoji: '🌙✨', title: 'Sweet Dreams', cat: 'love' },
+      { emoji: '☕🌧️', title: 'Cozy Rain', cat: 'love' },
+      { emoji: '🌈☀️', title: 'Bright Day', cat: 'love' },
+      { emoji: '🎵🎧', title: 'Music Vibe', cat: 'love' },
+      { emoji: '💌🌷', title: 'For You', cat: 'love' },
+      { emoji: '🫶✨', title: 'Heart Hands', cat: 'love' },
+      // Cyber & Gaming (12)
+      { emoji: '🚀🌕', title: 'To The Moon', cat: 'cyber' },
+      { emoji: '🎮🏆', title: 'GG WP', cat: 'cyber' },
+      { emoji: '🤖⚡', title: 'Cyber Bot', cat: 'cyber' },
+      { emoji: '💎🙌', title: 'Diamond Hands', cat: 'cyber' },
+      { emoji: '🛸🌌', title: 'Space Warp', cat: 'cyber' },
+      { emoji: '⚔️🛡️', title: 'Battle Ready', cat: 'cyber' },
+      { emoji: '💻🔥', title: 'Coding Mode', cat: 'cyber' },
+      { emoji: '🎯💥', title: 'Headshot', cat: 'cyber' },
+      { emoji: '🔋⚡', title: 'Full Power', cat: 'cyber' },
+      { emoji: '🕶️🌃', title: 'Night Runner', cat: 'cyber' },
+      { emoji: '🧬🔮', title: 'Quantum', cat: 'cyber' },
+      { emoji: '👑🐉', title: 'Apex Legend', cat: 'cyber' },
+      // Celebration (12)
+      { emoji: '🎉🥳', title: 'Party Time', cat: 'party' },
+      { emoji: '🎂🕯️', title: 'Happy Birthday', cat: 'party' },
+      { emoji: '🏆🥇', title: 'Champion', cat: 'party' },
+      { emoji: '🎊🍾', title: 'Congrats', cat: 'party' },
+      { emoji: '🎁🎈', title: 'Surprise Gift', cat: 'party' },
+      { emoji: '🎆🎇', title: 'Fireworks', cat: 'party' },
+      { emoji: '🌟👏', title: 'Bravo', cat: 'party' },
+      { emoji: '🍕🍔', title: 'Foodie Party', cat: 'party' },
+      { emoji: '🕺💃', title: 'Dance Floor', cat: 'party' },
+      { emoji: '✈️🌴', title: 'Vacation', cat: 'party' },
+      { emoji: '🎓📜', title: 'Graduated', cat: 'party' },
+      { emoji: '💐💍', title: 'Best Wishes', cat: 'party' }
+    ];
+
+    // ==================== GBOARD-STYLE AVRO PHONETIC TRANSLITERATION ENGINE ====================
+    const avroPhraseDict = {
+      'ami': 'আমি', 'tumi': 'তুমি', 'apni': 'আপনি', 'kemon': 'কেমন', 'achen': 'আছেন',
+      'acho': 'আছো', 'achi': 'আছি', 'bhalo': 'ভালো', 'valo': 'ভালো', 'dhonnobad': 'ধন্যবাদ',
+      'bangla': 'বাংলা', 'banglay': 'বাংলায়', 'bangladesh': 'বাংলাদেশ', 'gan': 'গান', 'gai': 'গাই',
+      'amar': 'আমার', 'tomar': 'তোমার', 'apnar': 'আপনার', 'nam': 'নাম', 'ki': 'কী',
+      'kothay': 'কোথায়', 'kobe': 'কবে', 'keno': 'কেন', 'ekhane': 'এখানে', 'okhane': 'ওখানে',
+      'prothom': 'প্রথম', 'shundor': 'সুন্দর', 'sundor': 'সুন্দর', 'oshadharon': 'অসাধারণ',
+      'monmoto': 'মনমতো', 'hoyeche': 'হয়েছে', 'bhai': 'ভাই', 'vai': 'ভাই', 'bon': 'বোন',
+      'bondhu': 'বন্ধু', 'valobasha': 'ভালোবাসা', 'bhalobasha': 'ভালোবাসা', 'shuvo': 'শুভ',
+      'sokale': 'সকালে', 'rat': 'রাত', 'din': 'দিন', 'aj': 'আজ', 'kal': 'কাল',
+      'ha': 'হ্যাঁ', 'na': 'না', 'thik': 'ঠিক', 'ache': 'আছে', 'korbo': 'করব',
+      'korchi': 'করছি', 'koro': 'করো', 'koren': 'করেন', 'dekho': 'দেখো', 'dekhen': 'দেখেন',
+      'bolen': 'বলেন', 'bolo': 'বলো', 'assalamu': 'আসসালামু', 'alaikum': 'আলাইকুম',
+      'inshallah': 'ইনশাআল্লাহ', 'alhamdulillah': 'আলহামদুলিল্লাহ', 'subhanallah': 'সুবহানাল্লাহ'
+    };
+
+    function transliterateAvro(rawInput) {
+      if (!rawInput) return '';
+      const lower = rawInput.toLowerCase();
+      if (avroPhraseDict[lower]) return avroPhraseDict[lower];
+
+      const consonants = {
+        'ksh': 'ক্ষ', 'ng': 'ঙ', 'chh': 'ছ', 'ch': 'চ', 'sh': 'শ', 'ss': 'ষ',
+        'kh': 'খ', 'gh': 'ঘ', 'jh': 'ঝ', 'th': 'থ', 'dh': 'ধ', 'ph': 'ফ', 'bh': 'ভ',
+        'kk': 'ক্ক', 'tt': 'ত্ত', 'nn': 'ন্ন', 'mm': 'ম্ম', 'll': 'ল্ল',
+        'k': 'ক', 'g': 'গ', 'j': 'জ', 't': 'ট', 'd': 'ড', 'n': 'ন',
+        'p': 'প', 'f': 'ফ', 'b': 'ব', 'v': 'ভ', 'm': 'ম', 'z': 'য',
+        'r': 'র', 'l': 'ল', 's': 'স', 'h': 'হ', 'y': 'য়', 'w': 'ও'
+      };
+      const vowelsFull = {
+        'ou': 'ঔ', 'oi': 'ঐ', 'aa': 'আ', 'ee': 'ঈ', 'oo': 'উ',
+        'a': 'আ', 'i': 'ই', 'u': 'উ', 'e': 'এ', 'o': 'অ'
+      };
+      const vowelKar = {
+        'ou': 'ৌ', 'oi': 'ৈ', 'aa': 'া', 'ee': 'ী', 'oo': 'ু',
+        'a': 'া', 'i': 'ি', 'u': 'ু', 'e': 'ে', 'o': ''
+      };
+
+      let out = '';
+      let i = 0;
+      let prevWasConsonant = false;
+
+      while (i < lower.length) {
+        let matched = false;
+
+        // Check 3-char, 2-char, 1-char consonants
+        for (const len of [3, 2, 1]) {
+          const chunk = lower.substr(i, len);
+          if (consonants[chunk]) {
+            out += consonants[chunk];
+            prevWasConsonant = true;
+            i += len;
+            matched = true;
+            break;
+          }
+        }
+        if (matched) continue;
+
+        // Check 2-char, 1-char vowels
+        for (const len of [2, 1]) {
+          const chunk = lower.substr(i, len);
+          if (vowelsFull[chunk] !== undefined) {
+            out += prevWasConsonant ? vowelKar[chunk] : vowelsFull[chunk];
+            prevWasConsonant = false;
+            i += len;
+            matched = true;
+            break;
+          }
+        }
+        if (matched) continue;
+
+        // Numbers or punctuation
+        const bnDigits = { '0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯' };
+        const ch = rawInput[i];
+        out += bnDigits[ch] || ch;
+        prevWasConsonant = false;
+        i++;
+      }
+      return out;
+    }
+
+    function getAvroCandidates(raw) {
+      if (!raw) return ['আমি', 'তুমি', 'কেমন', 'আছো', 'ধন্যবাদ', 'ভালো', 'বাংলাদেশ', 'অসাধারণ'];
+      const primary = transliterateAvro(raw);
+      const lower = raw.toLowerCase();
+      const matches = Object.keys(avroPhraseDict)
+        .filter(k => k.startsWith(lower))
+        .map(k => avroPhraseDict[k]);
+      const unique = [primary, ...matches, raw];
+      return [...new Set(unique)].slice(0, 6);
+    }
+
+    const englishSuggestions = ['Hello', 'Awesome', 'Thank you', 'How are you?', 'Great', 'Please', 'See you soon', 'Crystal Glass', 'Perfect'];
+
+    // ==================== CLEAN KEYBOARD LAYOUTS (NO CLUTTER SUB-LABELS) ====================
+    const layouts = {
+      ALPHA: [
+        [
+          { id: 'q', main: 'q', sub: '!' }, { id: 'w', main: 'w', sub: '@' }, { id: 'e', main: 'e', sub: '#' },
+          { id: 'r', main: 'r', sub: '$' }, { id: 't', main: 't', sub: '%' }, { id: 'y', main: 'y', sub: '^' },
+          { id: 'u', main: 'u', sub: '&' }, { id: 'i', main: 'i', sub: '*' }, { id: 'o', main: 'o', sub: '(' },
+          { id: 'p', main: 'p', sub: ')' }
+        ],
+        [
+          { id: 'a', main: 'a', sub: '~' }, { id: 's', main: 's', sub: '-' }, { id: 'd', main: 'd', sub: '+' },
+          { id: 'f', main: 'f', sub: '=' }, { id: 'g', main: 'g', sub: '_' }, { id: 'h', main: 'h', sub: '{' },
+          { id: 'j', main: 'j', sub: '}' }, { id: 'k', main: 'k', sub: '[' }, { id: 'l', main: 'l', sub: ']' }
+        ],
+        [
+          { id: 'SHIFT', main: '⇧', sub: '', flex: 1.35, special: true },
+          { id: 'z', main: 'z', sub: '|' }, { id: 'x', main: 'x', sub: '\\' }, { id: 'c', main: 'c', sub: '/' },
+          { id: 'v', main: 'v', sub: '<' }, { id: 'b', main: 'b', sub: '>' }, { id: 'n', main: 'n', sub: ':' },
+          { id: 'm', main: 'm', sub: '?' },
+          { id: 'BACKSPACE', main: '⌫', sub: '', flex: 1.85, backspace: true }
+        ]
+      ],
+      SYM1: [
+        [
+          { id: 's1', main: '@', sub: '1' }, { id: 's2', main: '#', sub: '2' }, { id: 's3', main: '$', sub: '৳' },
+          { id: 's4', main: '%', sub: '‰' }, { id: 's5', main: '&', sub: '^' }, { id: 's6', main: '-', sub: '_' },
+          { id: 's7', main: '+', sub: '±' }, { id: 's8', main: '(', sub: '[' }, { id: 's9', main: ')', sub: ']' },
+          { id: 's10', main: '/', sub: '\\' }
+        ],
+        [
+          { id: 's11', main: '*', sub: '×' }, { id: 's12', main: '"', sub: '“' }, { id: 's13', main: "'", sub: '’' },
+          { id: 's14', main: ':', sub: '…' }, { id: 's15', main: ';', sub: '·' }, { id: 's16', main: '!', sub: '¡' },
+          { id: 's17', main: '?', sub: '¿' }, { id: 's18', main: '~', sub: '`' }, { id: 's19', main: '=', sub: '≈' }
+        ],
+        [
+          { id: 'SYM_MORE', main: '=\\<', sub: '', flex: 1.35, special: true },
+          { id: 's20', main: '<', sub: '≤' }, { id: 's21', main: '>', sub: '≥' }, { id: 's22', main: '{', sub: '«' },
+          { id: 'v', main: '}', sub: '»' }, { id: 's24', main: '[', sub: '‹' }, { id: 's25', main: ']', sub: '›' },
+          { id: 's26', main: '|', sub: '¦' },
+          { id: 'BACKSPACE', main: '⌫', sub: '', flex: 1.85, backspace: true }
+        ]
+      ],
+      SYM2: [
+        [
+          { id: 'x1', main: '€', sub: '£' }, { id: 'x2', main: '¥', sub: '₹' }, { id: 'x3', main: '©', sub: '®' },
+          { id: 'x4', main: '™', sub: '℠' }, { id: 'x5', main: '°', sub: '℃' }, { id: 'x6', main: '•', sub: '★' },
+          { id: 'x7', main: '√', sub: '∛' }, { id: 'x8', main: 'π', sub: '∞' }, { id: 'x9', main: '÷', sub: '×' },
+          { id: 'x10', main: '¶', sub: '§' }
+        ],
+        [
+          { id: 'x11', main: '∆', sub: '∇' }, { id: 'x12', main: '♪', sub: '♫' }, { id: 'x13', main: '♥', sub: '♦' },
+          { id: 'x14', main: '♠', sub: '♣' }, { id: 'x15', main: '✓', sub: '✔' }, { id: 'x16', main: '✕', sub: '✖' },
+          { id: 'x17', main: '←', sub: '↑' }, { id: 'x18', main: '→', sub: '↓' }, { id: 'x19', main: '।', sub: '॥' }
+        ],
+        [
+          { id: 'SYM', main: '?123', sub: '', flex: 1.35, special: true },
+          { id: 'x20', main: '«', sub: '»' }, { id: 'x21', main: '≤', sub: '≥' }, { id: 'x22', main: '≠', sub: '≡' },
+          { id: 'v', main: '≈', sub: '≅' }, { id: 'x24', main: '¼', sub: '½' }, { id: 'x25', main: '¾', sub: '⅓' },
+          { id: 'x26', main: '…', sub: '⋮' },
+          { id: 'BACKSPACE', main: '⌫', sub: '', flex: 1.85, backspace: true }
+        ]
+      ]
+    };
+
+    // ==================== HAPTIC & AUDIO ENGINE ====================
+    let audioCtx = null;
+    function triggerHapticAndSound(isLong = false) {
+      if (!state.hapticEnabled) return;
+      try {
+        if (navigator.vibrate) {
+          navigator.vibrate(isLong ? [26, 18, 32] : 14);
+        }
+      } catch (e) {}
+      try {
+        if (!audioCtx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (AC) audioCtx = new AC();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        if (audioCtx) {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(isLong ? 540 : 360, audioCtx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(115, audioCtx.currentTime + 0.04);
+          gain.gain.setValueAtTime(0.055, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.045);
+        }
+      } catch (e) {}
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toastBanner');
+      if (!t) return;
+      t.textContent = msg;
+      t.classList.remove('hidden');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => t.classList.add('hidden'), 1600);
+    }
+
+    function applyCssVariables() {
+      const root = document.documentElement;
+      root.style.setProperty('--kb-blur', state.glassBlurPx + 'px');
+      root.style.setProperty('--kb-alpha', (state.glassAlphaPct / 100).toFixed(2));
+      root.style.setProperty('--kb-radius', state.keyRadiusPx + 'px');
+      root.style.setProperty('--kb-key-height', state.keyHeightPx + 'px');
+    }
+
+    // ==================== EDITOR & AVRO COMPOSING BUFFER LOGIC ====================
+    const editor = document.getElementById('typingOutput');
+
+    function updateAvroBadge() {
+      const badge = document.getElementById('avroBufferBadge');
+      const rawSpan = document.getElementById('avroRawText');
+      const prevSpan = document.getElementById('avroPreviewText');
+      if (state.inputMode === 'AVRO' && state.avroBuffer.length > 0) {
+        badge.classList.remove('hidden');
+        rawSpan.textContent = state.avroBuffer;
+        prevSpan.textContent = transliterateAvro(state.avroBuffer);
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    function commitAvroBuffer(customText = null) {
+      if (!state.avroBuffer && !customText) return;
+      const converted = customText !== null ? customText : transliterateAvro(state.avroBuffer);
+      state.avroBuffer = '';
+      updateAvroBadge();
+      insertRawText(converted);
+    }
+
+    function insertRawText(str) {
+      const start = editor.selectionStart ?? editor.value.length;
+      const end = editor.selectionEnd ?? editor.value.length;
+      const val = editor.value;
+      editor.value = val.slice(0, start) + str + val.slice(end);
+      const nextPos = start + str.length;
+      editor.selectionStart = editor.selectionEnd = nextPos;
+      editor.scrollTop = editor.scrollHeight;
+      renderSuggestions();
+    }
+
+    function handleCharacterInput(ch) {
+      if (state.inputMode === 'AVRO' && state.layoutMode === 'ALPHA' && /^[a-zA-Z]$/.test(ch)) {
+        state.avroBuffer += ch;
+        updateAvroBadge();
+        renderSuggestions();
+      } else {
+        if (state.avroBuffer) commitAvroBuffer();
+        insertRawText(ch);
+      }
+    }
+
+    function deleteAtCursor(clearWord = false) {
+      if (state.inputMode === 'AVRO' && state.avroBuffer.length > 0) {
+        if (clearWord) state.avroBuffer = '';
+        else state.avroBuffer = state.avroBuffer.slice(0, -1);
+        updateAvroBadge();
+        renderSuggestions();
+        return;
+      }
+      const start = editor.selectionStart ?? editor.value.length;
+      const end = editor.selectionEnd ?? editor.value.length;
+      const val = editor.value;
+      if (start !== end) {
+        editor.value = val.slice(0, start) + val.slice(end);
+        editor.selectionStart = editor.selectionEnd = start;
+      } else if (start > 0) {
+        if (clearWord) {
+          const leftPart = val.slice(0, start).replace(/\S+\s*$/, '');
+          editor.value = leftPart + val.slice(start);
+          editor.selectionStart = editor.selectionEnd = leftPart.length;
+        } else {
+          editor.value = val.slice(0, start - 1) + val.slice(start);
+          editor.selectionStart = editor.selectionEnd = start - 1;
+        }
+      }
+      renderSuggestions();
+    }
+
+    function copyFromEditor() {
+      if (state.avroBuffer) commitAvroBuffer();
+      const start = editor.selectionStart ?? 0;
+      const end = editor.selectionEnd ?? 0;
+      const selected = editor.value.slice(start, end);
+      const textToCopy = selected || editor.value;
+      if (!textToCopy.trim()) {
+        showToast('Nothing to copy');
+        return;
+      }
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(textToCopy).catch(() => {});
+        }
+      } catch (e) {}
+      state.clipboard.unshift({
+        id: 'clip_' + Date.now(),
+        text: textToCopy,
+        pinned: false
+      });
+      renderClipboardList();
+      showToast('📋 Copied & Saved to Clips!');
+    }
+
+    function pasteToEditor() {
+      if (state.avroBuffer) commitAvroBuffer();
+      const pinnedOrFirst = state.clipboard.find(c => c.pinned) || state.clipboard[0];
+      const fallbackText = pinnedOrFirst ? pinnedOrFirst.text : '';
+      if (fallbackText) {
+        insertRawText(fallbackText);
+        showToast('⚡ Pasted from Clipboard!');
+      } else {
+        showToast('Clipboard is empty');
+      }
+    }
+
+    // ==================== RENDER FUNCTIONS ====================
+    function updateModeIndicators() {
+      const isAvro = state.inputMode === 'AVRO';
+      document.getElementById('activeModeIndicator').textContent = isAvro
+        ? 'Mode: Avro Phonetic (অভ্র ফনেটিক)'
+        : 'Mode: English (US)';
+      document.getElementById('topModeLabel').textContent = isAvro ? 'অভ্র' : 'EN';
+      document.getElementById('sideLangBadge').textContent = isAvro ? 'Active: Avro Phonetic' : 'Active: English (US)';
+
+      const btnEn = document.getElementById('btnSelectEnglish');
+      const btnAv = document.getElementById('btnSelectAvro');
+      if (btnEn && btnAv) {
+        btnEn.className = !isAvro
+          ? 'py-2 px-3 rounded-xl font-bold text-xs border border-cyan-400 bg-cyan-500/25 text-white shadow'
+          : 'py-2 px-3 rounded-xl font-bold text-xs border border-white/15 bg-white/5 text-slate-300 hover:text-white';
+        btnAv.className = isAvro
+          ? 'py-2 px-3 rounded-xl font-bold text-xs border border-cyan-400 bg-cyan-500/25 text-white shadow'
+          : 'py-2 px-3 rounded-xl font-bold text-xs border border-white/15 bg-white/5 text-slate-300 hover:text-white';
+      }
+    }
+
+    function renderSuggestions() {
+      const strip = document.getElementById('suggestionStrip');
+      strip.innerHTML = '';
+
+      if (state.inputMode === 'AVRO') {
+        const candidates = getAvroCandidates(state.avroBuffer);
+        candidates.forEach((cand, idx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = idx === 0 && state.avroBuffer
+            ? 'px-3 py-1 rounded-full bg-cyan-500/30 border border-cyan-300/60 text-xs font-bold text-white whitespace-nowrap shrink-0 shadow'
+            : 'px-2.5 py-1 rounded-full bg-white/10 hover:bg-cyan-500/25 border border-white/15 text-xs text-slate-100 whitespace-nowrap transition shrink-0';
+          btn.textContent = cand;
+          btn.addEventListener('click', () => {
+            triggerHapticAndSound(false);
+            if (state.avroBuffer) {
+              commitAvroBuffer(cand + ' ');
+            } else {
+              insertRawText(cand + ' ');
+            }
+          });
+          strip.appendChild(btn);
+        });
+      } else {
+        englishSuggestions.forEach(w => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'px-2.5 py-1 rounded-full bg-white/10 hover:bg-cyan-500/25 border border-white/15 text-xs text-slate-100 whitespace-nowrap transition shrink-0';
+          btn.textContent = w;
+          btn.addEventListener('click', () => {
+            triggerHapticAndSound(false);
+            insertRawText(w + ' ');
+          });
+          strip.appendChild(btn);
+        });
+      }
+    }
+
+    function renderEmojiBar() {
+      const bar = document.getElementById('emojiBarContainer');
+      const hint = document.getElementById('emojiBarHiddenHint');
+      bar.innerHTML = '';
+      if (!state.showEmojiBar) {
+        bar.classList.add('hidden');
+        hint.classList.remove('hidden');
+        return;
+      }
+      bar.classList.remove('hidden');
+      hint.classList.add('hidden');
+
+      state.emojis.forEach(em => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'glass-key h-9 min-w-[36px] px-2 rounded-xl flex items-center justify-center text-base shrink-0';
+        b.textContent = em;
+        b.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          triggerHapticAndSound(false);
+          if (state.avroBuffer) commitAvroBuffer();
+          insertRawText(em);
+        });
+        bar.appendChild(b);
+      });
+    }
+
+    function renderNumberBar() {
+      const row = document.getElementById('numberBarRow');
+      row.innerHTML = '';
+      if (!state.showNumberBar) {
+        row.classList.add('hidden');
+        return;
+      }
+      row.classList.remove('hidden');
+
+      state.numbers.forEach(numObj => {
+        const btn = createGlassKeyElement({
+          id: 'num_' + numObj.main,
+          main: numObj.main,
+          sub: numObj.sub,
+          isNumberRow: true
+        });
+        row.appendChild(btn);
+      });
+    }
+
+    function getActiveRows() {
+      if (state.layoutMode === 'SYM1') return layouts.SYM1;
+      if (state.layoutMode === 'SYM2') return layouts.SYM2;
+      return layouts.ALPHA;
+    }
+
+    function renderMainKeyboard() {
+      const container = document.getElementById('mainKeysContainer');
+      container.innerHTML = '';
+
+      const rows = getActiveRows();
+      rows.forEach(rowDef => {
+        const rowEl = document.createElement('div');
+        rowEl.className = 'flex items-center gap-1 sm:gap-1.5 w-full';
+        rowDef.forEach(keyDef => {
+          const kEl = createGlassKeyElement(keyDef);
+          rowEl.appendChild(kEl);
+        });
+        container.appendChild(rowEl);
+      });
+
+      // Bottom Row: ?123 | Ctrl (opt) | Ctrl+C (opt) | 🌐 (EN/Avro) | Space | . | Enter
+      const bottomRow = document.createElement('div');
+      bottomRow.className = 'flex items-center gap-1 sm:gap-1.5 w-full';
+
+      const bottomKeys = [
+        { id: 'SYM', main: state.layoutMode === 'ALPHA' ? '?123' : 'ABC', sub: '', flex: 1.2, special: true }
+      ];
+
+      if (state.showCtrlKeys) {
+        bottomKeys.push({
+          id: 'CTRL',
+          main: state.isCtrlHeld ? 'Ctrl•' : 'Ctrl',
+          sub: '',
+          flex: 1.1,
+          special: true
+        });
+        bottomKeys.push({
+          id: 'CTRL_C',
+          main: 'Ctrl+C',
+          sub: '',
+          flex: 1.35,
+          special: true
+        });
+      }
+
+      bottomKeys.push(
+        { id: 'LANG', main: state.inputMode === 'AVRO' ? '🌐 অভ্র' : '🌐 EN', sub: '', flex: 1.25, special: true },
+        { id: 'SPACE', main: state.inputMode === 'AVRO' ? 'Avro Phonetic' : 'English (US)', sub: '', flex: 3.1 },
+        { id: 'DOT', main: '.', sub: ',', flex: 0.95 },
+        { id: 'ENTER', main: '↵', sub: '', flex: 1.85, enter: true }
+      );
+
+      bottomKeys.forEach(kDef => {
+        bottomRow.appendChild(createGlassKeyElement(kDef));
+      });
+
+      container.appendChild(bottomRow);
+    }
+
+    // ==================== PURE GLASS KEY ELEMENT ====================
+    function createGlassKeyElement(keyDef) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+
+      let extraClass = '';
+      if (keyDef.enter) extraClass = 'glass-key-enter';
+      else if (keyDef.backspace) extraClass = 'glass-key-backspace';
+      else if (keyDef.special) extraClass = 'glass-key-special';
+
+      btn.className = `glass-key ${extraClass} flex flex-col items-center justify-center px-1 select-none`;
+      btn.style.flex = keyDef.flex || 1;
+      btn.style.height = (keyDef.isNumberRow ? Math.max(36, state.keyHeightPx - 10) : state.keyHeightPx) + 'px';
+
+      // Clean sub-symbol (only single symbol characters, never word labels)
+      if (keyDef.sub) {
+        const subSpan = document.createElement('span');
+        subSpan.className = 'key-sub-char self-end pr-1 -mt-0.5';
+        subSpan.textContent = keyDef.sub;
+        btn.appendChild(subSpan);
+      }
+
+      // Main character
+      const mainSpan = document.createElement('span');
+      const displayChar = (state.isShift || state.isCaps) && keyDef.main.length === 1
+        ? keyDef.main.toUpperCase()
+        : keyDef.main;
+
+      const textSize = displayChar.length > 3 ? 'text-xs' : 'text-base sm:text-lg';
+      mainSpan.className = `key-main-char ${textSize}`;
+      mainSpan.textContent = displayChar;
+      btn.appendChild(mainSpan);
+
+      let pressTimer = null;
+      let longPressFired = false;
+
+      btn.addEventListener('contextmenu', e => e.preventDefault());
+
+      btn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        btn.classList.add('active-press');
+        longPressFired = false;
+        triggerHapticAndSound(false);
+
+        if (state.touchRippleEnabled) {
+          const kbRect = document.getElementById('keyboardRoot').getBoundingClientRect();
+          state.ripples.push({
+            x: e.clientX - kbRect.left,
+            y: e.clientY - kbRect.top,
+            r: 4,
+            alpha: 0.75
+          });
+        }
+
+        pressTimer = setTimeout(() => {
+          longPressFired = true;
+          triggerHapticAndSound(true);
+          handleKeyLongPress(keyDef);
+        }, 410);
+      });
+
+      const endPress = (e) => {
+        if (pressTimer) {
+          clearTimeout(pressTimer);
+          pressTimer = null;
+        }
+        btn.classList.remove('active-press');
+        if (e.type === 'pointerup' && !longPressFired) {
+          handleKeyShortTap(keyDef);
+        }
+      };
+
+      btn.addEventListener('pointerup', endPress);
+      btn.addEventListener('pointerleave', endPress);
+      btn.addEventListener('pointercancel', endPress);
+
+      return btn;
+    }
+
+    function handleKeyLongPress(keyDef) {
+      // 1. Holding 'V' ALWAYS pastes immediately (no label needed on key)
+      if (keyDef.id === 'v' || keyDef.main.toLowerCase() === 'v') {
+        pasteToEditor();
+        return;
+      }
+
+      // 2. Holding Backspace deletes whole word
+      if (keyDef.id === 'BACKSPACE') {
+        deleteAtCursor(true);
+        return;
+      }
+
+      // 3. Holding Shift toggles Caps Lock
+      if (keyDef.id === 'SHIFT') {
+        state.isCaps = !state.isCaps;
+        state.isShift = state.isCaps;
+        showToast(state.isCaps ? 'Caps Lock ON' : 'Caps Lock OFF');
+        renderMainKeyboard();
+        return;
+      }
+
+      // 4. Default Long-Press types the sub-symbol if enabled
+      if (state.longPressSubSymbol && keyDef.sub) {
+        if (state.avroBuffer) commitAvroBuffer();
+        insertRawText(keyDef.sub);
+      } else {
+        handleKeyShortTap(keyDef);
+      }
+    }
+
+    function toggleLanguageMode() {
+      if (state.avroBuffer) commitAvroBuffer();
+      state.inputMode = state.inputMode === 'EN' ? 'AVRO' : 'EN';
+      updateModeIndicators();
+      renderSuggestions();
+      renderMainKeyboard();
+      showToast(state.inputMode === 'AVRO' ? '🇧🇩 Avro Phonetic Active' : '🇺🇸 English (US) Active');
+    }
+
+    function handleKeyShortTap(keyDef) {
+      switch (keyDef.id) {
+        case 'BACKSPACE':
+          deleteAtCursor(false);
+          break;
+        case 'ENTER':
+          if (state.avroBuffer) commitAvroBuffer();
+          insertRawText('\n');
+          break;
+        case 'SPACE':
+          if (state.avroBuffer) commitAvroBuffer();
+          insertRawText(' ');
+          break;
+        case 'SHIFT':
+          state.isShift = !state.isShift;
+          state.isCaps = false;
+          renderMainKeyboard();
+          break;
+        case 'SYM':
+          if (state.avroBuffer) commitAvroBuffer();
+          state.layoutMode = state.layoutMode === 'ALPHA' ? 'SYM1' : 'ALPHA';
+          renderMainKeyboard();
+          break;
+        case 'SYM_MORE':
+          state.layoutMode = 'SYM2';
+          renderMainKeyboard();
+          break;
+        case 'LANG':
+          toggleLanguageMode();
+          break;
+        case 'CTRL':
+          state.isCtrlHeld = !state.isCtrlHeld;
+          renderMainKeyboard();
+          showToast(state.isCtrlHeld ? 'Ctrl Active' : 'Ctrl Off');
+          break;
+        case 'CTRL_C':
+          copyFromEditor();
+          break;
+        default: {
+          if (state.isCtrlHeld) {
+            if (keyDef.id === 'c' || keyDef.main.toLowerCase() === 'c') {
+              copyFromEditor();
+              state.isCtrlHeld = false;
+              renderMainKeyboard();
+              return;
+            }
+            if (keyDef.id === 'v' || keyDef.main.toLowerCase() === 'v') {
+              pasteToEditor();
+              state.isCtrlHeld = false;
+              renderMainKeyboard();
+              return;
+            }
+            state.isCtrlHeld = false;
+          }
+          const outChar = (state.isShift || state.isCaps) && keyDef.main.length === 1
+            ? keyDef.main.toUpperCase()
+            : keyDef.main;
+          handleCharacterInput(outChar);
+          if (state.isShift && !state.isCaps) {
+            state.isShift = false;
+            renderMainKeyboard();
+          }
+          break;
+        }
+      }
+    }
+
+    // ==================== CLIPBOARD, STICKERS & 15 THEMES HUB ====================
+    function renderClipboardList() {
+      const container = document.getElementById('clipboardListContainer');
+      container.innerHTML = '';
+      const sorted = [...state.clipboard].sort((a, b) => Number(b.pinned) - Number(a.pinned));
+
+      sorted.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between gap-2 p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition';
+
+        const txtBtn = document.createElement('button');
+        txtBtn.type = 'button';
+        txtBtn.className = 'flex-1 text-left text-xs text-white truncate hover:text-cyan-300';
+        txtBtn.textContent = item.text;
+        txtBtn.addEventListener('click', () => {
+          triggerHapticAndSound(false);
+          if (state.avroBuffer) commitAvroBuffer();
+          insertRawText(item.text);
+          showToast('Pasted clip!');
+        });
+
+        const actions = document.createElement('div');
+        actions.className = 'flex items-center gap-1 shrink-0';
+
+        const pinBtn = document.createElement('button');
+        pinBtn.type = 'button';
+        pinBtn.className = `px-2 py-0.5 rounded-md text-[10px] font-bold ${item.pinned ? 'bg-amber-400 text-slate-950' : 'bg-white/10 text-slate-300'}`;
+        pinBtn.textContent = item.pinned ? '📌 Pinned' : '📌 Pin';
+        pinBtn.addEventListener('click', () => {
+          item.pinned = !item.pinned;
+          renderClipboardList();
+        });
+
+        const delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = 'px-2 py-0.5 rounded-md bg-rose-500/25 text-rose-200 text-[10px]';
+        delBtn.textContent = '✕';
+        delBtn.addEventListener('click', () => {
+          state.clipboard = state.clipboard.filter(c => c.id !== item.id);
+          renderClipboardList();
+        });
+
+        actions.appendChild(pinBtn);
+        actions.appendChild(delBtn);
+        row.appendChild(txtBtn);
+        row.appendChild(actions);
+        container.appendChild(row);
+      });
+    }
+
+    function renderStickerGrid() {
+      const grid = document.getElementById('stickerGridContainer');
+      grid.innerHTML = '';
+      const filtered = state.activeStickerCat === 'all'
+        ? stickersList
+        : stickersList.filter(s => s.cat === state.activeStickerCat);
+
+      filtered.forEach(st => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'p-2 rounded-xl bg-white/5 hover:bg-cyan-500/25 border border-white/10 flex flex-col items-center justify-center gap-0.5 transition hover:scale-105';
+        card.innerHTML = `<span class="text-xl">${st.emoji}</span><span class="text-[9px] font-semibold text-slate-300 truncate max-w-full">${st.title}</span>`;
+        card.addEventListener('click', () => {
+          triggerHapticAndSound(false);
+          if (state.avroBuffer) commitAvroBuffer();
+          insertRawText(` ${st.emoji} `);
+          const prev = document.getElementById('sentStickerPreview');
+          document.getElementById('sentStickerGraphic').textContent = st.emoji;
+          document.getElementById('sentStickerTitle').textContent = `Sent Sticker: ${st.title}`;
+          prev.classList.remove('hidden');
+          showToast(`Sticker: ${st.title}`);
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    function renderThemeButtons() {
+      const drawerGrid = document.getElementById('themeButtonsGrid');
+      const extGrid = document.getElementById('externalThemeSwitcher');
+      drawerGrid.innerHTML = '';
+      extGrid.innerHTML = '';
+
+      const activeTh = themes[state.activeTheme] || themes[0];
+      const badge = document.getElementById('activeThemeNameBadge');
+      if (badge) badge.textContent = activeTh.name;
+
+      themes.forEach((th, idx) => {
+        const active = state.activeTheme === idx;
+        const makeBtn = () => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = `p-2 rounded-xl text-left border transition relative overflow-hidden ${active ? 'border-cyan-300 bg-cyan-500/20 shadow-lg' : 'border-white/10 bg-white/5 hover:bg-white/10'}`;
+          b.innerHTML = `
+            <div class="flex items-center justify-between gap-1">
+              <span class="text-[11px] font-bold text-white truncate">${idx + 1}. ${th.name}</span>
+              <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${th.colors[0]}; box-shadow: 0 0 8px ${th.colors[0]}"></span>
+            </div>
+            <div class="mt-1.5 h-1.5 w-full rounded-full overflow-hidden flex">
+              <span class="flex-1" style="background:${th.colors[0]}"></span>
+              <span class="flex-1" style="background:${th.colors[1]}"></span>
+              <span class="flex-1" style="background:${th.colors[2]}"></span>
+            </div>
+          `;
+          b.addEventListener('click', () => {
+            state.activeTheme = idx;
+            renderThemeButtons();
+            showToast(`Theme: ${th.name}`);
+          });
+          return b;
+        };
+        drawerGrid.appendChild(makeBtn());
+        extGrid.appendChild(makeBtn());
+      });
+    }
+
+    // ==================== 15-MODE UNDER-KEYBOARD SHADER ANIMATION ENGINE ====================
+    const canvas = document.getElementById('kbAnimCanvas');
+    const ctx = canvas.getContext('2d');
+    let animTick = 0;
+
+    // Pre-allocated particles for smooth 60fps effects
+    const particles = Array.from({ length: 42 }, (_, i) => ({
+      x: (i * 37) % 440,
+      y: (i * 53) % 340,
+      vx: ((i % 5) - 2) * 0.45,
+      vy: ((i % 7) - 3) * 0.45 + 0.8,
+      size: (i % 4) + 1.8,
+      char: String.fromCharCode(0x30A0 + (i % 46)),
+      phase: i * 0.7
+    }));
+
+    function resizeCanvas() {
+      const root = document.getElementById('keyboardRoot');
+      if (!root) return;
+      if (canvas.width !== root.clientWidth || canvas.height !== root.clientHeight) {
+        canvas.width = root.clientWidth || 420;
+        canvas.height = root.clientHeight || 320;
+      }
+    }
+
+    function drawKeyboardAnimation() {
+      resizeCanvas();
+      const w = canvas.width;
+      const h = canvas.height;
+      const th = themes[state.activeTheme] || themes[0];
+      const speedFactor = state.animSpeed / 10;
+      animTick += 0.024 * speedFactor;
+
+      // Base Rich Gradient
+      const bgGrad = ctx.createLinearGradient(0, 0, w, h);
+      bgGrad.addColorStop(0, th.c1);
+      bgGrad.addColorStop(1, th.c2);
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      const mode = th.mode;
+
+      if (mode === 'aurora' || mode === 'plasma' || mode === 'chroma') {
+        // Multi-ribbon flowing aurora & plasma waves
+        for (let i = 0; i < 4; i++) {
+          const cx = (w * (0.18 + i * 0.22)) + Math.cos(animTick * (1 + i * 0.2) + i) * (w * 0.22);
+          const cy = (h * (0.3 + (i % 2) * 0.4)) + Math.sin(animTick * 1.3 + i * 1.5) * (h * 0.25);
+          const r = Math.max(w, h) * 0.44;
+          const rad = ctx.createRadialGradient(cx, cy, 4, cx, cy, r);
+          const col = th.colors[i % th.colors.length];
+          rad.addColorStop(0, col + 'aa');
+          rad.addColorStop(0.5, col + '44');
+          rad.addColorStop(1, 'transparent');
+          ctx.fillStyle = rad;
+          ctx.beginPath();
+          ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        // Flowing silk wave line
+        ctx.strokeStyle = th.colors[0] + '77';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        for (let x = 0; x <= w; x += 12) {
+          const y = h * 0.5 + Math.sin(x * 0.018 + animTick * 2) * 38 + Math.cos(x * 0.01 - animTick) * 20;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      } else if (mode === 'matrix') {
+        // Digital emerald rain streams
+        ctx.font = 'bold 12px monospace';
+        particles.forEach((p, idx) => {
+          p.y = (p.y + (1.8 + (idx % 3)) * speedFactor) % h;
+          const x = (idx * 14) % w;
+          ctx.fillStyle = th.colors[idx % th.colors.length] + '99';
+          ctx.fillText(p.char, x, p.y);
+          ctx.fillStyle = 'rgba(16, 185, 129, 0.18)';
+          ctx.fillRect(x, p.y - 26, 2, 24);
+        });
+      } else if (mode === 'synthgrid') {
+        // glowing horizon sun + perspective neon grid
+        const sunGrad = ctx.createRadialGradient(w * 0.5, h * 0.32, 8, w * 0.5, h * 0.32, 95);
+        sunGrad.addColorStop(0, '#f43f5ebb');
+        sunGrad.addColorStop(0.6, '#ec489955');
+        sunGrad.addColorStop(1, 'transparent');
+        ctx.fillStyle = sunGrad;
+        ctx.beginPath();
+        ctx.arc(w * 0.5, h * 0.32, 95, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = th.colors[0] + '55';
+        ctx.lineWidth = 1.2;
+        const horizon = h * 0.42;
+        for (let i = -6; i <= 6; i++) {
+          ctx.beginPath();
+          ctx.moveTo(w * 0.5 + i * 18, horizon);
+          ctx.lineTo(w * 0.5 + i * 95, h);
+          ctx.stroke();
+        }
+        const offset = (animTick * 24) % 24;
+        for (let y = horizon + offset; y < h; y += 24) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(w, y);
+          ctx.stroke();
+        }
+      } else if (mode === 'vortex' || mode === 'starwarp') {
+        // Rotating spiral galaxy / starwarp
+        const cx = w * 0.5;
+        const cy = h * 0.5;
+        particles.forEach((p, i) => {
+          const angle = animTick * (0.6 + (i % 5) * 0.15) + i;
+          const dist = ((i * 9 + animTick * 30) % (Math.max(w, h) * 0.55));
+          const px = cx + Math.cos(angle) * dist;
+          const py = cy + Math.sin(angle) * dist * 0.65;
+          const col = th.colors[i % th.colors.length];
+          ctx.fillStyle = col;
+          ctx.beginPath();
+          ctx.arc(px, py, (dist / 90) + 1.2, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      } else if (mode === 'waves') {
+        // Bioluminescent ocean sine layers
+        for (let layer = 0; layer < 4; layer++) {
+          ctx.fillStyle = th.colors[layer % th.colors.length] + '38';
+          ctx.beginPath();
+          ctx.moveTo(0, h);
+          for (let x = 0; x <= w; x += 14) {
+            const y = h * (0.35 + layer * 0.14) + Math.sin(x * 0.02 + animTick * (1.2 + layer * 0.3)) * 26;
+            ctx.lineTo(x, y);
+          }
+          ctx.lineTo(w, h);
+          ctx.closePath();
+          ctx.fill();
+        }
+      } else if (mode === 'lasers' || mode === 'storm') {
+        // Crossing neon laser beams & lightning pulses
+        for (let i = 0; i < 6; i++) {
+          ctx.strokeStyle = th.colors[i % th.colors.length] + '88';
+          ctx.lineWidth = 2.2;
+          ctx.beginPath();
+          const x1 = (Math.sin(animTick * 0.9 + i) * 0.5 + 0.5) * w;
+          const x2 = (Math.cos(animTick * 1.1 + i * 2) * 0.5 + 0.5) * w;
+          ctx.moveTo(x1, 0);
+          ctx.lineTo(x2, h);
+          ctx.stroke();
+        }
+      } else if (mode === 'hexpulse') {
+        // Pulsing quantum rings
+        for (let i = 0; i < 5; i++) {
+          const cx = (w * 0.2) + (i * w * 0.16);
+          const cy = h * 0.5 + Math.sin(animTick + i) * 35;
+          const rad = 22 + ((animTick * 28 + i * 25) % 85);
+          ctx.strokeStyle = th.colors[i % th.colors.length] + '66';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      } else {
+        // Fireflies, Sakura Petals, Arctic Snow
+        particles.forEach((p, i) => {
+          p.x = (p.x + Math.sin(animTick + i) * 0.9 + w) % w;
+          p.y = (p.y + (mode === 'fireflies' ? -0.8 : 1.2) * speedFactor + h) % h;
+          const col = th.colors[i % th.colors.length];
+          const glow = ctx.createRadialGradient(p.x, p.y, 1, p.x, p.y, p.size * 5);
+          glow.addColorStop(0, col + 'dd');
+          glow.addColorStop(1, 'transparent');
+          ctx.fillStyle = glow;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * 5, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      // Interactive Touch Ripples on Key Press
+      for (let i = state.ripples.length - 1; i >= 0; i--) {
+        const rp = state.ripples[i];
+        rp.r += 4.2;
+        rp.alpha -= 0.032;
+        if (rp.alpha <= 0) {
+          state.ripples.splice(i, 1);
+          continue;
+        }
+        ctx.strokeStyle = `rgba(125, 211, 252, ${rp.alpha})`;
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      requestAnimationFrame(drawKeyboardAnimation);
+    }
+
+    // ==================== ANDROID SOURCE CODE VIEWER DATA ====================
+    const androidSourceFiles = {
+      kotlin_service: `package com.glasskeyboard.ime
+
+import android.animation.ValueAnimator
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.SharedPreferences
+import android.graphics.*
+import android.inputmethodservice.InputMethodService
+import android.os.*
+import android.view.MotionEvent
+import android.view.View
+import android.view.animation.LinearInterpolator
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.ExtractedTextRequest
+import kotlin.math.cos
+import kotlin.math.sin
+
+class GlassKeyboardService : InputMethodService() {
+
+    private lateinit var keyboardView: GlassKeyboardCanvasView
+    private lateinit var prefs: SharedPreferences
+    private var avroBuffer = StringBuilder()
+
+    override fun onCreate() {
+        super.onCreate()
+        prefs = getSharedPreferences("glass_keyboard_prefs", Context.MODE_PRIVATE)
+    }
+
+    override fun onCreateInputView(): View {
+        keyboardView = GlassKeyboardCanvasView(this, this, prefs)
+        return keyboardView
+    }
+
+    fun handleCharacter(ch: String, isAvroMode: Boolean) {
+        if (isAvroMode && ch.length == 1 && ch[0].isLetter()) {
+            avroBuffer.append(ch)
+            currentInputConnection?.setComposingText(transliterateAvro(avroBuffer.toString()), 1)
+        } else {
+            flushAvroBuffer()
+            currentInputConnection?.commitText(ch, 1)
+        }
+    }
+
+    fun flushAvroBuffer() {
+        if (avroBuffer.isNotEmpty()) {
+            val converted = transliterateAvro(avroBuffer.toString())
+            currentInputConnection?.commitText(converted, 1)
+            avroBuffer.clear()
+        }
+    }
+
+    // Gboard-style Avro Phonetic Transliteration Engine
+    private fun transliterateAvro(raw: String): String {
+        val dict = mapOf(
+            "ami" to "আমি", "tumi" to "তুমি", "apni" to "আপনি",
+            "kemon" to "কেমন", "achen" to "আছেন", "bhalo" to "ভালো",
+            "bangla" to "বাংলা", "dhonnobad" to "ধন্যবাদ"
+        )
+        val lower = raw.lowercase()
+        dict[lower]?.let { return it }
+        return lower
+            .replace("ksh", "ক্ষ").replace("kh", "খ").replace("gh", "ঘ")
+            .replace("ch", "চ").replace("sh", "শ").replace("th", "থ")
+            .replace("dh", "ধ").replace("ph", "ফ").replace("bh", "ভ")
+            .replace("k", "ক").replace("g", "গ").replace("j", "জ")
+            .replace("t", "ট").replace("d", "ড").replace("n", "ন")
+            .replace("p", "প").replace("b", "ব").replace("m", "ম")
+            .replace("r", "র").replace("l", "ল").replace("s", "স")
+            .replace("h", "হ").replace("a", "া").replace("i", "ি")
+            .replace("u", "ু").replace("e", "ে").replace("o", "")
+    }
+
+    fun sendBackspace() {
+        if (avroBuffer.isNotEmpty()) {
+            avroBuffer.deleteCharAt(avroBuffer.length - 1)
+            if (avroBuffer.isEmpty()) currentInputConnection?.commitText("", 1)
+            else currentInputConnection?.setComposingText(transliterateAvro(avroBuffer.toString()), 1)
+            return
+        }
+        val ic = currentInputConnection ?: return
+        val selected = ic.getSelectedText(0)
+        if (!selected.isNullOrEmpty()) ic.commitText("", 1)
+        else ic.deleteSurroundingText(1, 0)
+    }
+
+    fun sendEnter() {
+        flushAvroBuffer()
+        val ic = currentInputConnection ?: return
+        val ei = currentEditorInfo
+        if (ei != null && (ei.imeOptions and EditorInfo.IME_MASK_ACTION) != EditorInfo.IME_ACTION_NONE) {
+            ic.performEditorAction(ei.imeOptions and EditorInfo.IME_MASK_ACTION)
+        } else {
+            ic.commitText("\\n", 1)
+        }
+    }
+
+    fun copyCurrentText(): String {
+        flushAvroBuffer()
+        val ic = currentInputConnection ?: return ""
+        val selected = ic.getSelectedText(0)?.toString()
+        val textToCopy = if (!selected.isNullOrEmpty()) selected
+        else ic.getExtractedText(ExtractedTextRequest(), 0)?.text?.toString() ?: ""
+        if (textToCopy.isNotEmpty()) {
+            val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            cm.setPrimaryClip(ClipData.newPlainText("keyboard_copy", textToCopy))
+        }
+        return textToCopy
+    }
+
+    fun pasteFromClipboard(): String {
+        flushAvroBuffer()
+        val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val pasteText = cm.primaryClip?.getItemAt(0)?.text?.toString() ?: ""
+        if (pasteText.isNotEmpty()) currentInputConnection?.commitText(pasteText, 1)
+        return pasteText
+    }
+
+    fun triggerVibration(durationMs: Long = 16L) {
+        if (!prefs.getBoolean("vibrate_on", true)) return
+        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator ?: return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(durationMs, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(durationMs)
+        }
+    }
+}`,
+      kotlin_settings: `package com.glasskeyboard.ime
+
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.os.Bundle
+import android.provider.Settings
+import android.view.Gravity
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
+
+class SettingsActivity : Activity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val root = ScrollView(this).apply {
+            setBackgroundColor(Color.parseColor("#040711"))
+        }
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(48, 64, 48, 64)
+        }
+
+        val btnEnable = Button(this).apply {
+            text = "1. Enable Crystal Glass Keyboard"
+            setOnClickListener {
+                startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS))
+            }
+        }
+        container.addView(btnEnable)
+
+        val btnSelect = Button(this).apply {
+            text = "2. Select Keyboard Input Method"
+            setOnClickListener {
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showInputMethodPicker()
+            }
+        }
+        container.addView(btnSelect)
+
+        root.addView(container)
+        setContentView(root)
+    }
+}`,
+      manifest_xml: `<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.glasskeyboard.ime">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:allowBackup="true"
+        android:label="Crystal Glass Keyboard"
+        android:supportsRtl="true">
+
+        <service
+            android:name=".GlassKeyboardService"
+            android:label="Crystal Glass Keyboard"
+            android:permission="android.permission.BIND_INPUT_METHOD"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/method" />
+        </service>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>`,
+      method_xml: `<?xml version="1.0" encoding="utf-8"?>
+<input-method xmlns:android="http://schemas.android.com/apk/res/android"
+    android:settingsActivity="com.glasskeyboard.ime.SettingsActivity"
+    android:supportsSwitchingToNextInputMethod="true">
+    <subtype
+        android:label="English (US)"
+        android:imeSubtypeLocale="en_US"
+        android:imeSubtypeMode="keyboard" />
+    <subtype
+        android:label="Avro Phonetic (Bangla)"
+        android:imeSubtypeLocale="bn_BD"
+        android:imeSubtypeMode="keyboard" />
+</input-method>`
+    };
+
+    let currentCodeKey = 'kotlin_service';
+
+    function renderCodeBlock() {
+      const pre = document.getElementById('codeDisplayBlock');
+      pre.textContent = androidSourceFiles[currentCodeKey] || '';
+    }
+
+    // ==================== INITIALIZATION & EVENT BINDINGS ====================
+    window.addEventListener('DOMContentLoaded', () => {
+      applyCssVariables();
+      updateModeIndicators();
+      renderSuggestions();
+      renderEmojiBar();
+      renderNumberBar();
+      renderMainKeyboard();
+      renderClipboardList();
+      renderStickerGrid();
+      renderThemeButtons();
+      renderCodeBlock();
+      requestAnimationFrame(drawKeyboardAnimation);
+
+      // View Tabs
+      const tabBtnLive = document.getElementById('tabBtnLive');
+      const tabBtnCode = document.getElementById('tabBtnCode');
+      const viewLive = document.getElementById('viewLiveSection');
+      const viewCode = document.getElementById('viewCodeSection');
+
+      const switchMainTab = (mode) => {
+        if (mode === 'live') {
+          viewLive.classList.remove('hidden');
+          viewCode.classList.add('hidden');
+          tabBtnLive.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow';
+          tabBtnCode.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition';
+        } else {
+          viewLive.classList.add('hidden');
+          viewCode.classList.remove('hidden');
+          tabBtnCode.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow';
+          tabBtnLive.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition';
+        }
+      };
+
+      tabBtnLive.addEventListener('click', () => switchMainTab('live'));
+      tabBtnCode.addEventListener('click', () => switchMainTab('code'));
+      document.getElementById('btnJumpToCode').addEventListener('click', () => switchMainTab('code'));
+
+      // Language / Avro Mode Switchers
+      document.getElementById('btnTopModeSwitch').addEventListener('click', toggleLanguageMode);
+      document.getElementById('btnSelectEnglish').addEventListener('click', () => {
+        if (state.inputMode !== 'EN') toggleLanguageMode();
+      });
+      document.getElementById('btnSelectAvro').addEventListener('click', () => {
+        if (state.inputMode !== 'AVRO') toggleLanguageMode();
+      });
+
+      // Menu Hub Drawer
+      const menuDrawer = document.getElementById('menuHubDrawer');
+      const toggleDrawer = () => {
+        state.drawerOpen = !state.drawerOpen;
+        menuDrawer.classList.toggle('hidden', !state.drawerOpen);
+      };
+      document.getElementById('btnToggleMenu').addEventListener('click', toggleDrawer);
+      document.getElementById('btnOpenMenuQuick').addEventListener('click', () => {
+        state.drawerOpen = true;
+        menuDrawer.classList.remove('hidden');
+      });
+      document.getElementById('btnCloseDrawer').addEventListener('click', () => {
+        state.drawerOpen = false;
+        menuDrawer.classList.add('hidden');
+      });
+
+      // Drawer Sub-Tabs
+      const drawerTabBtns = document.querySelectorAll('.drawer-tab-btn');
+      const panels = {
+        themes: document.getElementById('drawerPanelThemes'),
+        stickers: document.getElementById('drawerPanelStickers'),
+        clipboard: document.getElementById('drawerPanelClipboard'),
+        settings: document.getElementById('drawerPanelSettings')
+      };
+
+      drawerTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-drawer-tab');
+          Object.keys(panels).forEach(k => {
+            panels[k].classList.toggle('hidden', k !== target);
+          });
+          drawerTabBtns.forEach(b => {
+            const isAct = b.getAttribute('data-drawer-tab') === target;
+            b.className = isAct
+              ? 'drawer-tab-btn py-1.5 px-2 rounded-lg text-[11px] font-bold bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow flex items-center justify-center gap-1'
+              : 'drawer-tab-btn py-1.5 px-2 rounded-lg text-[11px] font-bold text-slate-300 hover:text-white flex items-center justify-center gap-1';
+          });
+        });
+      });
+
+      // Sticker Category Filter
+      document.querySelectorAll('.sticker-cat-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.activeStickerCat = btn.getAttribute('data-sticker-cat');
+          renderStickerGrid();
+          document.querySelectorAll('.sticker-cat-btn').forEach(b => {
+            const act = b.getAttribute('data-sticker-cat') === state.activeStickerCat;
+            b.className = act
+              ? 'sticker-cat-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-cyan-500/30 text-cyan-200 border border-cyan-400/40'
+              : 'sticker-cat-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white/5 text-slate-300';
+          });
+        });
+      });
+
+      // Config Toggles
+      document.getElementById('toggleLongPressSub').addEventListener('change', (e) => {
+        state.longPressSubSymbol = e.target.checked;
+        showToast(state.longPressSubSymbol ? 'Long-Press Symbols ON' : 'Long-Press Symbols OFF');
+      });
+
+      document.getElementById('toggleEmojiBar').addEventListener('change', (e) => {
+        state.showEmojiBar = e.target.checked;
+        renderEmojiBar();
+      });
+
+      document.getElementById('toggleNumberBar').addEventListener('change', (e) => {
+        state.showNumberBar = e.target.checked;
+        renderNumberBar();
+      });
+
+      document.getElementById('toggleCtrlButton').addEventListener('change', (e) => {
+        state.showCtrlKeys = e.target.checked;
+        renderMainKeyboard();
+      });
+
+      document.getElementById('toggleHaptic').addEventListener('change', (e) => {
+        state.hapticEnabled = e.target.checked;
+        document.getElementById('statusBadge').textContent = state.hapticEnabled ? 'Haptics On' : 'Haptics Off';
+      });
+
+      document.getElementById('toggleTouchRipple').addEventListener('change', (e) => {
+        state.touchRippleEnabled = e.target.checked;
+      });
+
+      // Pro Sliders
+      document.getElementById('rangeGlassBlur').addEventListener('input', (e) => {
+        state.glassBlurPx = Number(e.target.value);
+        applyCssVariables();
+      });
+      document.getElementById('rangeGlassAlpha').addEventListener('input', (e) => {
+        state.glassAlphaPct = Number(e.target.value);
+        applyCssVariables();
+      });
+      document.getElementById('rangeAnimSpeed').addEventListener('input', (e) => {
+        state.animSpeed = Number(e.target.value);
+      });
+      document.getElementById('rangeKeyRadius').addEventListener('input', (e) => {
+        state.keyRadiusPx = Number(e.target.value);
+        applyCssVariables();
+      });
+      document.getElementById('rangeKeyHeight').addEventListener('input', (e) => {
+        state.keyHeightPx = Number(e.target.value);
+        applyCssVariables();
+        renderNumberBar();
+        renderMainKeyboard();
+      });
+
+      // Custom Emoji & Number Row Save
+      document.getElementById('btnSaveCustomEmojis').addEventListener('click', () => {
+        const raw = document.getElementById('inputCustomEmojis').value;
+        const parsed = raw.split(',').map(s => s.trim()).filter(Boolean);
+        if (parsed.length > 0) {
+          state.emojis = parsed;
+          renderEmojiBar();
+          showToast('Emoji Bar Updated');
+        }
+      });
+
+      const subSymbolsDefault = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')'];
+      document.getElementById('btnSaveCustomNumbers').addEventListener('click', () => {
+        const raw = document.getElementById('inputCustomNumbers').value;
+        const parsed = raw.split(',').map(s => s.trim()).filter(Boolean);
+        if (parsed.length > 0) {
+          state.numbers = parsed.slice(0, 10).map((m, i) => ({ main: m, sub: subSymbolsDefault[i] || '' }));
+          renderNumberBar();
+          showToast('Number Row Updated');
+        }
+      });
+
+      // Add Clipboard Item
+      document.getElementById('btnAddClip').addEventListener('click', () => {
+        const inp = document.getElementById('inputNewClip');
+        const txt = inp.value.trim();
+        if (txt) {
+          state.clipboard.unshift({ id: 'clip_' + Date.now(), text: txt, pinned: true });
+          inp.value = '';
+          renderClipboardList();
+          showToast('Pinned to Clipboard');
+        }
+      });
+
+      // Clear Editor & Dismiss Sticker
+      document.getElementById('btnClearEditor').addEventListener('click', () => {
+        state.avroBuffer = '';
+        updateAvroBadge();
+        editor.value = '';
+      });
+
+      document.getElementById('btnDismissSticker').addEventListener('click', () => {
+        document.getElementById('sentStickerPreview').classList.add('hidden');
+      });
+
+      // Code Viewer Tabs & Copy
+      document.querySelectorAll('.code-file-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentCodeKey = btn.getAttribute('data-code-file');
+          renderCodeBlock();
+          document.querySelectorAll('.code-file-tab').forEach(b => {
+            const act = b.getAttribute('data-code-file') === currentCodeKey;
+            b.className = act
+              ? 'code-file-tab px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-500 text-slate-950'
+              : 'code-file-tab px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-200';
+          });
+        });
+      });
+
+      document.getElementById('btnCopyActiveCode').addEventListener('click', () => {
+        const codeTxt = androidSourceFiles[currentCodeKey] || '';
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(codeTxt);
+          }
+        } catch (e) {}
+        const b = document.getElementById('btnCopyActiveCode');
+        b.textContent = '✅ Code Copied!';
+        setTimeout(() => {
+          b.textContent = '📋 Copy Current File Code';
+        }, 1800);
+      });
+    });
+  </script>
+</body>
+</html>
