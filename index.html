@@ -8,12 +8,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&family=Hind+Siliguri:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --kb-blur: 18px;
-      --kb-alpha: 0.20;
-      --kb-radius: 13px;
-      --kb-border-alpha: 0.42;
+      --kb-blur: 20px;
+      --kb-alpha: 0.28;
+      --kb-radius: 14px;
+      --kb-border-alpha: 0.52;
       --kb-key-height: 50px;
-      --kb-glow: rgba(56, 189, 248, 0.55);
+      --kb-main-font: 17px;
+      --kb-sub-font: 10px;
+      --kb-scale: 1;
+      --kb-glow: rgba(56, 189, 248, 0.65);
     }
     * {
       box-sizing: border-box;
@@ -32,26 +35,26 @@
       -webkit-user-select: none !important;
       -webkit-touch-callout: none !important;
     }
-    /* Ultra-pure Optical Crystal Glass Key */
+    /* Ultra-pure Optical Crystal Glass Key (Upgraded Default Density) */
     .glass-key {
       position: relative;
       background: linear-gradient(
         160deg,
-        rgba(255, 255, 255, calc(var(--kb-alpha) + 0.10)) 0%,
-        rgba(255, 255, 255, calc(var(--kb-alpha) * 0.35)) 55%,
-        rgba(255, 255, 255, calc(var(--kb-alpha) * 0.75)) 100%
+        rgba(255, 255, 255, calc(var(--kb-alpha) + 0.14)) 0%,
+        rgba(255, 255, 255, calc(var(--kb-alpha) * 0.45)) 55%,
+        rgba(255, 255, 255, calc(var(--kb-alpha) * 0.85)) 100%
       );
-      backdrop-filter: blur(var(--kb-blur)) saturate(200%);
-      -webkit-backdrop-filter: blur(var(--kb-blur)) saturate(200%);
+      backdrop-filter: blur(var(--kb-blur)) saturate(220%);
+      -webkit-backdrop-filter: blur(var(--kb-blur)) saturate(220%);
       border-radius: var(--kb-radius);
       border: 1px solid rgba(255, 255, 255, var(--kb-border-alpha));
-      border-top: 1.5px solid rgba(255, 255, 255, calc(var(--kb-border-alpha) + 0.28));
-      border-bottom: 1.5px solid rgba(0, 0, 0, 0.45);
+      border-top: 1.5px solid rgba(255, 255, 255, calc(var(--kb-border-alpha) + 0.32));
+      border-bottom: 1.5px solid rgba(0, 0, 0, 0.50);
       box-shadow:
-        0 6px 16px rgba(0, 0, 0, 0.34),
-        inset 0 1px 2px rgba(255, 255, 255, 0.60),
-        inset 0 -2px 6px rgba(255, 255, 255, 0.10);
-      transition: transform 0.08s cubic-bezier(0.2, 0.9, 0.3, 1), background 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+        0 6px 18px rgba(0, 0, 0, 0.38),
+        inset 0 1.5px 3px rgba(255, 255, 255, 0.68),
+        inset 0 -2px 6px rgba(255, 255, 255, 0.14);
+      transition: transform 0.08s cubic-bezier(0.2, 0.9, 0.3, 1), background 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease, height 0.12s ease;
       overflow: hidden;
       cursor: pointer;
       touch-action: manipulation;
@@ -63,64 +66,67 @@
       left: -35%;
       width: 70%;
       height: 44%;
-      background: linear-gradient(180deg, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0) 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0) 100%);
       transform: skewX(-24deg);
       pointer-events: none;
     }
     .glass-key.active-press, .glass-key:active {
       transform: scale(0.92) translateY(1.5px);
-      background: linear-gradient(145deg, rgba(56, 189, 248, 0.44) 0%, rgba(99, 102, 241, 0.30) 100%);
-      border-color: rgba(186, 230, 253, 0.95);
+      background: linear-gradient(145deg, rgba(56, 189, 248, 0.50) 0%, rgba(99, 102, 241, 0.38) 100%);
+      border-color: rgba(186, 230, 253, 0.98);
       box-shadow:
-        0 0 22px var(--kb-glow),
-        inset 0 0 12px rgba(255, 255, 255, 0.72);
+        0 0 24px var(--kb-glow),
+        inset 0 0 14px rgba(255, 255, 255, 0.78);
     }
     .glass-key-special {
       background: linear-gradient(
         160deg,
-        rgba(148, 163, 184, calc(var(--kb-alpha) + 0.08)) 0%,
-        rgba(30, 41, 59, calc(var(--kb-alpha) + 0.05)) 100%
+        rgba(148, 163, 184, calc(var(--kb-alpha) + 0.10)) 0%,
+        rgba(30, 41, 59, calc(var(--kb-alpha) + 0.08)) 100%
       );
     }
     .glass-key-enter {
-      background: linear-gradient(135deg, rgba(6, 182, 212, 0.68) 0%, rgba(99, 102, 241, 0.72) 50%, rgba(217, 70, 239, 0.68) 100%);
-      border-top: 1.5px solid rgba(255, 255, 255, 0.88);
-      border-color: rgba(165, 243, 252, 0.82);
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.72) 0%, rgba(99, 102, 241, 0.76) 50%, rgba(217, 70, 239, 0.72) 100%);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.90);
+      border-color: rgba(165, 243, 252, 0.85);
       box-shadow:
-        0 6px 22px rgba(56, 189, 248, 0.45),
-        inset 0 1px 4px rgba(255, 255, 255, 0.80);
+        0 6px 22px rgba(56, 189, 248, 0.48),
+        inset 0 1px 4px rgba(255, 255, 255, 0.82);
     }
     .glass-key-backspace {
-      background: linear-gradient(145deg, rgba(244, 63, 94, 0.34) 0%, rgba(136, 19, 55, 0.22) 100%);
-      border-color: rgba(253, 164, 175, 0.52);
+      background: linear-gradient(145deg, rgba(244, 63, 94, 0.38) 0%, rgba(136, 19, 55, 0.26) 100%);
+      border-color: rgba(253, 164, 175, 0.56);
     }
     .key-main-char {
       color: #ffffff;
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.88), 0 0 12px rgba(255, 255, 255, 0.32);
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.90), 0 0 12px rgba(255, 255, 255, 0.36);
       font-weight: 700;
+      font-size: var(--kb-main-font);
       line-height: 1;
       letter-spacing: 0.01em;
+      transition: font-size 0.1s ease;
     }
     .key-sub-char {
-      color: rgba(226, 232, 240, 0.88);
+      color: rgba(226, 232, 240, 0.92);
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95);
       font-weight: 600;
-      font-size: 10px;
+      font-size: var(--kb-sub-font);
       line-height: 1;
+      transition: font-size 0.1s ease;
     }
     .glass-drawer {
-      background: linear-gradient(165deg, rgba(15, 23, 42, 0.82) 0%, rgba(9, 13, 28, 0.88) 100%);
-      backdrop-filter: blur(26px) saturate(200%);
-      -webkit-backdrop-filter: blur(26px) saturate(200%);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+      background: linear-gradient(165deg, rgba(15, 23, 42, 0.86) 0%, rgba(9, 13, 28, 0.92) 100%);
+      backdrop-filter: blur(28px) saturate(210%);
+      -webkit-backdrop-filter: blur(28px) saturate(210%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.68), inset 0 1px 1px rgba(255, 255, 255, 0.28);
     }
     .thin-scroll::-webkit-scrollbar {
       height: 4px;
       width: 4px;
     }
     .thin-scroll::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.32);
       border-radius: 9999px;
     }
     /* Custom Toggle Switch */
@@ -163,6 +169,23 @@
     input:checked + .ios-slider:before {
       transform: translateX(18px);
     }
+    /* Square Box Cards for Clipboard & Settings */
+    .square-box-card {
+      aspect-ratio: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-radius: 14px;
+      background: linear-gradient(155deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 100%);
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.18);
+      padding: 10px;
+      transition: all 0.15s ease;
+    }
+    .square-box-card:hover {
+      border-color: rgba(56, 189, 248, 0.55);
+      background: linear-gradient(155deg, rgba(56,189,248,0.14) 0%, rgba(99,102,241,0.08) 100%);
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col bg-[#040711] text-slate-100">
@@ -177,9 +200,9 @@
         <div>
           <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
             Crystal Glass Keyboard
-            <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/30">Ultra Pro v3.0</span>
+            <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/30">Ultra Pro v4.0</span>
           </h1>
-          <p class="text-xs text-slate-400">Pure Glass Keys • 15 Live Shader Animations • English + Gboard Avro Phonetic • Clean Layout</p>
+          <p class="text-xs text-slate-400">Pure Glass Keys • 20 Extreme Shaders • Hold Space for Avro • Smart Word-Select Backspace</p>
         </div>
       </div>
 
@@ -220,7 +243,7 @@
                 </div>
                 <div class="flex items-center gap-1.5">
                   <span id="statusBadge" class="text-[11px] px-2 py-0.5 rounded-full bg-white/10 text-cyan-300 font-medium">
-                    Haptics On
+                    Vibe: 90%
                   </span>
                   <button id="btnClearEditor" type="button" class="text-[11px] px-2.5 py-0.5 rounded-md bg-rose-500/20 text-rose-300 border border-rose-400/30 hover:bg-rose-500/30 font-medium">
                     Clear
@@ -230,15 +253,15 @@
 
               <!-- Textarea & Live Composing Buffer Badge -->
               <div class="relative">
-                <textarea id="typingOutput" rows="3" placeholder="Type with pure glass keys... Switch to 'Avro' on the keyboard to type phonetic Bangla (e.g. ami -> আমি)..." class="w-full rounded-xl bg-slate-950/90 border border-cyan-400/30 focus:border-cyan-400 focus:outline-none p-3 text-sm sm:text-base text-white placeholder-slate-500 resize-none shadow-inner"></textarea>
+                <textarea id="typingOutput" rows="3" placeholder="টাইপ করুন... স্পেস বাটন চেপে ধরে ভাষা পরিবর্তন করুন (English ⇄ অভ্র ফনেটিক)..." class="w-full rounded-xl bg-slate-950/90 border border-cyan-400/30 focus:border-cyan-400 focus:outline-none p-3 text-sm sm:text-base text-white placeholder-slate-500 resize-none shadow-inner selection:bg-rose-500/60 selection:text-white"></textarea>
 
                 <!-- Avro Composing Floating Pill -->
-                <div id="avroBufferBadge" class="hidden absolute top-2 right-2 px-2.5 py-0.5 rounded-md bg-indigo-600/90 border border-indigo-300/50 text-white font-mono text-xs shadow-lg">
+                <div id="avroBufferBadge" class="hidden absolute top-2 right-2 px-2.5 py-0.5 rounded-md bg-indigo-600/90 border border-indigo-300/50 text-white font-mono text-xs shadow-lg pointer-events-none">
                   <span id="avroRawText"></span> → <span id="avroPreviewText" class="font-bold text-cyan-200"></span>
                 </div>
 
                 <!-- Toast Notification -->
-                <div id="toastBanner" class="hidden absolute bottom-2.5 right-2.5 px-3 py-1 rounded-lg bg-cyan-400 text-slate-950 font-bold text-xs shadow-lg">
+                <div id="toastBanner" class="hidden absolute bottom-2.5 right-2.5 px-3 py-1 rounded-lg bg-cyan-400 text-slate-950 font-bold text-xs shadow-lg z-30">
                   Copied!
                 </div>
               </div>
@@ -252,20 +275,31 @@
                 <button id="btnDismissSticker" type="button" class="text-xs text-slate-400 hover:text-white px-1.5">✕</button>
               </div>
 
-              <!-- Smart Word / Avro Phonetic Candidate Strip -->
+              <!-- Smart Word / Avro Phonetic Candidate Strip (Scrollable Multi-Suggestion Bar) -->
               <div id="suggestionStrip" class="mt-2 flex items-center gap-1.5 overflow-x-auto thin-scroll py-1">
               </div>
             </div>
 
+            <!-- Minimized Keyboard Bar (Visible only when keyboard is minimized) -->
+            <div id="minimizedKeyboardBar" class="hidden bg-slate-900/95 border-t border-white/15 px-3.5 py-2.5 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping"></span>
+                <span class="text-xs font-bold text-cyan-200">Crystal Keyboard Minimized</span>
+              </div>
+              <button id="btnRestoreKeyboard" type="button" class="px-3 py-1 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-white text-xs font-bold shadow-lg">
+                🔼 ওপেন কিবোর্ড (Expand)
+              </button>
+            </div>
+
             <!-- ==================== THE CRYSTAL GLASS KEYBOARD ==================== -->
-            <div id="keyboardRoot" class="relative w-full select-none no-select-zone overflow-hidden" style="min-height: 320px;">
+            <div id="keyboardRoot" class="relative w-full select-none no-select-zone overflow-hidden transition-all duration-200 origin-bottom" style="min-height: 310px;">
               <!-- High-FPS Under-Keyboard Animated Shader Canvas -->
               <canvas id="kbAnimCanvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
 
               <!-- Keyboard Foreground Container -->
-              <div class="relative z-10 flex flex-col justify-between p-1.5 sm:p-2 gap-1.5">
+              <div id="kbForegroundWrapper" class="relative z-10 flex flex-col justify-between p-1.5 sm:p-2 gap-1.5 transition-transform duration-150 origin-top">
 
-                <!-- Top Bar: Sleek Menu Trigger + Custom Emoji Bar -->
+                <!-- Top Bar: Sleek Menu Trigger + Custom Emoji Bar + Minimize Button -->
                 <div class="flex items-center gap-1.5">
                   <button id="btnToggleMenu" type="button" title="Open Keyboard Hub (Themes, Stickers, Clipboard, Config)" class="glass-key glass-key-special h-9 w-10 rounded-xl flex items-center justify-center shrink-0">
                     <svg class="w-5 h-5 text-cyan-300" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
@@ -286,6 +320,11 @@
                   <div id="emojiBarHiddenHint" class="hidden flex-1 text-right pr-2">
                     <span class="text-[11px] text-slate-300/75">Emoji Bar Hidden</span>
                   </div>
+
+                  <!-- Minimize Keyboard Button -->
+                  <button id="btnMinimizeKeyboard" type="button" title="Minimize Keyboard" class="glass-key glass-key-special h-9 w-9 rounded-xl flex items-center justify-center shrink-0 text-cyan-200 text-xs font-bold">
+                    🔽
+                  </button>
                 </div>
 
                 <!-- ==================== REDESIGNED PREMIUM GLASS MENU HUB ==================== -->
@@ -311,17 +350,17 @@
                     </button>
                   </div>
 
-                  <!-- TAB 1: 15 LIVE ANIMATED THEMES -->
-                  <div id="drawerPanelThemes" class="space-y-2.5 text-xs max-h-56 overflow-y-auto thin-scroll pr-1">
+                  <!-- TAB 1: 20 LIVE ANIMATED THEMES -->
+                  <div id="drawerPanelThemes" class="space-y-2.5 text-xs max-h-60 overflow-y-auto thin-scroll pr-1">
                     <div class="flex items-center justify-between">
-                      <span class="text-[11px] font-semibold text-cyan-300">15 Live Under-Glass Shader Animations</span>
+                      <span class="text-[11px] font-semibold text-cyan-300">20 Extreme Under-Glass Shader Animations</span>
                       <span id="activeThemeNameBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-slate-200">Cyber Aurora</span>
                     </div>
                     <div id="themeButtonsGrid" class="grid grid-cols-3 gap-1.5"></div>
                   </div>
 
                   <!-- TAB 2: 48+ RICH STICKER PACKS WITH CATEGORIES -->
-                  <div id="drawerPanelStickers" class="hidden space-y-2 max-h-56 overflow-y-auto thin-scroll pr-1">
+                  <div id="drawerPanelStickers" class="hidden space-y-2 max-h-60 overflow-y-auto thin-scroll pr-1">
                     <div class="flex items-center gap-1 overflow-x-auto thin-scroll pb-1">
                       <button type="button" data-sticker-cat="all" class="sticker-cat-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-cyan-500/30 text-cyan-200 border border-cyan-400/40">All (48)</button>
                       <button type="button" data-sticker-cat="reactions" class="sticker-cat-btn px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white/5 text-slate-300">🔥 Reactions</button>
@@ -332,114 +371,156 @@
                     <div id="stickerGridContainer" class="grid grid-cols-4 gap-1.5"></div>
                   </div>
 
-                  <!-- TAB 3: CLIPBOARD & PIN MANAGER -->
-                  <div id="drawerPanelClipboard" class="hidden space-y-2 text-xs max-h-56 overflow-y-auto thin-scroll pr-1">
+                  <!-- TAB 3: CLIPBOARD & PIN MANAGER (SQUARE BOX GRID) -->
+                  <div id="drawerPanelClipboard" class="hidden space-y-2.5 text-xs max-h-60 overflow-y-auto thin-scroll pr-1">
                     <div class="flex gap-1.5">
-                      <input id="inputNewClip" type="text" placeholder="Save or pin a new clip..." class="flex-1 rounded-xl bg-slate-900/90 border border-white/20 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-cyan-400" />
+                      <input id="inputNewClip" type="text" placeholder="নতুন ক্লিপ সেভ বা পিন করুন..." class="flex-1 rounded-xl bg-slate-900/90 border border-white/20 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-cyan-400" />
                       <button id="btnAddClip" type="button" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-bold">+ Pin</button>
                     </div>
-                    <div id="clipboardListContainer" class="space-y-1.5"></div>
+                    <!-- 4-Corner Square Box Grid for Clips -->
+                    <div id="clipboardListContainer" class="grid grid-cols-3 gap-2"></div>
                   </div>
 
-                  <!-- TAB 4: PRO CONFIGURATION & SLIDERS -->
-                  <div id="drawerPanelSettings" class="hidden space-y-2.5 text-xs max-h-56 overflow-y-auto thin-scroll pr-1">
-                    <!-- Toggles Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                      <div class="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10">
-                        <div>
-                          <p class="font-semibold text-white text-[11px]">Long-Press Sub-Symbol</p>
-                          <p class="text-[10px] text-slate-400">Hold key for bottom/top symbol</p>
+                  <!-- TAB 4: PRO CONFIGURATION & SLIDERS (SQUARE BOX CARDS) -->
+                  <div id="drawerPanelSettings" class="hidden space-y-3 text-xs max-h-64 overflow-y-auto thin-scroll pr-1">
+                    <!-- Square Box Toggles Grid -->
+                    <div class="grid grid-cols-3 gap-2">
+                      <div class="square-box-card">
+                        <div class="flex items-center justify-between">
+                          <span class="text-base">🔣</span>
+                          <label class="ios-switch">
+                            <input id="toggleLongPressSub" type="checkbox" checked />
+                            <span class="ios-slider"></span>
+                          </label>
                         </div>
-                        <label class="ios-switch">
-                          <input id="toggleLongPressSub" type="checkbox" checked />
-                          <span class="ios-slider"></span>
-                        </label>
+                        <div>
+                          <p class="font-bold text-white text-[11px] leading-tight">Sub-Symbol</p>
+                          <p class="text-[9px] text-slate-400 mt-0.5">Hold for symbol</p>
+                        </div>
                       </div>
 
-                      <div class="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10">
-                        <div>
-                          <p class="font-semibold text-white text-[11px]">Emoji Bar Row</p>
-                          <p class="text-[10px] text-slate-400">Show top quick emoji bar</p>
+                      <div class="square-box-card">
+                        <div class="flex items-center justify-between">
+                          <span class="text-base">😍</span>
+                          <label class="ios-switch">
+                            <input id="toggleEmojiBar" type="checkbox" checked />
+                            <span class="ios-slider"></span>
+                          </label>
                         </div>
-                        <label class="ios-switch">
-                          <input id="toggleEmojiBar" type="checkbox" checked />
-                          <span class="ios-slider"></span>
-                        </label>
+                        <div>
+                          <p class="font-bold text-white text-[11px] leading-tight">Emoji Bar</p>
+                          <p class="text-[9px] text-slate-400 mt-0.5">Top emoji row</p>
+                        </div>
                       </div>
 
-                      <div class="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10">
-                        <div>
-                          <p class="font-semibold text-white text-[11px]">Number Row (1–0)</p>
-                          <p class="text-[10px] text-slate-400">Show dedicated number bar</p>
+                      <div class="square-box-card">
+                        <div class="flex items-center justify-between">
+                          <span class="text-base">🔢</span>
+                          <label class="ios-switch">
+                            <input id="toggleNumberBar" type="checkbox" checked />
+                            <span class="ios-slider"></span>
+                          </label>
                         </div>
-                        <label class="ios-switch">
-                          <input id="toggleNumberBar" type="checkbox" checked />
-                          <span class="ios-slider"></span>
-                        </label>
+                        <div>
+                          <p class="font-bold text-white text-[11px] leading-tight">Number Row</p>
+                          <p class="text-[9px] text-slate-400 mt-0.5">1–0 top keys</p>
+                        </div>
                       </div>
 
-                      <div class="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10">
-                        <div>
-                          <p class="font-semibold text-white text-[11px]">Ctrl & Ctrl+C Keys</p>
-                          <p class="text-[10px] text-slate-400">Show shortcut keys on bottom row</p>
+                      <div class="square-box-card">
+                        <div class="flex items-center justify-between">
+                          <span class="text-base">📳</span>
+                          <label class="ios-switch">
+                            <input id="toggleHaptic" type="checkbox" checked />
+                            <span class="ios-slider"></span>
+                          </label>
                         </div>
-                        <label class="ios-switch">
-                          <input id="toggleCtrlButton" type="checkbox" checked />
-                          <span class="ios-slider"></span>
-                        </label>
+                        <div>
+                          <p class="font-bold text-white text-[11px] leading-tight">Heavy Vibe</p>
+                          <p class="text-[9px] text-slate-400 mt-0.5">Strong haptics</p>
+                        </div>
                       </div>
 
-                      <div class="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10">
-                        <div>
-                          <p class="font-semibold text-white text-[11px]">Haptic Vibration & Click</p>
-                          <p class="text-[10px] text-slate-400">Tactile response on key press</p>
+                      <div class="square-box-card">
+                        <div class="flex items-center justify-between">
+                          <span class="text-base">💧</span>
+                          <label class="ios-switch">
+                            <input id="toggleTouchRipple" type="checkbox" checked />
+                            <span class="ios-slider"></span>
+                          </label>
                         </div>
-                        <label class="ios-switch">
-                          <input id="toggleHaptic" type="checkbox" checked />
-                          <span class="ios-slider"></span>
-                        </label>
+                        <div>
+                          <p class="font-bold text-white text-[11px] leading-tight">Touch Ripple</p>
+                          <p class="text-[9px] text-slate-400 mt-0.5">Wave on tap</p>
+                        </div>
                       </div>
 
-                      <div class="flex items-center justify-between p-2 rounded-xl bg-white/5 border border-white/10">
-                        <div>
-                          <p class="font-semibold text-white text-[11px]">Touch Ripple Burst</p>
-                          <p class="text-[10px] text-slate-400">Interactive light wave on tap</p>
+                      <button id="btnQuickMinimizeFromMenu" type="button" class="square-box-card text-left cursor-pointer">
+                        <div class="flex items-center justify-between w-full">
+                          <span class="text-base">🔽</span>
+                          <span class="px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-[9px] font-bold">Action</span>
                         </div>
-                        <label class="ios-switch">
-                          <input id="toggleTouchRipple" type="checkbox" checked />
-                          <span class="ios-slider"></span>
-                        </label>
+                        <div>
+                          <p class="font-bold text-cyan-200 text-[11px] leading-tight">Minimize KB</p>
+                          <p class="text-[9px] text-slate-400 mt-0.5">Fold keyboard</p>
+                        </div>
+                      </button>
+                    </div>
+
+                    <!-- Square Box Sliders Grid -->
+                    <div class="grid grid-cols-2 gap-2">
+                      <div class="p-2.5 rounded-xl bg-white/5 border border-white/15 flex flex-col justify-between gap-1.5">
+                        <div class="flex items-center justify-between">
+                          <span class="text-[11px] font-bold text-cyan-300">📳 Vibe Power</span>
+                          <span id="valVibePower" class="text-[10px] font-mono text-white">90%</span>
+                        </div>
+                        <input id="rangeVibrationPower" type="range" min="10" max="100" value="90" class="w-full accent-cyan-400" />
+                      </div>
+
+                      <div class="p-2.5 rounded-xl bg-white/5 border border-white/15 flex flex-col justify-between gap-1.5">
+                        <div class="flex items-center justify-between">
+                          <span class="text-[11px] font-bold text-cyan-300">💎 কাচের ঘনত্ব</span>
+                          <span id="valGlassDensity" class="text-[10px] font-mono text-white">28%</span>
+                        </div>
+                        <input id="rangeGlassAlpha" type="range" min="8" max="65" value="28" class="w-full accent-cyan-400" />
+                      </div>
+
+                      <div class="p-2.5 rounded-xl bg-white/5 border border-white/15 flex flex-col justify-between gap-1.5">
+                        <div class="flex items-center justify-between">
+                          <span class="text-[11px] font-bold text-cyan-300">🔠 বাটন ও ফন্ট সাইজ</span>
+                          <span id="valKeyHeight" class="text-[10px] font-mono text-white">50px</span>
+                        </div>
+                        <input id="rangeKeyHeight" type="range" min="36" max="64" value="50" class="w-full accent-cyan-400" />
+                      </div>
+
+                      <div class="p-2.5 rounded-xl bg-white/5 border border-white/15 flex flex-col justify-between gap-1.5">
+                        <div class="flex items-center justify-between">
+                          <span class="text-[11px] font-bold text-cyan-300">📐 কিবোর্ড জুম সাইজ</span>
+                          <span id="valKbScale" class="text-[10px] font-mono text-white">100%</span>
+                        </div>
+                        <input id="rangeKbScale" type="range" min="75" max="115" value="100" class="w-full accent-cyan-400" />
+                      </div>
+
+                      <div class="p-2.5 rounded-xl bg-white/5 border border-white/15 flex flex-col justify-between gap-1.5">
+                        <div class="flex items-center justify-between">
+                          <span class="text-[11px] font-bold text-cyan-300">❄️ Frost Blur</span>
+                          <span id="valGlassBlur" class="text-[10px] font-mono text-white">20px</span>
+                        </div>
+                        <input id="rangeGlassBlur" type="range" min="4" max="32" value="20" class="w-full accent-cyan-400" />
+                      </div>
+
+                      <div class="p-2.5 rounded-xl bg-white/5 border border-white/15 flex flex-col justify-between gap-1.5">
+                        <div class="flex items-center justify-between">
+                          <span class="text-[11px] font-bold text-cyan-300">⚡ Anim Speed</span>
+                          <span id="valAnimSpeed" class="text-[10px] font-mono text-white">10x</span>
+                        </div>
+                        <input id="rangeAnimSpeed" type="range" min="2" max="25" value="10" class="w-full accent-cyan-400" />
                       </div>
                     </div>
 
-                    <!-- Pro Hardware & Optical Glass Sliders -->
-                    <div class="p-2.5 rounded-xl bg-white/5 border border-white/10 space-y-2">
-                      <p class="text-[11px] font-bold text-cyan-300 uppercase tracking-wider">Optical Glass & Animation Tuning</p>
-
-                      <div class="flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-slate-300">Glass Frost Blur</span>
-                        <input id="rangeGlassBlur" type="range" min="4" max="28" value="18" class="w-32 accent-cyan-400" />
-                      </div>
-
-                      <div class="flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-slate-300">Crystal Transparency</span>
-                        <input id="rangeGlassAlpha" type="range" min="8" max="45" value="20" class="w-32 accent-cyan-400" />
-                      </div>
-
-                      <div class="flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-slate-300">Animation Speed</span>
-                        <input id="rangeAnimSpeed" type="range" min="2" max="25" value="10" class="w-32 accent-cyan-400" />
-                      </div>
-
-                      <div class="flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-slate-300">Key Corner Radius</span>
-                        <input id="rangeKeyRadius" type="range" min="6" max="22" value="13" class="w-32 accent-cyan-400" />
-                      </div>
-
-                      <div class="flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-slate-300">Key Height</span>
-                        <input id="rangeKeyHeight" type="range" min="42" max="58" value="50" class="w-32 accent-cyan-400" />
-                      </div>
+                    <div class="p-2.5 rounded-xl bg-white/5 border border-white/15 flex items-center justify-between gap-2">
+                      <span class="text-[11px] font-bold text-cyan-300">🔲 Key Corner Radius</span>
+                      <input id="rangeKeyRadius" type="range" min="6" max="24" value="14" class="w-36 accent-cyan-400" />
                     </div>
 
                     <!-- Custom Emoji & Number Row Editors -->
@@ -481,14 +562,14 @@
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               🎛️ Live Keyboard Control Deck
             </h2>
-            <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 font-semibold">v3.0 Pro Engine</span>
+            <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 font-semibold">v4.0 Ultra Engine</span>
           </div>
 
           <!-- Language / Input Method Switcher (English vs Gboard Avro Phonetic) -->
           <div class="p-3 rounded-xl bg-slate-950/90 border border-white/10 space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-cyan-300">⌨️ Input Method (Gboard Style)</span>
-              <span id="sideLangBadge" class="text-[11px] text-slate-400">Default: English (US)</span>
+              <span class="text-xs font-bold text-cyan-300">⌨️ Input Method (Hold Spacebar to Switch)</span>
+              <span id="sideLangBadge" class="text-[11px] text-slate-400">Active: English (US)</span>
             </div>
             <div class="grid grid-cols-2 gap-2">
               <button id="btnSelectEnglish" type="button" class="py-2 px-3 rounded-xl font-bold text-xs border border-cyan-400 bg-cyan-500/25 text-white shadow">
@@ -499,14 +580,14 @@
               </button>
             </div>
             <p class="text-[11px] text-slate-400 leading-relaxed">
-              In <strong>Avro Phonetic</strong> mode, the keyboard stays English QWERTY and converts your English typing into Bangla phonetically in real time (e.g., type <code class="text-cyan-300">ami banglay gan gai</code> → <span class="text-white">আমি বাংলায় গান গাই</span>) just like Gboard!
+              <strong>স্পেস বাটন চেপে ধরলে</strong> সরাসরি ভাষা পরিবর্তন হয়ে অভ্র ফনেটিক বা ইংরেজিতে চলে যাবে। অভ্র মোডে টাইপ করার সাথে সাথে সরাসরি টেক্সট বক্সে উঠবে এবং সাজেশন বারে ১ নম্বরে বাংলা, ২ নম্বরে ইংরেজি এবং ৩ নম্বরে সঠিক বানানসহ অসংখ্য সাজেশন দেখাবে!
             </p>
           </div>
 
-          <!-- 15 Live Under-Glass Animations Selector -->
+          <!-- 20 Live Under-Glass Animations Selector -->
           <div class="space-y-1.5">
             <div class="flex items-center justify-between">
-              <label class="text-xs font-bold text-cyan-300">🌈 15 Live Under-Keyboard Animations:</label>
+              <label class="text-xs font-bold text-cyan-300">🌈 20 Extreme Under-Keyboard Animations:</label>
               <span class="text-[10px] text-slate-400">Tap any preset</span>
             </div>
             <div class="grid grid-cols-3 gap-1.5 max-h-56 overflow-y-auto thin-scroll pr-1" id="externalThemeSwitcher"></div>
@@ -514,11 +595,12 @@
 
           <!-- Clean Key Behavior Summary -->
           <div class="p-3 rounded-xl bg-slate-950/80 border border-white/10 space-y-1.5 text-xs">
-            <p class="font-bold text-white">✨ Clean Glass Keys & Hidden Power Shortcuts</p>
+            <p class="font-bold text-white">✨ v4.0 নতুন পাওয়ার ফিচারসমূহ</p>
             <ul class="text-[11px] text-slate-300 space-y-1 list-disc pl-4">
-              <li><strong>Zero Clutter Labels:</strong> No "Copy", "Paste", "Clear", or "Send" text printed on the keys.</li>
-              <li><strong>Hold <kbd class="px-1 py-0.5 rounded bg-white/10 text-cyan-300">V</kbd> to Paste:</strong> Works silently at all times without cluttering the V key.</li>
-              <li><strong>Hold Any Key for Sub-Symbol:</strong> Holding <kbd class="px-1 py-0.5 rounded bg-white/10 text-cyan-300">Q</kbd> types <kbd class="px-1 py-0.5 rounded bg-white/10 text-cyan-300">!</kbd>, holding <kbd class="px-1 py-0.5 rounded bg-white/10 text-cyan-300">W</kbd> types <kbd class="px-1 py-0.5 rounded bg-white/10 text-cyan-300">@</kbd> (configurable in Menu).</li>
+              <li><strong>ক্লিন বটম রো:</strong> Ctrl, Ctrl+C এবং আলাদা ভাষা বাটন সরিয়ে শুধুমাত্র ক্লিন স্পেসবার রাখা হয়েছে।</li>
+              <li><strong>স্পেসবার হোল্ড = ভাষা পরিবর্তন:</strong> স্পেস বাটনে চাপ দিয়ে ধরে রাখলে English ⇄ অভ্র ফনেটিক পরিবর্তন হবে।</li>
+              <li><strong>স্মার্ট ব্যাকস্পেস ওয়ার্ড সিলেক্ট:</strong> ব্যাকস্পেস চেপে ধরে রাখলে একটি একটি করে শব্দ (Word) সিলেক্ট হতে থাকবে; সম্পূর্ণ সিলেক্ট হওয়ার পর আরেকটি ট্যাপ করলেই পুরো সিলেক্টেড অংশ কেটে যাবে!</li>
+              <li><strong>পাওয়ার ভাইব্রেশন ও ডায়নামিক ফন্ট:</strong> মেনু থেকে ভাইব্রেশনের মাত্রা, কাচের ঘনত্ব, বাটন বড়-ছোট (সংখ্যা ও অক্ষরের ফন্ট সাইজ অটো-স্কেলিং সহ) এবং কিবোর্ড মিনিমাইজ করা যাবে।</li>
             </ul>
           </div>
 
@@ -540,8 +622,8 @@
       <div class="rounded-2xl bg-slate-900 border border-white/10 p-4 space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <h2 class="text-base sm:text-lg font-bold text-white">📦 Complete Android System-Wide Keyboard Source Code (v3.0)</h2>
-            <p class="text-xs text-slate-400">Includes English QWERTY, Gboard-style Avro Phonetic Engine, 15 Shader Animations, Clean Glass Keys, and Haptic Feedback.</p>
+            <h2 class="text-base sm:text-lg font-bold text-white">📦 Complete Android System-Wide Keyboard Source Code (v4.0)</h2>
+            <p class="text-xs text-slate-400">Includes Direct Avro Phonetic Composing, 20 Extreme Shaders, Progressive Word-Select Backspace, and Variable Vibration Control.</p>
           </div>
           <button id="btnCopyActiveCode" type="button" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-bold text-xs shadow-lg hover:opacity-95">
             📋 Copy Current File Code
@@ -550,7 +632,7 @@
 
         <div class="flex flex-wrap gap-1.5 pt-1 border-b border-white/10 pb-2.5">
           <button type="button" data-code-file="kotlin_service" class="code-file-tab px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-500 text-slate-950">
-            1. GlassKeyboardService.kt (Core IME + Avro + 15 Shaders)
+            1. GlassKeyboardService.kt (Core IME + Avro + 20 Shaders)
           </button>
           <button type="button" data-code-file="kotlin_settings" class="code-file-tab px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-200">
             2. SettingsActivity.kt
@@ -575,23 +657,26 @@
       showEmojiBar: true,
       showNumberBar: true,
       longPressSubSymbol: true,
-      showCtrlKeys: true,
       hapticEnabled: true,
+      vibrationPower: 90, // 10 to 100 heavy vibration control
       touchRippleEnabled: true,
-      glassBlurPx: 18,
-      glassAlphaPct: 20,
+      glassBlurPx: 20,
+      glassAlphaPct: 28, // Richer default crystal glass density
       animSpeed: 10,
-      keyRadiusPx: 13,
+      keyRadiusPx: 14,
       keyHeightPx: 50,
+      kbScalePct: 100,
+      isMinimized: false,
       activeTheme: 0,
       inputMode: 'EN', // 'EN' (English US) or 'AVRO' (Gboard-style Avro Phonetic)
       layoutMode: 'ALPHA', // 'ALPHA', 'SYM1', 'SYM2'
       isShift: false,
       isCaps: false,
-      isCtrlHeld: false,
       drawerOpen: false,
       activeStickerCat: 'all',
       avroBuffer: '',
+      avroTrackStart: null, // Tracks start index of live-typed word in textarea
+      backspaceSelecting: false, // True when holding backspace has selected words
       emojis: ['😍', '🔥', '😂', '🥰', '👍', '🙏', '✨', '❤️', '😎', '🎉', '🚀', '⚡', '💎', '👑'],
       numbers: [
         { main: '1', sub: '!' }, { main: '2', sub: '@' }, { main: '3', sub: '#' },
@@ -600,30 +685,38 @@
         { main: '0', sub: ')' }
       ],
       clipboard: [
-        { id: 'c1', text: 'Crystal Glass Keyboard Pro v3.0 ✨', pinned: true },
-        { id: 'c2', text: 'আমি বাংলায় গান গাই (Typed via Avro Phonetic)', pinned: true },
-        { id: 'c3', text: 'https://developer.android.com/guide/topics/text/creating-input-method', pinned: false }
+        { id: 'c1', text: 'Crystal Glass Keyboard Pro v4.0 ✨', pinned: true },
+        { id: 'c2', text: 'আমি বাংলায় গান গাই', pinned: true },
+        { id: 'c3', text: 'সোনার বাংলা আমি তোমায় ভালোবাসি', pinned: true },
+        { id: 'c4', text: 'আসসালামু আলাইকুম, কেমন আছেন?', pinned: false },
+        { id: 'c5', text: 'ধন্যবাদ আপনার সুন্দর মেসেজের জন্য!', pinned: false },
+        { id: 'c6', text: 'https://developer.android.com/guide', pinned: false }
       ],
       ripples: []
     };
 
-    // ==================== 15 DISTINCT MULTI-LAYER ANIMATION THEMES ====================
+    // ==================== 20 EXTREME MULTI-LAYER ANIMATION THEMES ====================
     const themes = [
-      { id: 0,  name: 'Cyber Aurora',     mode: 'aurora',    c1: '#040914', c2: '#0b2545', colors: ['#06b6d4', '#3b82f6', '#8b5cf6', '#10b981'] },
-      { id: 1,  name: 'Matrix Rain',      mode: 'matrix',    c1: '#020d07', c2: '#052617', colors: ['#10b981', '#34d399', '#059669', '#6ee7b7'] },
-      { id: 2,  name: 'Neon Synthwave',   mode: 'synthgrid', c1: '#120424', c2: '#2e0854', colors: ['#ec4899', '#8b5cf6', '#06b6d4', '#f43f5e'] },
-      { id: 3,  name: 'Galaxy Nebula',    mode: 'vortex',    c1: '#070417', c2: '#1e1040', colors: ['#a855f7', '#ec4899', '#6366f1', '#38bdf8'] },
-      { id: 4,  name: 'Liquid Plasma',    mode: 'plasma',    c1: '#1a0618', c2: '#3b092c', colors: ['#f43f5e', '#fb923c', '#d946ef', '#8b5cf6'] },
-      { id: 5,  name: 'Fireflies Gold',   mode: 'fireflies', c1: '#120d04', c2: '#291d06', colors: ['#fbbf24', '#f59e0b', '#fde047', '#fb923c'] },
-      { id: 6,  name: 'Ocean Ripples',    mode: 'waves',     c1: '#03111c', c2: '#073452', colors: ['#0ea5e9', '#2dd4bf', '#38bdf8', '#6366f1'] },
-      { id: 7,  name: 'Prism Laser',      mode: 'lasers',    c1: '#060714', c2: '#131633', colors: ['#22d3ee', '#f472b6', '#a78bfa', '#34d399'] },
-      { id: 8,  name: 'Sakura Petals',    mode: 'petals',    c1: '#170712', c2: '#361029', colors: ['#f472b6', '#fb7185', '#f9a8d4', '#e879f9'] },
-      { id: 9,  name: 'Starfield Warp',   mode: 'starwarp',  c1: '#02040a', c2: '#091326', colors: ['#e2e8f0', '#38bdf8', '#818cf8', '#f8fafc'] },
-      { id: 10, name: 'Electric Storm',   mode: 'storm',     c1: '#050814', c2: '#111c38', colors: ['#38bdf8', '#818cf8', '#c084fc', '#e0f2fe'] },
-      { id: 11, name: 'Magma Core',       mode: 'plasma',    c1: '#1c0505', c2: '#450a0a', colors: ['#ef4444', '#f97316', '#eab308', '#dc2626'] },
-      { id: 12, name: 'Arctic Frost',     mode: 'snow',      c1: '#04101c', c2: '#0c2d48', colors: ['#7dd3fc', '#bae6fd', '#38bdf8', '#e0f2fe'] },
-      { id: 13, name: 'Quantum Hex',      mode: 'hexpulse',  c1: '#070a17', c2: '#141e3d', colors: ['#6366f1', '#06b6d4', '#a855f7', '#14b8a6'] },
-      { id: 14, name: 'RGB Chroma Wave',  mode: 'chroma',    c1: '#08080c', c2: '#141420', colors: ['#ff0055', '#00ff88', '#00ccff', '#ffcc00'] }
+      { id: 0,  name: 'Cyber Aurora',      mode: 'aurora',     c1: '#040914', c2: '#0b2545', colors: ['#06b6d4', '#3b82f6', '#8b5cf6', '#10b981'] },
+      { id: 1,  name: 'Matrix Rain',       mode: 'matrix',     c1: '#020d07', c2: '#052617', colors: ['#10b981', '#34d399', '#059669', '#6ee7b7'] },
+      { id: 2,  name: 'Neon Synthwave',    mode: 'synthgrid',  c1: '#120424', c2: '#2e0854', colors: ['#ec4899', '#8b5cf6', '#06b6d4', '#f43f5e'] },
+      { id: 3,  name: 'Galaxy Nebula',     mode: 'vortex',     c1: '#070417', c2: '#1e1040', colors: ['#a855f7', '#ec4899', '#6366f1', '#38bdf8'] },
+      { id: 4,  name: 'Liquid Plasma',     mode: 'plasma',     c1: '#1a0618', c2: '#3b092c', colors: ['#f43f5e', '#fb923c', '#d946ef', '#8b5cf6'] },
+      { id: 5,  name: 'Fireflies Gold',    mode: 'fireflies',  c1: '#120d04', c2: '#291d06', colors: ['#fbbf24', '#f59e0b', '#fde047', '#fb923c'] },
+      { id: 6,  name: 'Ocean Ripples',     mode: 'waves',      c1: '#03111c', c2: '#073452', colors: ['#0ea5e9', '#2dd4bf', '#38bdf8', '#6366f1'] },
+      { id: 7,  name: 'Prism Laser',       mode: 'lasers',     c1: '#060714', c2: '#131633', colors: ['#22d3ee', '#f472b6', '#a78bfa', '#34d399'] },
+      { id: 8,  name: 'Sakura Petals',     mode: 'petals',     c1: '#170712', c2: '#361029', colors: ['#f472b6', '#fb7185', '#f9a8d4', '#e879f9'] },
+      { id: 9,  name: 'Starfield Warp',    mode: 'starwarp',   c1: '#02040a', c2: '#091326', colors: ['#e2e8f0', '#38bdf8', '#818cf8', '#f8fafc'] },
+      { id: 10, name: 'Electric Storm',    mode: 'storm',      c1: '#050814', c2: '#111c38', colors: ['#38bdf8', '#818cf8', '#c084fc', '#e0f2fe'] },
+      { id: 11, name: 'Magma Core',        mode: 'plasma',     c1: '#1c0505', c2: '#450a0a', colors: ['#ef4444', '#f97316', '#eab308', '#dc2626'] },
+      { id: 12, name: 'Arctic Frost',      mode: 'snow',       c1: '#04101c', c2: '#0c2d48', colors: ['#7dd3fc', '#bae6fd', '#38bdf8', '#e0f2fe'] },
+      { id: 13, name: 'Quantum Hex',       mode: 'hexpulse',   c1: '#070a17', c2: '#141e3d', colors: ['#6366f1', '#06b6d4', '#a855f7', '#14b8a6'] },
+      { id: 14, name: 'RGB Chroma Wave',   mode: 'chroma',     c1: '#08080c', c2: '#141420', colors: ['#ff0055', '#00ff88', '#00ccff', '#ffcc00'] },
+      { id: 15, name: 'Black Hole Singularity', mode: 'blackhole', c1: '#020108', c2: '#150726', colors: ['#f97316', '#a855f7', '#38bdf8', '#fde047'] },
+      { id: 16, name: 'DNA Helix Bio',     mode: 'dna',        c1: '#031217', c2: '#0a2e36', colors: ['#14b8a6', '#ec4899', '#38bdf8', '#a855f7'] },
+      { id: 17, name: 'Supernova Burst',   mode: 'supernova',  c1: '#170409', c2: '#330818', colors: ['#fb7185', '#facc15', '#f97316', '#c084fc'] },
+      { id: 18, name: 'Cyber Glitch Pulse',mode: 'glitch',     c1: '#05050a', c2: '#121224', colors: ['#00ffff', '#ff0055', '#a3e635', '#ffffff'] },
+      { id: 19, name: 'Emerald Dragon',    mode: 'dragon',     c1: '#02140b', c2: '#083820', colors: ['#10b981', '#facc15', '#34d399', '#06b6d4'] }
     ];
 
     // ==================== 48+ RICH STICKERS ACROSS 4 PACKS ====================
@@ -644,7 +737,7 @@
       // Love & Vibe (12)
       { emoji: '💖🌸', title: 'Pure Love', cat: 'love' },
       { emoji: '🥰💫', title: 'Adore You', cat: 'love' },
-      { emoji: '❤️‍🔥🌹', title: 'Passionate', cat: 'love' },
+      { emoji: '❤️🔥🌹', title: 'Passionate', cat: 'love' },
       { emoji: '🤗💞', title: 'Warm Hug', cat: 'love' },
       { emoji: '😘💋', title: 'Blow Kiss', cat: 'love' },
       { emoji: '✨🦋', title: 'Good Vibes', cat: 'love' },
@@ -682,21 +775,47 @@
       { emoji: '💐💍', title: 'Best Wishes', cat: 'party' }
     ];
 
-    // ==================== GBOARD-STYLE AVRO PHONETIC TRANSLITERATION ENGINE ====================
+    // ==================== UPGRADED AVRO PHONETIC & SPELL-CORRECTION ENGINE ====================
     const avroPhraseDict = {
       'ami': 'আমি', 'tumi': 'তুমি', 'apni': 'আপনি', 'kemon': 'কেমন', 'achen': 'আছেন',
       'acho': 'আছো', 'achi': 'আছি', 'bhalo': 'ভালো', 'valo': 'ভালো', 'dhonnobad': 'ধন্যবাদ',
-      'bangla': 'বাংলা', 'banglay': 'বাংলায়', 'bangladesh': 'বাংলাদেশ', 'gan': 'গান', 'gai': 'গাই',
+      'bangla': 'বাংলা', 'banglay': 'বাংলায়', 'bangladesh': 'বাংলাদেশ', 'gan': 'গান', 'gai': 'গাই',
       'amar': 'আমার', 'tomar': 'তোমার', 'apnar': 'আপনার', 'nam': 'নাম', 'ki': 'কী',
-      'kothay': 'কোথায়', 'kobe': 'কবে', 'keno': 'কেন', 'ekhane': 'এখানে', 'okhane': 'ওখানে',
+      'kothay': 'কোথায়', 'kobe': 'কবে', 'keno': 'কেন', 'ekhane': 'এখানে', 'okhane': 'ওখানে',
       'prothom': 'প্রথম', 'shundor': 'সুন্দর', 'sundor': 'সুন্দর', 'oshadharon': 'অসাধারণ',
-      'monmoto': 'মনমতো', 'hoyeche': 'হয়েছে', 'bhai': 'ভাই', 'vai': 'ভাই', 'bon': 'বোন',
-      'bondhu': 'বন্ধু', 'valobasha': 'ভালোবাসা', 'bhalobasha': 'ভালোবাসা', 'shuvo': 'শুভ',
-      'sokale': 'সকালে', 'rat': 'রাত', 'din': 'দিন', 'aj': 'আজ', 'kal': 'কাল',
+      'monmoto': 'মনমতো', 'hoyeche': 'হয়েছে', 'bhai': 'ভাই', 'vai': 'ভাই', 'bon': 'বোন',
+      'bondhu': 'বন্ধু', 'valobasha': 'ভালোবাসা', 'bhalobasha': 'ভালোবাসা', 'valobashi': 'ভালোবাসি',
+      'shuvo': 'শুভ', 'sokale': 'সকালে', 'rat': 'রাত', 'din': 'দিন', 'aj': 'আজ', 'kal': 'কাল',
       'ha': 'হ্যাঁ', 'na': 'না', 'thik': 'ঠিক', 'ache': 'আছে', 'korbo': 'করব',
       'korchi': 'করছি', 'koro': 'করো', 'koren': 'করেন', 'dekho': 'দেখো', 'dekhen': 'দেখেন',
       'bolen': 'বলেন', 'bolo': 'বলো', 'assalamu': 'আসসালামু', 'alaikum': 'আলাইকুম',
-      'inshallah': 'ইনশাআল্লাহ', 'alhamdulillah': 'আলহামদুলিল্লাহ', 'subhanallah': 'সুবহানাল্লাহ'
+      'inshallah': 'ইনশাআল্লাহ', 'alhamdulillah': 'আলহামদুলিল্লাহ', 'subhanallah': 'সুবহানাল্লাহ',
+      'khabar': 'খাবার', 'jol': 'জল', 'pani': 'পানি', 'bari': 'বাড়ি', 'ghor': 'ঘর',
+      'manush': 'মানুষ', 'desh': 'দেশ', 'shomoy': 'সময়', 'somoy': 'সময়', 'kotha': 'কথা',
+      'kaj': 'কাজ', 'chele': 'ছেলে', 'meye': 'মেয়ে', 'ma': 'মা', 'baba': 'বাবা',
+      'dada': 'দাদা', 'didi': 'দিদি', 'chobi': 'ছবি', 'boi': 'বই', 'khobor': 'খবর',
+      'akash': 'আকাশ', 'batash': 'বাতাস', 'bristi': 'বৃষ্টি', 'rod': 'রোদ', 'ful': 'ফুল'
+    };
+
+    // Spelling correction & formal variant map (সঠিক বানান সাজেস্ট করার ডিকশনারি)
+    const avroCorrectSpellingMap = {
+      'ami': ['আমি', 'আমিই', 'আমাকে', 'আমার'],
+      'tumi': ['তুমি', 'তুমিই', 'তোমাকে', 'তোমার'],
+      'apni': ['আপনি', 'আপনিই', 'আপনাকে', 'আপনার'],
+      'ki': ['কী', 'কি', 'কীভাবে', 'কিসের'],
+      'valo': ['ভালো', 'ভাল', 'ভালোবাসা', 'ভালোবাসি'],
+      'bhalo': ['ভালো', 'ভাল', 'ভালোবাসা', 'ভালোভাবে'],
+      'kemon': ['কেমন', 'কেমন আছেন', 'কেমন আছো', 'কেমনে'],
+      'achen': ['আছেন', 'আছেন তো', 'আছি', 'আছে'],
+      'bangla': ['বাংলা', 'বাংলাদেশ', 'বাংলায়', 'বাঙালি'],
+      'dhonnobad': ['ধন্যবাদ', 'অসংখ্য ধন্যবাদ', 'ধন্যবাদান্তে'],
+      'sundor': ['সুন্দর', 'সুন্দরী', 'সৌন্দর্য', 'অতি সুন্দর'],
+      'shundor': ['সুন্দর', 'সুন্দরী', 'সৌন্দর্য'],
+      'somoy': ['সময়', 'সময়ে', 'সময়ের', 'সময়মতো'],
+      'shomoy': ['সময়', 'সময়ে', 'সময়ের'],
+      'bristi': ['বৃষ্টি', 'বৃষ্টির', 'বৃষ্টিপাত'],
+      'manush': ['মানুষ', 'মানুষের', 'মানবিক'],
+      'assalamu': ['আসসালামু আলাইকুম', 'আসসালামু', 'ওয়ালাইকুম আসসালাম']
     };
 
     function transliterateAvro(rawInput) {
@@ -708,9 +827,9 @@
         'ksh': 'ক্ষ', 'ng': 'ঙ', 'chh': 'ছ', 'ch': 'চ', 'sh': 'শ', 'ss': 'ষ',
         'kh': 'খ', 'gh': 'ঘ', 'jh': 'ঝ', 'th': 'থ', 'dh': 'ধ', 'ph': 'ফ', 'bh': 'ভ',
         'kk': 'ক্ক', 'tt': 'ত্ত', 'nn': 'ন্ন', 'mm': 'ম্ম', 'll': 'ল্ল',
-        'k': 'ক', 'g': 'গ', 'j': 'জ', 't': 'ট', 'd': 'ড', 'n': 'ন',
+        'k': 'ক', 'g': 'গ', 'j': 'জ', 't': 'ত', 'd': 'দ', 'n': 'ন',
         'p': 'প', 'f': 'ফ', 'b': 'ব', 'v': 'ভ', 'm': 'ম', 'z': 'য',
-        'r': 'র', 'l': 'ল', 's': 'স', 'h': 'হ', 'y': 'য়', 'w': 'ও'
+        'r': 'র', 'l': 'ল', 's': 'স', 'h': 'হ', 'y': 'য়', 'w': 'ও'
       };
       const vowelsFull = {
         'ou': 'ঔ', 'oi': 'ঐ', 'aa': 'আ', 'ee': 'ঈ', 'oo': 'উ',
@@ -727,8 +846,6 @@
 
       while (i < lower.length) {
         let matched = false;
-
-        // Check 3-char, 2-char, 1-char consonants
         for (const len of [3, 2, 1]) {
           const chunk = lower.substr(i, len);
           if (consonants[chunk]) {
@@ -741,7 +858,6 @@
         }
         if (matched) continue;
 
-        // Check 2-char, 1-char vowels
         for (const len of [2, 1]) {
           const chunk = lower.substr(i, len);
           if (vowelsFull[chunk] !== undefined) {
@@ -754,7 +870,6 @@
         }
         if (matched) continue;
 
-        // Numbers or punctuation
         const bnDigits = { '0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯' };
         const ch = rawInput[i];
         out += bnDigits[ch] || ch;
@@ -764,20 +879,62 @@
       return out;
     }
 
+    // Generates ordered rich candidates:
+    // [0] Phonetic Bangla -> [1] Exact English typed -> [2] Correct/Formal Bangla Spelling -> [3..N] Rich related scrollable suggestions
     function getAvroCandidates(raw) {
-      if (!raw) return ['আমি', 'তুমি', 'কেমন', 'আছো', 'ধন্যবাদ', 'ভালো', 'বাংলাদেশ', 'অসাধারণ'];
-      const primary = transliterateAvro(raw);
+      if (!raw) {
+        return ['আমি', 'তুমি', 'আপনি', 'কেমন', 'আছেন', 'ভালো', 'ধন্যবাদ', 'বাংলাদেশ', 'অসাধারণ', 'ভালোবাসা', 'আসসালামু আলাইকুম', 'শুভ সকাল'];
+      }
       const lower = raw.toLowerCase();
-      const matches = Object.keys(avroPhraseDict)
+      const phoneticBangla = transliterateAvro(raw);
+
+      // Find verified/correct spelling (সঠিক বানান)
+      let correctSpellings = [];
+      if (avroCorrectSpellingMap[lower]) {
+        correctSpellings.push(...avroCorrectSpellingMap[lower]);
+      }
+
+      // Prefix dictionary matches
+      const prefixMatches = Object.keys(avroPhraseDict)
         .filter(k => k.startsWith(lower))
         .map(k => avroPhraseDict[k]);
-      const unique = [primary, ...matches, raw];
-      return [...new Set(unique)].slice(0, 6);
+
+      // Construct suffix/inflected variations for rich scrolling
+      const suffixes = ['ই', 'ও', 'টা', 'টি', 'গুলো', 'কে', 'র', 'তে', 'দের'];
+      const inflected = suffixes.map(sfx => phoneticBangla + sfx);
+
+      // Strict ordering requested by user:
+      // 1st: Phonetic Bangla of what is typed
+      // 2nd: Exact English letters being typed
+      // 3rd: Verified/Correct Bangla spelling (distinct from 1st if available, or formal variant)
+      const thirdCandidate = correctSpellings.find(w => w !== phoneticBangla)
+        || prefixMatches.find(w => w !== phoneticBangla)
+        || (phoneticBangla + 'ই');
+
+      const orderedList = [
+        phoneticBangla,
+        raw,
+        thirdCandidate,
+        ...correctSpellings,
+        ...prefixMatches,
+        ...inflected
+      ];
+
+      // Deduplicate after keeping the first 3 positions intact
+      const seen = new Set();
+      const finalResult = [];
+      for (const item of orderedList) {
+        if (item && !seen.has(item)) {
+          seen.add(item);
+          finalResult.push(item);
+        }
+      }
+      return finalResult.slice(0, 14);
     }
 
-    const englishSuggestions = ['Hello', 'Awesome', 'Thank you', 'How are you?', 'Great', 'Please', 'See you soon', 'Crystal Glass', 'Perfect'];
+    const englishSuggestions = ['Hello', 'Awesome', 'Thank you', 'How are you?', 'Great', 'Please', 'See you soon', 'Crystal Glass', 'Perfect', 'Congratulations', 'Good morning', 'Let us go'];
 
-    // ==================== CLEAN KEYBOARD LAYOUTS (NO CLUTTER SUB-LABELS) ====================
+    // ==================== CLEAN KEYBOARD LAYOUTS ====================
     const layouts = {
       ALPHA: [
         [
@@ -841,13 +998,15 @@
       ]
     };
 
-    // ==================== HAPTIC & AUDIO ENGINE ====================
+    // ==================== HEAVY HAPTIC & ADJUSTABLE VIBRATION ENGINE ====================
     let audioCtx = null;
     function triggerHapticAndSound(isLong = false) {
       if (!state.hapticEnabled) return;
+      const powerRatio = state.vibrationPower / 100; // 0.1 to 1.0
+      const baseMs = Math.round(12 + powerRatio * 48); // up to 60ms strong pulse
       try {
         if (navigator.vibrate) {
-          navigator.vibrate(isLong ? [26, 18, 32] : 14);
+          navigator.vibrate(isLong ? [baseMs + 20, 20, baseMs + 35] : baseMs);
         }
       } catch (e) {}
       try {
@@ -861,15 +1020,16 @@
         if (audioCtx) {
           const osc = audioCtx.createOscillator();
           const gain = audioCtx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(isLong ? 540 : 360, audioCtx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(115, audioCtx.currentTime + 0.04);
-          gain.gain.setValueAtTime(0.055, audioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+          osc.type = isLong ? 'triangle' : 'sine';
+          osc.frequency.setValueAtTime(isLong ? 480 : 310, audioCtx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(85, audioCtx.currentTime + 0.055);
+          const vol = Math.min(0.28, 0.03 + powerRatio * 0.18);
+          gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.055);
           osc.connect(gain);
           gain.connect(audioCtx.destination);
           osc.start();
-          osc.stop(audioCtx.currentTime + 0.045);
+          osc.stop(audioCtx.currentTime + 0.06);
         }
       } catch (e) {}
     }
@@ -883,15 +1043,34 @@
       window.__toastTimer = setTimeout(() => t.classList.add('hidden'), 1600);
     }
 
+    // Dynamic CSS Variables including Auto-Scaled Main & Sub Font Sizes
     function applyCssVariables() {
       const root = document.documentElement;
+      const alpha = (state.glassAlphaPct / 100).toFixed(2);
+      const borderAlpha = Math.min(0.85, (state.glassAlphaPct / 100) + 0.24).toFixed(2);
+
+      // Proportional font scaling when key height changes (36px -> 64px)
+      const mainFontPx = Math.round(12 + (state.keyHeightPx - 36) * 0.36); // ~12px to 22px
+      const subFontPx = Math.round(8 + (state.keyHeightPx - 36) * 0.16);   // ~8px to 13px
+
       root.style.setProperty('--kb-blur', state.glassBlurPx + 'px');
-      root.style.setProperty('--kb-alpha', (state.glassAlphaPct / 100).toFixed(2));
+      root.style.setProperty('--kb-alpha', alpha);
+      root.style.setProperty('--kb-border-alpha', borderAlpha);
       root.style.setProperty('--kb-radius', state.keyRadiusPx + 'px');
       root.style.setProperty('--kb-key-height', state.keyHeightPx + 'px');
+      root.style.setProperty('--kb-main-font', mainFontPx + 'px');
+      root.style.setProperty('--kb-sub-font', subFontPx + 'px');
+
+      const kbRoot = document.getElementById('keyboardRoot');
+      const kbWrap = document.getElementById('kbForegroundWrapper');
+      if (kbWrap && kbRoot) {
+        const scale = state.kbScalePct / 100;
+        kbWrap.style.transform = `scale(${scale})`;
+        kbRoot.style.minHeight = Math.round(310 * scale) + 'px';
+      }
     }
 
-    // ==================== EDITOR & AVRO COMPOSING BUFFER LOGIC ====================
+    // ==================== DIRECT REAL-TIME AVRO & EDITOR ENGINE ====================
     const editor = document.getElementById('typingOutput');
 
     function updateAvroBadge() {
@@ -907,12 +1086,34 @@
       }
     }
 
+    // Replaces the currently tracked live word in the textarea with the chosen candidate or phonetic Bangla
+    function replaceLiveTrackedWord(replacementText) {
+      if (state.avroTrackStart === null) {
+        insertRawText(replacementText);
+        return;
+      }
+      const val = editor.value;
+      const curEnd = editor.selectionEnd ?? val.length;
+      const before = val.slice(0, state.avroTrackStart);
+      const after = val.slice(curEnd);
+      editor.value = before + replacementText + after;
+      const nextPos = before.length + replacementText.length;
+      editor.selectionStart = editor.selectionEnd = nextPos;
+      editor.scrollTop = editor.scrollHeight;
+    }
+
     function commitAvroBuffer(customText = null) {
       if (!state.avroBuffer && !customText) return;
       const converted = customText !== null ? customText : transliterateAvro(state.avroBuffer);
+      if (state.avroBuffer) {
+        replaceLiveTrackedWord(converted);
+      } else if (customText) {
+        insertRawText(customText);
+      }
       state.avroBuffer = '';
+      state.avroTrackStart = null;
       updateAvroBadge();
-      insertRawText(converted);
+      renderSuggestions();
     }
 
     function insertRawText(str) {
@@ -926,40 +1127,92 @@
       renderSuggestions();
     }
 
+    // Direct Typing in Avro Mode: Immediately writes to textarea so text appears live in the input box!
     function handleCharacterInput(ch) {
+      state.backspaceSelecting = false;
       if (state.inputMode === 'AVRO' && state.layoutMode === 'ALPHA' && /^[a-zA-Z]$/.test(ch)) {
+        if (state.avroBuffer.length === 0) {
+          state.avroTrackStart = editor.selectionStart ?? editor.value.length;
+        }
         state.avroBuffer += ch;
+        const liveBangla = transliterateAvro(state.avroBuffer);
+        replaceLiveTrackedWord(liveBangla);
         updateAvroBadge();
         renderSuggestions();
       } else {
-        if (state.avroBuffer) commitAvroBuffer();
+        if (state.avroBuffer) {
+          state.avroBuffer = '';
+          state.avroTrackStart = null;
+          updateAvroBadge();
+        }
         insertRawText(ch);
       }
     }
 
-    function deleteAtCursor(clearWord = false) {
+    // Progressive Word-by-Word Selection on Backspace Hold & Instant Cut on Tap
+    function selectPreviousWordStep() {
+      const val = editor.value;
+      if (!val.length) return;
+      let start = editor.selectionStart ?? val.length;
+      let end = editor.selectionEnd ?? val.length;
+
+      if (!state.backspaceSelecting) {
+        state.backspaceSelecting = true;
+        end = val.length;
+        start = end;
+      }
+
+      if (start <= 0) return; // Entire text already selected
+
+      let i = start;
+      while (i > 0 && /\s/.test(val[i - 1])) i--;
+      while (i > 0 && !/\s/.test(val[i - 1])) i--;
+
+      editor.focus();
+      editor.setSelectionRange(i, end);
+      triggerHapticAndSound(false);
+
+      if (i === 0) {
+        showToast('সব সিলেক্ট হয়েছে — কাটতে আবার ⌫ চাপুন');
+      }
+    }
+
+    function deleteAtCursor() {
+      const start = editor.selectionStart ?? editor.value.length;
+      const end = editor.selectionEnd ?? editor.value.length;
+      const val = editor.value;
+
+      // If text is selected (either manually or via Backspace Hold Word-Selection), cut the entire selected range!
+      if (start !== end) {
+        editor.value = val.slice(0, start) + val.slice(end);
+        editor.selectionStart = editor.selectionEnd = start;
+        state.backspaceSelecting = false;
+        state.avroBuffer = '';
+        state.avroTrackStart = null;
+        updateAvroBadge();
+        renderSuggestions();
+        showToast('✂️ সিলেক্ট করা লেখা মুছে ফেলা হয়েছে');
+        return;
+      }
+
+      state.backspaceSelecting = false;
+
       if (state.inputMode === 'AVRO' && state.avroBuffer.length > 0) {
-        if (clearWord) state.avroBuffer = '';
-        else state.avroBuffer = state.avroBuffer.slice(0, -1);
+        state.avroBuffer = state.avroBuffer.slice(0, -1);
+        if (state.avroBuffer.length > 0) {
+          replaceLiveTrackedWord(transliterateAvro(state.avroBuffer));
+        } else {
+          replaceLiveTrackedWord('');
+          state.avroTrackStart = null;
+        }
         updateAvroBadge();
         renderSuggestions();
         return;
       }
-      const start = editor.selectionStart ?? editor.value.length;
-      const end = editor.selectionEnd ?? editor.value.length;
-      const val = editor.value;
-      if (start !== end) {
-        editor.value = val.slice(0, start) + val.slice(end);
-        editor.selectionStart = editor.selectionEnd = start;
-      } else if (start > 0) {
-        if (clearWord) {
-          const leftPart = val.slice(0, start).replace(/\S+\s*$/, '');
-          editor.value = leftPart + val.slice(start);
-          editor.selectionStart = editor.selectionEnd = leftPart.length;
-        } else {
-          editor.value = val.slice(0, start - 1) + val.slice(start);
-          editor.selectionStart = editor.selectionEnd = start - 1;
-        }
+
+      if (start > 0) {
+        editor.value = val.slice(0, start - 1) + val.slice(start);
+        editor.selectionStart = editor.selectionEnd = start - 1;
       }
       renderSuggestions();
     }
@@ -1030,14 +1283,34 @@
         candidates.forEach((cand, idx) => {
           const btn = document.createElement('button');
           btn.type = 'button';
+
+          let badgeLabel = '';
+          if (state.avroBuffer) {
+            if (idx === 0) badgeLabel = 'বাংলা ';
+            else if (idx === 1) badgeLabel = 'EN ';
+            else if (idx === 2) badgeLabel = '✓সঠিক ';
+          }
+
           btn.className = idx === 0 && state.avroBuffer
-            ? 'px-3 py-1 rounded-full bg-cyan-500/30 border border-cyan-300/60 text-xs font-bold text-white whitespace-nowrap shrink-0 shadow'
+            ? 'px-3 py-1 rounded-full bg-cyan-500/35 border border-cyan-300/80 text-xs font-bold text-white whitespace-nowrap shrink-0 shadow'
+            : idx === 1 && state.avroBuffer
+            ? 'px-3 py-1 rounded-full bg-indigo-500/30 border border-indigo-300/60 text-xs font-semibold text-indigo-100 whitespace-nowrap shrink-0'
+            : idx === 2 && state.avroBuffer
+            ? 'px-3 py-1 rounded-full bg-emerald-500/30 border border-emerald-300/60 text-xs font-bold text-emerald-100 whitespace-nowrap shrink-0'
             : 'px-2.5 py-1 rounded-full bg-white/10 hover:bg-cyan-500/25 border border-white/15 text-xs text-slate-100 whitespace-nowrap transition shrink-0';
-          btn.textContent = cand;
+
+          btn.innerHTML = badgeLabel
+            ? `<span class="text-[9px] opacity-75 mr-1">${badgeLabel}</span><span>${cand}</span>`
+            : cand;
+
           btn.addEventListener('click', () => {
             triggerHapticAndSound(false);
             if (state.avroBuffer) {
-              commitAvroBuffer(cand + ' ');
+              replaceLiveTrackedWord(cand + ' ');
+              state.avroBuffer = '';
+              state.avroTrackStart = null;
+              updateAvroBadge();
+              renderSuggestions();
             } else {
               insertRawText(cand + ' ');
             }
@@ -1127,37 +1400,21 @@
         container.appendChild(rowEl);
       });
 
-      // Bottom Row: ?123 | Ctrl (opt) | Ctrl+C (opt) | 🌐 (EN/Avro) | Space | . | Enter
+      // Clean Bottom Row: ?123 | Space (Hold to switch EN/Avro) | . | Enter (No Ctrl, Ctrl+C, or extra Lang key)
       const bottomRow = document.createElement('div');
       bottomRow.className = 'flex items-center gap-1 sm:gap-1.5 w-full';
 
       const bottomKeys = [
-        { id: 'SYM', main: state.layoutMode === 'ALPHA' ? '?123' : 'ABC', sub: '', flex: 1.2, special: true }
-      ];
-
-      if (state.showCtrlKeys) {
-        bottomKeys.push({
-          id: 'CTRL',
-          main: state.isCtrlHeld ? 'Ctrl•' : 'Ctrl',
+        { id: 'SYM', main: state.layoutMode === 'ALPHA' ? '?123' : 'ABC', sub: '', flex: 1.35, special: true },
+        {
+          id: 'SPACE',
+          main: state.inputMode === 'AVRO' ? 'অভ্র ফনেটিক (Hold ⇄ EN)' : 'English • Hold for অভ্র',
           sub: '',
-          flex: 1.1,
-          special: true
-        });
-        bottomKeys.push({
-          id: 'CTRL_C',
-          main: 'Ctrl+C',
-          sub: '',
-          flex: 1.35,
-          special: true
-        });
-      }
-
-      bottomKeys.push(
-        { id: 'LANG', main: state.inputMode === 'AVRO' ? '🌐 অভ্র' : '🌐 EN', sub: '', flex: 1.25, special: true },
-        { id: 'SPACE', main: state.inputMode === 'AVRO' ? 'Avro Phonetic' : 'English (US)', sub: '', flex: 3.1 },
-        { id: 'DOT', main: '.', sub: ',', flex: 0.95 },
+          flex: 5.2
+        },
+        { id: 'DOT', main: '.', sub: ',', flex: 1.0 },
         { id: 'ENTER', main: '↵', sub: '', flex: 1.85, enter: true }
-      );
+      ];
 
       bottomKeys.forEach(kDef => {
         bottomRow.appendChild(createGlassKeyElement(kDef));
@@ -1178,9 +1435,8 @@
 
       btn.className = `glass-key ${extraClass} flex flex-col items-center justify-center px-1 select-none`;
       btn.style.flex = keyDef.flex || 1;
-      btn.style.height = (keyDef.isNumberRow ? Math.max(36, state.keyHeightPx - 10) : state.keyHeightPx) + 'px';
+      btn.style.height = (keyDef.isNumberRow ? Math.max(32, state.keyHeightPx - 10) : state.keyHeightPx) + 'px';
 
-      // Clean sub-symbol (only single symbol characters, never word labels)
       if (keyDef.sub) {
         const subSpan = document.createElement('span');
         subSpan.className = 'key-sub-char self-end pr-1 -mt-0.5';
@@ -1188,18 +1444,20 @@
         btn.appendChild(subSpan);
       }
 
-      // Main character
       const mainSpan = document.createElement('span');
       const displayChar = (state.isShift || state.isCaps) && keyDef.main.length === 1
         ? keyDef.main.toUpperCase()
         : keyDef.main;
 
-      const textSize = displayChar.length > 3 ? 'text-xs' : 'text-base sm:text-lg';
-      mainSpan.className = `key-main-char ${textSize}`;
+      mainSpan.className = 'key-main-char';
+      if (displayChar.length > 3) {
+        mainSpan.style.fontSize = Math.max(10, Math.round(state.keyHeightPx * 0.24)) + 'px';
+      }
       mainSpan.textContent = displayChar;
       btn.appendChild(mainSpan);
 
       let pressTimer = null;
+      let repeatInterval = null;
       let longPressFired = false;
 
       btn.addEventListener('contextmenu', e => e.preventDefault());
@@ -1216,21 +1474,36 @@
             x: e.clientX - kbRect.left,
             y: e.clientY - kbRect.top,
             r: 4,
-            alpha: 0.75
+            alpha: 0.78
           });
         }
 
-        pressTimer = setTimeout(() => {
-          longPressFired = true;
-          triggerHapticAndSound(true);
-          handleKeyLongPress(keyDef);
-        }, 410);
+        // Special progressive word-by-word selection when holding Backspace
+        if (keyDef.id === 'BACKSPACE') {
+          pressTimer = setTimeout(() => {
+            longPressFired = true;
+            selectPreviousWordStep();
+            repeatInterval = setInterval(() => {
+              selectPreviousWordStep();
+            }, 220);
+          }, 350);
+        } else {
+          pressTimer = setTimeout(() => {
+            longPressFired = true;
+            triggerHapticAndSound(true);
+            handleKeyLongPress(keyDef);
+          }, 410);
+        }
       });
 
       const endPress = (e) => {
         if (pressTimer) {
           clearTimeout(pressTimer);
           pressTimer = null;
+        }
+        if (repeatInterval) {
+          clearInterval(repeatInterval);
+          repeatInterval = null;
         }
         btn.classList.remove('active-press');
         if (e.type === 'pointerup' && !longPressFired) {
@@ -1246,19 +1519,25 @@
     }
 
     function handleKeyLongPress(keyDef) {
-      // 1. Holding 'V' ALWAYS pastes immediately (no label needed on key)
+      // 1. Holding SPACEBAR switches language (English ⇄ Avro Phonetic)
+      if (keyDef.id === 'SPACE') {
+        toggleLanguageMode();
+        return;
+      }
+
+      // 2. Holding 'V' pastes from clipboard
       if (keyDef.id === 'v' || keyDef.main.toLowerCase() === 'v') {
         pasteToEditor();
         return;
       }
 
-      // 2. Holding Backspace deletes whole word
-      if (keyDef.id === 'BACKSPACE') {
-        deleteAtCursor(true);
+      // 3. Holding 'C' copies from editor
+      if (keyDef.id === 'c' || keyDef.main.toLowerCase() === 'c') {
+        copyFromEditor();
         return;
       }
 
-      // 3. Holding Shift toggles Caps Lock
+      // 4. Holding Shift toggles Caps Lock
       if (keyDef.id === 'SHIFT') {
         state.isCaps = !state.isCaps;
         state.isShift = state.isCaps;
@@ -1267,9 +1546,13 @@
         return;
       }
 
-      // 4. Default Long-Press types the sub-symbol if enabled
+      // 5. Default Long-Press types the sub-symbol if enabled
       if (state.longPressSubSymbol && keyDef.sub) {
-        if (state.avroBuffer) commitAvroBuffer();
+        if (state.avroBuffer) {
+          state.avroBuffer = '';
+          state.avroTrackStart = null;
+          updateAvroBadge();
+        }
         insertRawText(keyDef.sub);
       } else {
         handleKeyShortTap(keyDef);
@@ -1277,25 +1560,33 @@
     }
 
     function toggleLanguageMode() {
-      if (state.avroBuffer) commitAvroBuffer();
+      if (state.avroBuffer) {
+        state.avroBuffer = '';
+        state.avroTrackStart = null;
+        updateAvroBadge();
+      }
       state.inputMode = state.inputMode === 'EN' ? 'AVRO' : 'EN';
       updateModeIndicators();
       renderSuggestions();
       renderMainKeyboard();
-      showToast(state.inputMode === 'AVRO' ? '🇧🇩 Avro Phonetic Active' : '🇺🇸 English (US) Active');
+      showToast(state.inputMode === 'AVRO' ? '🇧🇩 অভ্র ফনেটিক চালু হয়েছে' : '🇺🇸 English (US) Active');
     }
 
     function handleKeyShortTap(keyDef) {
       switch (keyDef.id) {
         case 'BACKSPACE':
-          deleteAtCursor(false);
+          deleteAtCursor();
           break;
         case 'ENTER':
-          if (state.avroBuffer) commitAvroBuffer();
+          state.avroBuffer = '';
+          state.avroTrackStart = null;
+          updateAvroBadge();
           insertRawText('\n');
           break;
         case 'SPACE':
-          if (state.avroBuffer) commitAvroBuffer();
+          state.avroBuffer = '';
+          state.avroTrackStart = null;
+          updateAvroBadge();
           insertRawText(' ');
           break;
         case 'SHIFT':
@@ -1304,7 +1595,9 @@
           renderMainKeyboard();
           break;
         case 'SYM':
-          if (state.avroBuffer) commitAvroBuffer();
+          state.avroBuffer = '';
+          state.avroTrackStart = null;
+          updateAvroBadge();
           state.layoutMode = state.layoutMode === 'ALPHA' ? 'SYM1' : 'ALPHA';
           renderMainKeyboard();
           break;
@@ -1312,33 +1605,7 @@
           state.layoutMode = 'SYM2';
           renderMainKeyboard();
           break;
-        case 'LANG':
-          toggleLanguageMode();
-          break;
-        case 'CTRL':
-          state.isCtrlHeld = !state.isCtrlHeld;
-          renderMainKeyboard();
-          showToast(state.isCtrlHeld ? 'Ctrl Active' : 'Ctrl Off');
-          break;
-        case 'CTRL_C':
-          copyFromEditor();
-          break;
         default: {
-          if (state.isCtrlHeld) {
-            if (keyDef.id === 'c' || keyDef.main.toLowerCase() === 'c') {
-              copyFromEditor();
-              state.isCtrlHeld = false;
-              renderMainKeyboard();
-              return;
-            }
-            if (keyDef.id === 'v' || keyDef.main.toLowerCase() === 'v') {
-              pasteToEditor();
-              state.isCtrlHeld = false;
-              renderMainKeyboard();
-              return;
-            }
-            state.isCtrlHeld = false;
-          }
           const outChar = (state.isShift || state.isCaps) && keyDef.main.length === 1
             ? keyDef.main.toUpperCase()
             : keyDef.main;
@@ -1352,53 +1619,58 @@
       }
     }
 
-    // ==================== CLIPBOARD, STICKERS & 15 THEMES HUB ====================
+    // ==================== SQUARE BOX CLIPBOARD, STICKERS & 20 THEMES HUB ====================
     function renderClipboardList() {
       const container = document.getElementById('clipboardListContainer');
       container.innerHTML = '';
       const sorted = [...state.clipboard].sort((a, b) => Number(b.pinned) - Number(a.pinned));
 
       sorted.forEach(item => {
-        const row = document.createElement('div');
-        row.className = 'flex items-center justify-between gap-2 p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition';
+        const box = document.createElement('div');
+        box.className = 'square-box-card relative group';
 
-        const txtBtn = document.createElement('button');
-        txtBtn.type = 'button';
-        txtBtn.className = 'flex-1 text-left text-xs text-white truncate hover:text-cyan-300';
-        txtBtn.textContent = item.text;
-        txtBtn.addEventListener('click', () => {
-          triggerHapticAndSound(false);
-          if (state.avroBuffer) commitAvroBuffer();
-          insertRawText(item.text);
-          showToast('Pasted clip!');
-        });
-
-        const actions = document.createElement('div');
-        actions.className = 'flex items-center gap-1 shrink-0';
+        const topBar = document.createElement('div');
+        topBar.className = 'flex items-center justify-between gap-1 w-full';
 
         const pinBtn = document.createElement('button');
         pinBtn.type = 'button';
-        pinBtn.className = `px-2 py-0.5 rounded-md text-[10px] font-bold ${item.pinned ? 'bg-amber-400 text-slate-950' : 'bg-white/10 text-slate-300'}`;
-        pinBtn.textContent = item.pinned ? '📌 Pinned' : '📌 Pin';
-        pinBtn.addEventListener('click', () => {
+        pinBtn.className = `px-1.5 py-0.5 rounded text-[9px] font-bold ${item.pinned ? 'bg-amber-400 text-slate-950' : 'bg-white/10 text-slate-300'}`;
+        pinBtn.textContent = item.pinned ? '📌 Pin' : 'Pin';
+        pinBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
           item.pinned = !item.pinned;
           renderClipboardList();
         });
 
         const delBtn = document.createElement('button');
         delBtn.type = 'button';
-        delBtn.className = 'px-2 py-0.5 rounded-md bg-rose-500/25 text-rose-200 text-[10px]';
+        delBtn.className = 'w-5 h-5 rounded bg-rose-500/25 text-rose-200 text-[10px] flex items-center justify-center';
         delBtn.textContent = '✕';
-        delBtn.addEventListener('click', () => {
+        delBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
           state.clipboard = state.clipboard.filter(c => c.id !== item.id);
           renderClipboardList();
         });
 
-        actions.appendChild(pinBtn);
-        actions.appendChild(delBtn);
-        row.appendChild(txtBtn);
-        row.appendChild(actions);
-        container.appendChild(row);
+        topBar.appendChild(pinBtn);
+        topBar.appendChild(delBtn);
+
+        const txtBtn = document.createElement('button');
+        txtBtn.type = 'button';
+        txtBtn.className = 'flex-1 w-full text-left text-[11px] text-white line-clamp-3 overflow-hidden leading-snug hover:text-cyan-300 mt-1';
+        txtBtn.textContent = item.text;
+        txtBtn.addEventListener('click', () => {
+          triggerHapticAndSound(false);
+          state.avroBuffer = '';
+          state.avroTrackStart = null;
+          updateAvroBadge();
+          insertRawText(item.text);
+          showToast('Pasted clip!');
+        });
+
+        box.appendChild(topBar);
+        box.appendChild(txtBtn);
+        container.appendChild(box);
       });
     }
 
@@ -1416,7 +1688,9 @@
         card.innerHTML = `<span class="text-xl">${st.emoji}</span><span class="text-[9px] font-semibold text-slate-300 truncate max-w-full">${st.title}</span>`;
         card.addEventListener('click', () => {
           triggerHapticAndSound(false);
-          if (state.avroBuffer) commitAvroBuffer();
+          state.avroBuffer = '';
+          state.avroTrackStart = null;
+          updateAvroBadge();
           insertRawText(` ${st.emoji} `);
           const prev = document.getElementById('sentStickerPreview');
           document.getElementById('sentStickerGraphic').textContent = st.emoji;
@@ -1467,13 +1741,12 @@
       });
     }
 
-    // ==================== 15-MODE UNDER-KEYBOARD SHADER ANIMATION ENGINE ====================
+    // ==================== 20-MODE UNDER-KEYBOARD SHADER ANIMATION ENGINE ====================
     const canvas = document.getElementById('kbAnimCanvas');
     const ctx = canvas.getContext('2d');
     let animTick = 0;
 
-    // Pre-allocated particles for smooth 60fps effects
-    const particles = Array.from({ length: 42 }, (_, i) => ({
+    const particles = Array.from({ length: 46 }, (_, i) => ({
       x: (i * 37) % 440,
       y: (i * 53) % 340,
       vx: ((i % 5) - 2) * 0.45,
@@ -1485,7 +1758,7 @@
 
     function resizeCanvas() {
       const root = document.getElementById('keyboardRoot');
-      if (!root) return;
+      if (!root || state.isMinimized) return;
       if (canvas.width !== root.clientWidth || canvas.height !== root.clientHeight) {
         canvas.width = root.clientWidth || 420;
         canvas.height = root.clientHeight || 320;
@@ -1493,169 +1766,228 @@
     }
 
     function drawKeyboardAnimation() {
-      resizeCanvas();
-      const w = canvas.width;
-      const h = canvas.height;
-      const th = themes[state.activeTheme] || themes[0];
-      const speedFactor = state.animSpeed / 10;
-      animTick += 0.024 * speedFactor;
+      if (!state.isMinimized) {
+        resizeCanvas();
+        const w = canvas.width;
+        const h = canvas.height;
+        const th = themes[state.activeTheme] || themes[0];
+        const speedFactor = state.animSpeed / 10;
+        animTick += 0.024 * speedFactor;
 
-      // Base Rich Gradient
-      const bgGrad = ctx.createLinearGradient(0, 0, w, h);
-      bgGrad.addColorStop(0, th.c1);
-      bgGrad.addColorStop(1, th.c2);
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, w, h);
+        const bgGrad = ctx.createLinearGradient(0, 0, w, h);
+        bgGrad.addColorStop(0, th.c1);
+        bgGrad.addColorStop(1, th.c2);
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, w, h);
 
-      const mode = th.mode;
+        const mode = th.mode;
 
-      if (mode === 'aurora' || mode === 'plasma' || mode === 'chroma') {
-        // Multi-ribbon flowing aurora & plasma waves
-        for (let i = 0; i < 4; i++) {
-          const cx = (w * (0.18 + i * 0.22)) + Math.cos(animTick * (1 + i * 0.2) + i) * (w * 0.22);
-          const cy = (h * (0.3 + (i % 2) * 0.4)) + Math.sin(animTick * 1.3 + i * 1.5) * (h * 0.25);
-          const r = Math.max(w, h) * 0.44;
-          const rad = ctx.createRadialGradient(cx, cy, 4, cx, cy, r);
-          const col = th.colors[i % th.colors.length];
-          rad.addColorStop(0, col + 'aa');
-          rad.addColorStop(0.5, col + '44');
-          rad.addColorStop(1, 'transparent');
-          ctx.fillStyle = rad;
-          ctx.beginPath();
-          ctx.arc(cx, cy, r, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        // Flowing silk wave line
-        ctx.strokeStyle = th.colors[0] + '77';
-        ctx.lineWidth = 2.5;
-        ctx.beginPath();
-        for (let x = 0; x <= w; x += 12) {
-          const y = h * 0.5 + Math.sin(x * 0.018 + animTick * 2) * 38 + Math.cos(x * 0.01 - animTick) * 20;
-          if (x === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-      } else if (mode === 'matrix') {
-        // Digital emerald rain streams
-        ctx.font = 'bold 12px monospace';
-        particles.forEach((p, idx) => {
-          p.y = (p.y + (1.8 + (idx % 3)) * speedFactor) % h;
-          const x = (idx * 14) % w;
-          ctx.fillStyle = th.colors[idx % th.colors.length] + '99';
-          ctx.fillText(p.char, x, p.y);
-          ctx.fillStyle = 'rgba(16, 185, 129, 0.18)';
-          ctx.fillRect(x, p.y - 26, 2, 24);
-        });
-      } else if (mode === 'synthgrid') {
-        // glowing horizon sun + perspective neon grid
-        const sunGrad = ctx.createRadialGradient(w * 0.5, h * 0.32, 8, w * 0.5, h * 0.32, 95);
-        sunGrad.addColorStop(0, '#f43f5ebb');
-        sunGrad.addColorStop(0.6, '#ec489955');
-        sunGrad.addColorStop(1, 'transparent');
-        ctx.fillStyle = sunGrad;
-        ctx.beginPath();
-        ctx.arc(w * 0.5, h * 0.32, 95, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.strokeStyle = th.colors[0] + '55';
-        ctx.lineWidth = 1.2;
-        const horizon = h * 0.42;
-        for (let i = -6; i <= 6; i++) {
-          ctx.beginPath();
-          ctx.moveTo(w * 0.5 + i * 18, horizon);
-          ctx.lineTo(w * 0.5 + i * 95, h);
-          ctx.stroke();
-        }
-        const offset = (animTick * 24) % 24;
-        for (let y = horizon + offset; y < h; y += 24) {
-          ctx.beginPath();
-          ctx.moveTo(0, y);
-          ctx.lineTo(w, y);
-          ctx.stroke();
-        }
-      } else if (mode === 'vortex' || mode === 'starwarp') {
-        // Rotating spiral galaxy / starwarp
-        const cx = w * 0.5;
-        const cy = h * 0.5;
-        particles.forEach((p, i) => {
-          const angle = animTick * (0.6 + (i % 5) * 0.15) + i;
-          const dist = ((i * 9 + animTick * 30) % (Math.max(w, h) * 0.55));
-          const px = cx + Math.cos(angle) * dist;
-          const py = cy + Math.sin(angle) * dist * 0.65;
-          const col = th.colors[i % th.colors.length];
-          ctx.fillStyle = col;
-          ctx.beginPath();
-          ctx.arc(px, py, (dist / 90) + 1.2, 0, Math.PI * 2);
-          ctx.fill();
-        });
-      } else if (mode === 'waves') {
-        // Bioluminescent ocean sine layers
-        for (let layer = 0; layer < 4; layer++) {
-          ctx.fillStyle = th.colors[layer % th.colors.length] + '38';
-          ctx.beginPath();
-          ctx.moveTo(0, h);
-          for (let x = 0; x <= w; x += 14) {
-            const y = h * (0.35 + layer * 0.14) + Math.sin(x * 0.02 + animTick * (1.2 + layer * 0.3)) * 26;
-            ctx.lineTo(x, y);
+        if (mode === 'aurora' || mode === 'plasma' || mode === 'chroma') {
+          for (let i = 0; i < 4; i++) {
+            const cx = (w * (0.18 + i * 0.22)) + Math.cos(animTick * (1 + i * 0.2) + i) * (w * 0.22);
+            const cy = (h * (0.3 + (i % 2) * 0.4)) + Math.sin(animTick * 1.3 + i * 1.5) * (h * 0.25);
+            const r = Math.max(w, h) * 0.44;
+            const rad = ctx.createRadialGradient(cx, cy, 4, cx, cy, r);
+            const col = th.colors[i % th.colors.length];
+            rad.addColorStop(0, col + 'aa');
+            rad.addColorStop(0.5, col + '44');
+            rad.addColorStop(1, 'transparent');
+            ctx.fillStyle = rad;
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+            ctx.fill();
           }
-          ctx.lineTo(w, h);
-          ctx.closePath();
+          ctx.strokeStyle = th.colors[0] + '77';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          for (let x = 0; x <= w; x += 12) {
+            const y = h * 0.5 + Math.sin(x * 0.018 + animTick * 2) * 38 + Math.cos(x * 0.01 - animTick) * 20;
+            if (x === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+        } else if (mode === 'matrix') {
+          ctx.font = 'bold 12px monospace';
+          particles.forEach((p, idx) => {
+            p.y = (p.y + (1.8 + (idx % 3)) * speedFactor) % h;
+            const x = (idx * 14) % w;
+            ctx.fillStyle = th.colors[idx % th.colors.length] + '99';
+            ctx.fillText(p.char, x, p.y);
+            ctx.fillStyle = 'rgba(16, 185, 129, 0.18)';
+            ctx.fillRect(x, p.y - 26, 2, 24);
+          });
+        } else if (mode === 'synthgrid') {
+          const sunGrad = ctx.createRadialGradient(w * 0.5, h * 0.32, 8, w * 0.5, h * 0.32, 95);
+          sunGrad.addColorStop(0, '#f43f5ebb');
+          sunGrad.addColorStop(0.6, '#ec489955');
+          sunGrad.addColorStop(1, 'transparent');
+          ctx.fillStyle = sunGrad;
+          ctx.beginPath();
+          ctx.arc(w * 0.5, h * 0.32, 95, 0, Math.PI * 2);
           ctx.fill();
+
+          ctx.strokeStyle = th.colors[0] + '55';
+          ctx.lineWidth = 1.2;
+          const horizon = h * 0.42;
+          for (let i = -6; i <= 6; i++) {
+            ctx.beginPath();
+            ctx.moveTo(w * 0.5 + i * 18, horizon);
+            ctx.lineTo(w * 0.5 + i * 95, h);
+            ctx.stroke();
+          }
+          const offset = (animTick * 24) % 24;
+          for (let y = horizon + offset; y < h; y += 24) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(w, y);
+            ctx.stroke();
+          }
+        } else if (mode === 'vortex' || mode === 'starwarp') {
+          const cx = w * 0.5;
+          const cy = h * 0.5;
+          particles.forEach((p, i) => {
+            const angle = animTick * (0.6 + (i % 5) * 0.15) + i;
+            const dist = ((i * 9 + animTick * 30) % (Math.max(w, h) * 0.55));
+            const px = cx + Math.cos(angle) * dist;
+            const py = cy + Math.sin(angle) * dist * 0.65;
+            const col = th.colors[i % th.colors.length];
+            ctx.fillStyle = col;
+            ctx.beginPath();
+            ctx.arc(px, py, (dist / 90) + 1.2, 0, Math.PI * 2);
+            ctx.fill();
+          });
+        } else if (mode === 'waves') {
+          for (let layer = 0; layer < 4; layer++) {
+            ctx.fillStyle = th.colors[layer % th.colors.length] + '38';
+            ctx.beginPath();
+            ctx.moveTo(0, h);
+            for (let x = 0; x <= w; x += 14) {
+              const y = h * (0.35 + layer * 0.14) + Math.sin(x * 0.02 + animTick * (1.2 + layer * 0.3)) * 26;
+              ctx.lineTo(x, y);
+            }
+            ctx.lineTo(w, h);
+            ctx.closePath();
+            ctx.fill();
+          }
+        } else if (mode === 'lasers' || mode === 'storm') {
+          for (let i = 0; i < 6; i++) {
+            ctx.strokeStyle = th.colors[i % th.colors.length] + '88';
+            ctx.lineWidth = 2.2;
+            ctx.beginPath();
+            const x1 = (Math.sin(animTick * 0.9 + i) * 0.5 + 0.5) * w;
+            const x2 = (Math.cos(animTick * 1.1 + i * 2) * 0.5 + 0.5) * w;
+            ctx.moveTo(x1, 0);
+            ctx.lineTo(x2, h);
+            ctx.stroke();
+          }
+        } else if (mode === 'hexpulse') {
+          for (let i = 0; i < 5; i++) {
+            const cx = (w * 0.2) + (i * w * 0.16);
+            const cy = h * 0.5 + Math.sin(animTick + i) * 35;
+            const rad = 22 + ((animTick * 28 + i * 25) % 85);
+            ctx.strokeStyle = th.colors[i % th.colors.length] + '66';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+        } else if (mode === 'blackhole') {
+          // 16. Black Hole Accretion Disk
+          const cx = w * 0.5, cy = h * 0.5;
+          for (let r = 110; r > 18; r -= 14) {
+            ctx.strokeStyle = th.colors[r % th.colors.length] + '66';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, r, r * 0.42, animTick * 0.5, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+          ctx.fillStyle = '#000000';
+          ctx.beginPath();
+          ctx.arc(cx, cy, 20, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (mode === 'dna') {
+          // 17. DNA Double Helix
+          for (let x = 20; x < w - 20; x += 22) {
+            const y1 = h * 0.5 + Math.sin(x * 0.03 + animTick * 2) * 65;
+            const y2 = h * 0.5 - Math.sin(x * 0.03 + animTick * 2) * 65;
+            ctx.strokeStyle = th.colors[2] + '44';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(x, y1);
+            ctx.lineTo(x, y2);
+            ctx.stroke();
+            ctx.fillStyle = th.colors[0];
+            ctx.beginPath();
+            ctx.arc(x, y1, 4.5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = th.colors[1];
+            ctx.beginPath();
+            ctx.arc(x, y2, 4.5, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        } else if (mode === 'supernova') {
+          // 18. Supernova Shockwave
+          const cx = w * 0.5, cy = h * 0.5;
+          for (let i = 0; i < 24; i++) {
+            const ang = (i / 24) * Math.PI * 2 + animTick * 0.4;
+            const len = 30 + ((animTick * 45 + i * 15) % 150);
+            ctx.strokeStyle = th.colors[i % th.colors.length] + '88';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + Math.cos(ang) * len, cy + Math.sin(ang) * len);
+            ctx.stroke();
+          }
+        } else if (mode === 'glitch') {
+          // 19. Cyber Glitch Slices
+          for (let i = 0; i < 8; i++) {
+            const gy = ((i * 43 + Math.floor(animTick * 18) * 13) % h);
+            const gw = 50 + ((i * 67) % (w * 0.6));
+            const gx = ((i * 97 + Math.sin(animTick * 3 + i) * 80) % w);
+            ctx.fillStyle = th.colors[i % th.colors.length] + '44';
+            ctx.fillRect(gx, gy, gw, 8 + (i % 10));
+          }
+        } else if (mode === 'dragon') {
+          // 20. Emerald Dragon Energy Wave
+          for (let s = 0; s < 28; s++) {
+            const sx = (w * 0.1) + (s / 28) * (w * 0.8);
+            const sy = h * 0.5 + Math.sin(s * 0.35 - animTick * 2.5) * 65;
+            ctx.fillStyle = th.colors[s % th.colors.length] + '88';
+            ctx.beginPath();
+            ctx.arc(sx, sy, 8 + Math.sin(s * 0.3 + animTick) * 4, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        } else {
+          // Fireflies, Sakura Petals, Arctic Snow
+          particles.forEach((p, i) => {
+            p.x = (p.x + Math.sin(animTick + i) * 0.9 + w) % w;
+            p.y = (p.y + (mode === 'fireflies' ? -0.8 : 1.2) * speedFactor + h) % h;
+            const col = th.colors[i % th.colors.length];
+            const glow = ctx.createRadialGradient(p.x, p.y, 1, p.x, p.y, p.size * 5);
+            glow.addColorStop(0, col + 'dd');
+            glow.addColorStop(1, 'transparent');
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size * 5, 0, Math.PI * 2);
+            ctx.fill();
+          });
         }
-      } else if (mode === 'lasers' || mode === 'storm') {
-        // Crossing neon laser beams & lightning pulses
-        for (let i = 0; i < 6; i++) {
-          ctx.strokeStyle = th.colors[i % th.colors.length] + '88';
+
+        // Interactive Touch Ripples on Key Press
+        for (let i = state.ripples.length - 1; i >= 0; i--) {
+          const rp = state.ripples[i];
+          rp.r += 4.2;
+          rp.alpha -= 0.032;
+          if (rp.alpha <= 0) {
+            state.ripples.splice(i, 1);
+            continue;
+          }
+          ctx.strokeStyle = `rgba(125, 211, 252, ${rp.alpha})`;
           ctx.lineWidth = 2.2;
           ctx.beginPath();
-          const x1 = (Math.sin(animTick * 0.9 + i) * 0.5 + 0.5) * w;
-          const x2 = (Math.cos(animTick * 1.1 + i * 2) * 0.5 + 0.5) * w;
-          ctx.moveTo(x1, 0);
-          ctx.lineTo(x2, h);
+          ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
           ctx.stroke();
         }
-      } else if (mode === 'hexpulse') {
-        // Pulsing quantum rings
-        for (let i = 0; i < 5; i++) {
-          const cx = (w * 0.2) + (i * w * 0.16);
-          const cy = h * 0.5 + Math.sin(animTick + i) * 35;
-          const rad = 22 + ((animTick * 28 + i * 25) % 85);
-          ctx.strokeStyle = th.colors[i % th.colors.length] + '66';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.arc(cx, cy, rad, 0, Math.PI * 2);
-          ctx.stroke();
-        }
-      } else {
-        // Fireflies, Sakura Petals, Arctic Snow
-        particles.forEach((p, i) => {
-          p.x = (p.x + Math.sin(animTick + i) * 0.9 + w) % w;
-          p.y = (p.y + (mode === 'fireflies' ? -0.8 : 1.2) * speedFactor + h) % h;
-          const col = th.colors[i % th.colors.length];
-          const glow = ctx.createRadialGradient(p.x, p.y, 1, p.x, p.y, p.size * 5);
-          glow.addColorStop(0, col + 'dd');
-          glow.addColorStop(1, 'transparent');
-          ctx.fillStyle = glow;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size * 5, 0, Math.PI * 2);
-          ctx.fill();
-        });
-      }
-
-      // Interactive Touch Ripples on Key Press
-      for (let i = state.ripples.length - 1; i >= 0; i--) {
-        const rp = state.ripples[i];
-        rp.r += 4.2;
-        rp.alpha -= 0.032;
-        if (rp.alpha <= 0) {
-          state.ripples.splice(i, 1);
-          continue;
-        }
-        ctx.strokeStyle = `rgba(125, 211, 252, ${rp.alpha})`;
-        ctx.lineWidth = 2.2;
-        ctx.beginPath();
-        ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
-        ctx.stroke();
       }
 
       requestAnimationFrame(drawKeyboardAnimation);
@@ -1665,25 +1997,19 @@
     const androidSourceFiles = {
       kotlin_service: `package com.glasskeyboard.ime
 
-import android.animation.ValueAnimator
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.*
 import android.inputmethodservice.InputMethodService
 import android.os.*
-import android.view.MotionEvent
 import android.view.View
-import android.view.animation.LinearInterpolator
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
-import kotlin.math.cos
-import kotlin.math.sin
 
 class GlassKeyboardService : InputMethodService() {
 
-    private lateinit var keyboardView: GlassKeyboardCanvasView
+    private lateinit var keyboardView: View
     private lateinit var prefs: SharedPreferences
     private var avroBuffer = StringBuilder()
 
@@ -1693,14 +2019,16 @@ class GlassKeyboardService : InputMethodService() {
     }
 
     override fun onCreateInputView(): View {
-        keyboardView = GlassKeyboardCanvasView(this, this, prefs)
+        keyboardView = View(this)
         return keyboardView
     }
 
+    // Direct Live Composing for Avro Phonetic
     fun handleCharacter(ch: String, isAvroMode: Boolean) {
         if (isAvroMode && ch.length == 1 && ch[0].isLetter()) {
             avroBuffer.append(ch)
-            currentInputConnection?.setComposingText(transliterateAvro(avroBuffer.toString()), 1)
+            val liveBangla = transliterateAvro(avroBuffer.toString())
+            currentInputConnection?.setComposingText(liveBangla, 1)
         } else {
             flushAvroBuffer()
             currentInputConnection?.commitText(ch, 1)
@@ -1715,7 +2043,6 @@ class GlassKeyboardService : InputMethodService() {
         }
     }
 
-    // Gboard-style Avro Phonetic Transliteration Engine
     private fun transliterateAvro(raw: String): String {
         val dict = mapOf(
             "ami" to "আমি", "tumi" to "তুমি", "apni" to "আপনি",
@@ -1729,63 +2056,21 @@ class GlassKeyboardService : InputMethodService() {
             .replace("ch", "চ").replace("sh", "শ").replace("th", "থ")
             .replace("dh", "ধ").replace("ph", "ফ").replace("bh", "ভ")
             .replace("k", "ক").replace("g", "গ").replace("j", "জ")
-            .replace("t", "ট").replace("d", "ড").replace("n", "ন")
+            .replace("t", "ত").replace("d", "দ").replace("n", "ন")
             .replace("p", "প").replace("b", "ব").replace("m", "ম")
             .replace("r", "র").replace("l", "ল").replace("s", "স")
             .replace("h", "হ").replace("a", "া").replace("i", "ি")
             .replace("u", "ু").replace("e", "ে").replace("o", "")
     }
 
-    fun sendBackspace() {
-        if (avroBuffer.isNotEmpty()) {
-            avroBuffer.deleteCharAt(avroBuffer.length - 1)
-            if (avroBuffer.isEmpty()) currentInputConnection?.commitText("", 1)
-            else currentInputConnection?.setComposingText(transliterateAvro(avroBuffer.toString()), 1)
-            return
-        }
-        val ic = currentInputConnection ?: return
-        val selected = ic.getSelectedText(0)
-        if (!selected.isNullOrEmpty()) ic.commitText("", 1)
-        else ic.deleteSurroundingText(1, 0)
-    }
-
-    fun sendEnter() {
-        flushAvroBuffer()
-        val ic = currentInputConnection ?: return
-        val ei = currentEditorInfo
-        if (ei != null && (ei.imeOptions and EditorInfo.IME_MASK_ACTION) != EditorInfo.IME_ACTION_NONE) {
-            ic.performEditorAction(ei.imeOptions and EditorInfo.IME_MASK_ACTION)
-        } else {
-            ic.commitText("\\n", 1)
-        }
-    }
-
-    fun copyCurrentText(): String {
-        flushAvroBuffer()
-        val ic = currentInputConnection ?: return ""
-        val selected = ic.getSelectedText(0)?.toString()
-        val textToCopy = if (!selected.isNullOrEmpty()) selected
-        else ic.getExtractedText(ExtractedTextRequest(), 0)?.text?.toString() ?: ""
-        if (textToCopy.isNotEmpty()) {
-            val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            cm.setPrimaryClip(ClipData.newPlainText("keyboard_copy", textToCopy))
-        }
-        return textToCopy
-    }
-
-    fun pasteFromClipboard(): String {
-        flushAvroBuffer()
-        val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val pasteText = cm.primaryClip?.getItemAt(0)?.text?.toString() ?: ""
-        if (pasteText.isNotEmpty()) currentInputConnection?.commitText(pasteText, 1)
-        return pasteText
-    }
-
-    fun triggerVibration(durationMs: Long = 16L) {
+    // Adjustable Heavy Vibration Engine
+    fun triggerVibration(powerPercent: Int = 90) {
         if (!prefs.getBoolean("vibrate_on", true)) return
         val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator ?: return
+        val durationMs = (12L + (powerPercent * 48L) / 100L)
+        val amplitude = ((powerPercent * 255) / 100).coerceIn(1, 255)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrate(VibrationEffect.createOneShot(durationMs, VibrationEffect.DEFAULT_AMPLITUDE))
+            vibrator.vibrate(VibrationEffect.createOneShot(durationMs, amplitude))
         } else {
             @Suppress("DEPRECATION")
             vibrator.vibrate(durationMs)
@@ -1800,7 +2085,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.Settings
-import android.view.Gravity
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 
@@ -1816,7 +2100,7 @@ class SettingsActivity : Activity() {
         }
 
         val btnEnable = Button(this).apply {
-            text = "1. Enable Crystal Glass Keyboard"
+            text = "1. Enable Crystal Glass Keyboard v4.0"
             setOnClickListener {
                 startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS))
             }
@@ -1906,6 +2190,19 @@ class SettingsActivity : Activity() {
       renderCodeBlock();
       requestAnimationFrame(drawKeyboardAnimation);
 
+      // Minimize & Restore Keyboard Handlers
+      const kbRoot = document.getElementById('keyboardRoot');
+      const minBar = document.getElementById('minimizedKeyboardBar');
+      const setMinimized = (val) => {
+        state.isMinimized = val;
+        kbRoot.classList.toggle('hidden', val);
+        minBar.classList.toggle('hidden', !val);
+        showToast(val ? '🔽 কিবোর্ড মিনিমাইজ করা হয়েছে' : '🔼 কিবোর্ড ওপেন করা হয়েছে');
+      };
+      document.getElementById('btnMinimizeKeyboard').addEventListener('click', () => setMinimized(true));
+      document.getElementById('btnRestoreKeyboard').addEventListener('click', () => setMinimized(false));
+      document.getElementById('btnQuickMinimizeFromMenu').addEventListener('click', () => setMinimized(true));
+
       // View Tabs
       const tabBtnLive = document.getElementById('tabBtnLive');
       const tabBtnCode = document.getElementById('tabBtnCode');
@@ -1947,6 +2244,7 @@ class SettingsActivity : Activity() {
       };
       document.getElementById('btnToggleMenu').addEventListener('click', toggleDrawer);
       document.getElementById('btnOpenMenuQuick').addEventListener('click', () => {
+        if (state.isMinimized) setMinimized(false);
         state.drawerOpen = true;
         menuDrawer.classList.remove('hidden');
       });
@@ -2009,41 +2307,61 @@ class SettingsActivity : Activity() {
         renderNumberBar();
       });
 
-      document.getElementById('toggleCtrlButton').addEventListener('change', (e) => {
-        state.showCtrlKeys = e.target.checked;
-        renderMainKeyboard();
-      });
-
       document.getElementById('toggleHaptic').addEventListener('change', (e) => {
         state.hapticEnabled = e.target.checked;
-        document.getElementById('statusBadge').textContent = state.hapticEnabled ? 'Haptics On' : 'Haptics Off';
+        document.getElementById('statusBadge').textContent = state.hapticEnabled
+          ? `Vibe: ${state.vibrationPower}%`
+          : 'Vibe: Off';
       });
 
       document.getElementById('toggleTouchRipple').addEventListener('change', (e) => {
         state.touchRippleEnabled = e.target.checked;
       });
 
-      // Pro Sliders
+      // Pro Sliders (Vibration Power, Glass Density, Button & Font Scaling, Keyboard Zoom)
+      document.getElementById('rangeVibrationPower').addEventListener('input', (e) => {
+        state.vibrationPower = Number(e.target.value);
+        document.getElementById('valVibePower').textContent = state.vibrationPower + '%';
+        if (state.hapticEnabled) {
+          document.getElementById('statusBadge').textContent = `Vibe: ${state.vibrationPower}%`;
+          triggerHapticAndSound(false);
+        }
+      });
+
       document.getElementById('rangeGlassBlur').addEventListener('input', (e) => {
         state.glassBlurPx = Number(e.target.value);
+        document.getElementById('valGlassBlur').textContent = state.glassBlurPx + 'px';
         applyCssVariables();
       });
+
       document.getElementById('rangeGlassAlpha').addEventListener('input', (e) => {
         state.glassAlphaPct = Number(e.target.value);
+        document.getElementById('valGlassDensity').textContent = state.glassAlphaPct + '%';
         applyCssVariables();
       });
+
       document.getElementById('rangeAnimSpeed').addEventListener('input', (e) => {
         state.animSpeed = Number(e.target.value);
+        document.getElementById('valAnimSpeed').textContent = state.animSpeed + 'x';
       });
+
       document.getElementById('rangeKeyRadius').addEventListener('input', (e) => {
         state.keyRadiusPx = Number(e.target.value);
         applyCssVariables();
       });
+
       document.getElementById('rangeKeyHeight').addEventListener('input', (e) => {
         state.keyHeightPx = Number(e.target.value);
+        document.getElementById('valKeyHeight').textContent = state.keyHeightPx + 'px';
         applyCssVariables();
         renderNumberBar();
         renderMainKeyboard();
+      });
+
+      document.getElementById('rangeKbScale').addEventListener('input', (e) => {
+        state.kbScalePct = Number(e.target.value);
+        document.getElementById('valKbScale').textContent = state.kbScalePct + '%';
+        applyCssVariables();
       });
 
       // Custom Emoji & Number Row Save
@@ -2083,8 +2401,11 @@ class SettingsActivity : Activity() {
       // Clear Editor & Dismiss Sticker
       document.getElementById('btnClearEditor').addEventListener('click', () => {
         state.avroBuffer = '';
+        state.avroTrackStart = null;
+        state.backspaceSelecting = false;
         updateAvroBadge();
         editor.value = '';
+        renderSuggestions();
       });
 
       document.getElementById('btnDismissSticker').addEventListener('click', () => {
