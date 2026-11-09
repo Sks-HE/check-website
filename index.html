@@ -225,6 +225,44 @@
             "https://thumb-cdn77.xnxx-cdn.com/a29e9a84-db5e-44db-a031-f4fff3cf9ae8/0/xn_30_p.jpg",
             // এখানে আগের মতোই কমা দিয়ে SKSK চ্যাপ্টারের সব ছবির লিঙ্ক যোগ করতে পারবেন
         ];
+// --- ৩য় চ্যাপ্টার থেকে শুরু করে পরপর নতুন যত খুশি চ্যাপ্টার এখানে যোগ করুন ---
+        const moreChapters = [
+            {
+                name: "সেরা কিছু",
+                links: [
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5o0c4MrMTK96QZeKMtx-YZTywAkEnq6BwvN8QYCtf-ySZtzUEdrwrNvo&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUowvyTJps3_Acxwfefu5DkwS4t-l5GRZY1oixJqEJ0A&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuvB8R_sUSi55FCHj-gOTuNF4K2PQXI4sstPJo2qR-Tg&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRmUVSr3VecAnKaTwTjbm1M7hvNUkWhhIq3N-Jltu8tg&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj9svOBwIUmPGsm4P2Tmx-W1a9HO7m4y5l8CPnFUZJRA&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlxzESJyGGESGRViixDdTCp68GQuxbMab-fS8f8V8rAg&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpgAdzBxbhfjkVra6Sv7hStYt2cGKt_tavUCVzL_sN0A&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwrjsuZdMp8Et82C7uMPpmGIbsg6xhUGmVkJAbdqpOkw&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJVPDOtyc-06JoxYovtJlQDPctLZVAccv-o8hcEBZm6l9OKV3U1NmanH4&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjO2JIOifrpShOjKc6jl_1Ke5pS6ey1aH2RU-zgkRCKg&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6ajXNcllrcceD9PEhIiRaa-_CR_H9C362fy9E5p00CQ&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2MYsDssPH97lNzji_r3ulzIrgFXCpKdWYLJoLTmFnkQ&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn9PdyFzvr-ocyywBmWUDkpOGHVd6J-B_NB_vvuApBBg&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThm1c1EnRzbNZhsIi-VMtioL-sjJrnRTMxfRg3LxCwQ8Rzp8V0VWG4I8E&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPA99ionJ6DouIrbI_ahpLk0p27mKRA4u-58yuJmtVMA&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGE-udZhK8ElPhrr7_RT4EB5c7pTUa3dcYzg0wvI0BFbmjMWTx1VQzUo4&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfDMhdfy0xEBt2XyseyZffrAXIVyiTb2meiLyWAGx7uw&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxTSrLC_JeMHZ1nPiw9lDFs-Z19sY5OLpEpDRqz_yaSA&s=10",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGLXqWWQ3SqS0Czt5GEqdFOxESCnYKGSOeybLhiXaE7w&s=10",
+                    // এখানে কমা দিয়ে SKSK চ্যাপ্টারের সব ছবির লিঙ্ক বসান
+                ]
+            },
+            // ৪র্থ বা তার পরের চ্যাপ্টার খুলতে শুধু নিচের মতো আরেকটি ব্লক কপি করে এখানে বসিয়ে দেবেন:
+            /*
+            {
+                name: "৪র্থ চ্যাপ্টারের নাম",
+                links: [
+                    "ছবির লিঙ্ক ১",
+                    "ছবির লিঙ্ক ২",
+                ]
+            },
+            */
+        ];
 
         const gallery = document.getElementById('gallery');
         const gallerySksk = document.getElementById('gallery-sksk');
@@ -234,20 +272,19 @@
         const autoPlayBtn = document.getElementById('autoplay-btn');
 
         let currentIdx = 0;
-        // দুই চ্যাপ্টারের সব ছবি একসাথে যুক্ত করা হয়েছে যাতে ফুলস্ক্রিন ও অটো-প্লেতে কোনো বিভাজন না থাকে
-        let images = [...imageLinks, ...skskImageLinks];
+        let images = [];
         let isAutoPlaying = false;
         let autoPlayInterval;
         let scale = 1;
         let startX = 0;
 
-        // দুই চ্যাপ্টারের ছবির কার্ড জেনারেট করা
+        // আগের ২টা চ্যাপ্টার + নতুন সব চ্যাপ্টারের ছবির কার্ড জেনারেট করা
         function initGallery() {
             images = [...imageLinks, ...skskImageLinks];
             gallery.innerHTML = '';
             gallerySksk.innerHTML = '';
 
-            // ১ম চ্যাপ্টারের ছবি সাজানো
+            // ১ম চ্যাপ্টারের ছবি সাজানো (আগের মতোই থাকবে)
             imageLinks.forEach((imgUrl, index) => {
                 const card = document.createElement('div');
                 card.className = 'photo-card fade-in';
@@ -256,14 +293,48 @@
                 gallery.appendChild(card);
             });
 
-            // ২য় চ্যাপ্টার (SKSK)-এর ছবি সাজানো
+            // ২য় চ্যাপ্টারের ছবি সাজানো (আগের মতোই থাকবে)
             skskImageLinks.forEach((imgUrl, index) => {
                 const card = document.createElement('div');
                 card.className = 'photo-card fade-in';
                 const globalIndex = imageLinks.length + index;
-                card.innerHTML = `<img src="${imgUrl}" alt="SKSK Photo ${index + 1}" loading="lazy">`;
+                card.innerHTML = `<img src="${imgUrl}" alt="Photo ${index + 1}" loading="lazy">`;
                 card.onclick = () => openFullscreen(globalIndex);
                 gallerySksk.appendChild(card);
+            });
+
+            // ৩য় চ্যাপ্টার ও তার পরের নতুন চ্যাপ্টারগুলো ২য় চ্যাপ্টারের ঠিক নিচে সাজানো
+            let extraContainer = document.getElementById('extra-chapters-container');
+            if (!extraContainer) {
+                extraContainer = document.createElement('div');
+                extraContainer.id = 'extra-chapters-container';
+                gallerySksk.insertAdjacentElement('afterend', extraContainer);
+            }
+            extraContainer.innerHTML = '';
+
+            moreChapters.forEach((chapter) => {
+                // চ্যাপ্টারের নাম
+                const titleDiv = document.createElement('div');
+                titleDiv.className = 'w-full max-w-6xl mx-auto px-6 pt-8 pb-2 text-left';
+                titleDiv.innerHTML = `<h2 class="text-white text-2xl font-light opacity-80">${chapter.name}</h2>`;
+                extraContainer.appendChild(titleDiv);
+
+                // চ্যাপ্টারের ছবির গ্রিড
+                const sec = document.createElement('section');
+                sec.className = 'gallery-grid';
+
+                chapter.links.forEach((imgUrl, idx) => {
+                    const globalIndex = images.length;
+                    images.push(imgUrl);
+
+                    const card = document.createElement('div');
+                    card.className = 'photo-card fade-in';
+                    card.innerHTML = `<img src="${imgUrl}" alt="${chapter.name} ${idx + 1}" loading="lazy">`;
+                    card.onclick = () => openFullscreen(globalIndex);
+                    sec.appendChild(card);
+                });
+
+                extraContainer.appendChild(sec);
             });
         }
         function openFullscreen(index) {
