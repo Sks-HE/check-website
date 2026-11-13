@@ -2653,6 +2653,23 @@ aspect-ratio: 16/9;
     0% { background-position: -200% center; }
     100% { background-position: 200% center; }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ===== FULL EPISODE BUTTON (NO ANIMATION) ===== */
 .full-episode-section {
     width: 100%;
@@ -2843,22 +2860,159 @@ height: 22px !important;
     }
 }
 
+/* ===== HOME PAGE DUAL BUTTONS: LEFT (FULL EPISODE) & RIGHT (BAAHUBALI) ===== */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&display=swap');
 
+.home-dual-action-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.full-episode-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+}
+.full-episode-title {
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-color);
+    text-align: center;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.baahubali-home-title {
+    font-family: 'Cinzel Decorative', 'Hind Siliguri', serif;
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--text-color);
+    text-align: center;
+    letter-spacing: 1.2px;
+}
+.full-episode-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 22px;
+    border-radius: 50px;
+    background: linear-gradient(90deg, var(--accent), #fb923c);
+    color: #fff;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: fit-content;
+    max-width: 100%;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.full-episode-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    transition: left 0.6s ease;
+}
+.full-episode-btn:hover::before {
+    left: 100%;
+}
+.full-episode-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.25), 0 0 18px var(--glow-color);
+}
+.full-episode-btn:active {
+    transform: scale(0.97);
+}
+.full-episode-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: #ffffff;
+    flex-shrink: 0;
+}
+/* হোমপেজের ডান পাশের বাহুবলী বাটনের ভেতরের স্টাইলিশ ফন্ট */
+.baahubali-home-btn-text {
+    font-family: 'Cinzel Decorative', 'Orbitron', 'Hind Siliguri', serif;
+    font-weight: 900;
+    letter-spacing: 1.8px;
+    font-size: 14px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.35);
+}
+@media (max-width: 480px) {
+    .home-dual-action-row {
+        gap: 8px;
+    }
+    .full-episode-btn {
+        padding: 11px 14px;
+        font-size: 12px;
+        gap: 6px;
+    }
+    .baahubali-home-btn-text {
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+    .full-episode-title, .baahubali-home-title {
+        font-size: 14px;
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* ===== DESKTOP / LAPTOP VIEW OPTIMIZATION ===== */
+@media (min-width: 990px) {
+    .app-container {
+        max-width: 1200px !important;
+        width: 95% !important;
+        padding: 50px 40px !important;
+        gap: 50px !important;
+    }
+    .collection-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 30px !important;
+    }
+    .header-wrapper { gap: 25px; }
+    .custom-logo-placeholder { width: 80px; height: 80px; }
+    .header-wrapper h1 {
+        height: 80px;
+        font-size: 28px !important;
+        line-height: 1.2 !important;
+    }
+    .feed-item { width: 160px; height: 230px; }
+    .horizontal-feed-container { gap: 25px; }
+    .btn-premium { padding: 16px 32px; font-size: 15px; }
+    .social-box { width: 80px; height: 80px; }
+    .social-container { gap: 35px; }
+    .menu-container { top: 25px !important; right: 30px !important; z-index: 1002 !important; }
+    .dropdown-menu {
+        width: 100% !important; top: 0 !important; left: 0 !important;
+        min-height: 90px !important; padding-right: 100px !important;
+        padding-left: 40px !important; gap: 15px !important; justify-content: flex-start !important;
+    }
+    .menu-h-btn { padding: 10px 20px !important; font-size: 14px !important; }
+    .menu-h-social { width: 42px !important; height: 42px !important; }
+    .menu-h-social svg { width: 22px !important; height: 22px !important; }
+    .filter-btn { padding: 12px 28px; font-size: 15px; }
+    .thank-you-bar { width: 60%; padding: 16px 24px; }
+    .post-caption { font-size: 17px; padding: 12px 16px; }
+    .animated-title { font-size: 22px; margin-bottom: 20px; }
+    .full-episode-btn { padding: 15px 32px; font-size: 15px; }
+    .baahubali-home-btn-text { font-size: 15px; }
+}
 
 /* ===== BAAHUBALI 2D BUTTON (MOBILE & LAPTOP FULLSCREEN) ===== */
 .baahubali-2d-btn {
@@ -2885,63 +3039,10 @@ height: 22px !important;
     -webkit-backdrop-filter: blur(12px);
     white-space: nowrap;
     user-select: none;
+    overflow: hidden;
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
 }
-.baahubali-2d-btn.active {
-    display: inline-flex;
-}
-.baahubali-2d-btn .play-logo-circle {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: #ffffff;
-    color: #ef4444;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.35);
-    flex-shrink: 0;
-}
-.baahubali-2d-btn .play-logo-circle svg {
-    width: 14px;
-    height: 14px;
-    fill: #ef4444;
-    margin-left: 2px;
-}
-/* ফোনের ক্ষেত্রে: ঠিক ক্যাপশনের সামান্য একটু নিচে মাঝখানে */
-@media (max-width: 768px) {
-    .baahubali-2d-btn {
-        top: 66px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 15px;
-        padding: 9px 22px;
-    }
-    @keyframes baahubaliBtnPulse {
-        0%, 100% { transform: translateX(-50%) scale(1); }
-        50% { transform: translateX(-50%) scale(1.07); box-shadow: 0 10px 34px rgba(245, 158, 11, 0.8), 0 0 30px rgba(244, 114, 182, 0.7); }
-    }
-}
-/* ল্যাপটপ/পিসির ক্ষেত্রে: ফুল স্ক্রিনের ডান পাশে নিচের দিকে (সোয়াইপ বরাবর এবং টোস্ট মেসেজের ঠিক ওপরে) */
-@media (min-width: 769px) {
-    .baahubali-2d-btn {
-        bottom: 155px;
-        right: 28px;
-        top: auto;
-        left: auto;
-        font-size: 16px;
-        padding: 12px 28px;
-    }
-    @keyframes baahubaliBtnPulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.07) translateY(-3px); box-shadow: 0 12px 36px rgba(245, 158, 11, 0.85), 0 0 32px rgba(244, 114, 182, 0.75); }
-    }
-}
-
-/* অন্যান্য প্রিমিয়াম বাটনের মতোই মাউস ধরলে শাইন ওভারলে এবং গ্লো */
-.baahubali-2d-btn {
-    overflow: hidden;
-}
+.baahubali-2d-btn.active { display: inline-flex; }
 .baahubali-2d-btn::before {
     content: '';
     position: absolute;
@@ -2953,21 +3054,43 @@ height: 22px !important;
     transition: left 0.6s ease;
     pointer-events: none;
 }
-.baahubali-2d-btn:hover::before {
-    left: 100%;
-}
+.baahubali-2d-btn:hover::before { left: 100%; }
 .baahubali-2d-btn:hover {
     border-color: #ffffff;
     box-shadow: 0 15px 38px rgba(245, 158, 11, 0.9), 0 0 32px var(--accent);
 }
-.baahubali-2d-btn:hover .play-logo-circle {
-    transform: scale(1.15) rotate(8deg);
+.baahubali-2d-btn .play-logo-circle {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: #ffffff; color: #ef4444;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.35); flex-shrink: 0;
     transition: transform 0.3s ease;
+}
+.baahubali-2d-btn:hover .play-logo-circle { transform: scale(1.15) rotate(8deg); }
+.baahubali-2d-btn .play-logo-circle svg { width: 14px; height: 14px; fill: #ef4444; margin-left: 2px; }
+
+@media (max-width: 768px) {
+    .baahubali-2d-btn {
+        top: 66px; left: 50%; transform: translateX(-50%);
+        font-size: 15px; padding: 9px 22px;
+    }
+    @keyframes baahubaliBtnPulse {
+        0%, 100% { transform: translateX(-50%) scale(1); }
+        50% { transform: translateX(-50%) scale(1.07); box-shadow: 0 10px 34px rgba(245, 158, 11, 0.8), 0 0 30px rgba(244, 114, 182, 0.7); }
+    }
+}
+@media (min-width: 769px) {
+    .baahubali-2d-btn {
+        bottom: 155px; right: 28px; top: auto; left: auto;
+        font-size: 16px; padding: 12px 28px;
+    }
+    @keyframes baahubaliBtnPulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.07) translateY(-3px); box-shadow: 0 12px 36px rgba(245, 158, 11, 0.85), 0 0 32px rgba(244, 114, 182, 0.75); }
+    }
 }
 
 /* ===== BAAHUBALI ROYAL PAGE & EPIC CINEMATIC FONT STYLE ===== */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&display=swap');
-
 .baahubali-epic-title {
     font-family: 'Cinzel Decorative', 'Orbitron', 'Hind Siliguri', serif;
     font-size: 40px;
@@ -2995,7 +3118,6 @@ height: 22px !important;
     opacity: 0.95;
 }
 
-/* বাহুবলী পেজের ২-কলাম লেআউট (বাম পাশে তলা মারা শর্টস ডেক + ডান পাশে ১৬:৯ ফুল এপিসোড) */
 .baahubali-media-showcase {
     width: 100%;
     max-width: 1020px;
@@ -3014,26 +3136,13 @@ height: 22px !important;
     }
 }
 
-/* বাম পাশের তলা মারা (Stacked Deck) শর্টস কার্ড */
+/* বাম পাশের ডাইনামিক তলা মারা (Stacked Deck) শর্টস কার্ড */
 .baahubali-shorts-stack-wrap {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    justify-content: center;
     width: 100%;
-}
-.baahubali-first-caption-pill {
-    font-family: 'Hind Siliguri', 'Inter', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text-color);
-    background: var(--card-bg);
-    border-left: 4px solid #f59e0b;
-    padding: 8px 16px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    max-width: 260px;
-    text-align: center;
 }
 .baahubali-shorts-stack {
     position: relative;
@@ -3059,20 +3168,19 @@ height: 22px !important;
     object-fit: cover;
     display: block;
 }
-/* তলা মারা (Stacked Deck) এফেক্ট যাতে নিচে অনেকগুলো শর্টস আছে বোঝা যায় */
 .baahubali-stack-layer.layer-4 {
     transform: translate(32px, 24px) rotate(11deg) scale(0.88);
-    opacity: 0.4;
+    opacity: 0.42;
     z-index: 1;
 }
 .baahubali-stack-layer.layer-3 {
     transform: translate(-26px, 18px) rotate(-9deg) scale(0.91);
-    opacity: 0.6;
+    opacity: 0.62;
     z-index: 2;
 }
 .baahubali-stack-layer.layer-2 {
     transform: translate(20px, 11px) rotate(6deg) scale(0.95);
-    opacity: 0.8;
+    opacity: 0.82;
     z-index: 3;
 }
 .baahubali-stack-layer.layer-1 {
@@ -3081,72 +3189,52 @@ height: 22px !important;
     border-color: #fde047;
     box-shadow: 0 16px 42px rgba(0,0,0,0.8), 0 0 28px rgba(245, 158, 11, 0.5);
 }
-.baahubali-shorts-stack:hover .layer-4 {
-    transform: translate(42px, 28px) rotate(15deg) scale(0.9);
-}
-.baahubali-shorts-stack:hover .layer-3 {
-    transform: translate(-36px, 22px) rotate(-13deg) scale(0.93);
-}
-.baahubali-shorts-stack:hover .layer-2 {
-    transform: translate(28px, 14px) rotate(9deg) scale(0.97);
-}
+.baahubali-shorts-stack:hover .layer-4 { transform: translate(42px, 28px) rotate(15deg) scale(0.9); }
+.baahubali-shorts-stack:hover .layer-3 { transform: translate(-36px, 22px) rotate(-13deg) scale(0.93); }
+.baahubali-shorts-stack:hover .layer-2 { transform: translate(28px, 14px) rotate(9deg) scale(0.97); }
 .baahubali-shorts-stack:hover .layer-1 {
     transform: translateY(-6px) scale(1.03);
     box-shadow: 0 22px 48px rgba(0,0,0,0.9), 0 0 38px rgba(245, 158, 11, 0.85);
 }
 .baahubali-stack-badge {
     position: absolute;
-    top: 12px;
-    left: 12px;
-    z-index: 5;
+    top: 12px; left: 12px; z-index: 5;
     background: rgba(0,0,0,0.8);
     border: 1px solid #fbbf24;
     color: #fde047;
     font-family: 'Hind Siliguri', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 4px 11px;
-    border-radius: 20px;
+    font-size: 11px; font-weight: 700;
+    padding: 4px 11px; border-radius: 20px;
     backdrop-filter: blur(8px);
 }
 .baahubali-stack-play {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     z-index: 5;
-    width: 62px;
-    height: 62px;
+    width: 62px; height: 62px;
     border-radius: 50%;
     background: linear-gradient(135deg, #f59e0b, #ef4444);
     border: 2.5px solid #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     box-shadow: 0 0 25px rgba(245, 158, 11, 0.85);
     animation: heartbeat 2s infinite ease-in-out;
 }
-.baahubali-stack-play svg {
-    width: 26px;
-    height: 26px;
-    fill: #fff;
-    margin-left: 3px;
-}
+.baahubali-stack-play svg { width: 26px; height: 26px; fill: #fff; margin-left: 3px; }
+/* কার্ডের নিচে ১ম ভিডিওর ক্যাপশন */
 .baahubali-stack-footer {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 5;
-    padding: 32px 12px 12px;
-    background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+    bottom: 0; left: 0; right: 0; z-index: 5;
+    padding: 36px 12px 14px;
+    background: linear-gradient(to top, rgba(0,0,0,0.96) 20%, rgba(0,0,0,0.6) 70%, transparent 100%);
     color: #fff;
-    font-family: 'Hind Siliguri', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
+    font-family: 'Hind Siliguri', 'Inter', sans-serif;
+    font-size: 14px; font-weight: 700;
     text-align: center;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.9);
 }
-/* ডান পাশের ১৬:৯ ফুল এপিসোড ফেসবুক ভিডিও বক্স */
+
+/* ডান পাশের ১৬:৯ ফুল এপিসোড বক্স */
 .baahubali-full-ep-box {
     width: 100%;
     max-width: 580px;
@@ -3170,18 +3258,14 @@ height: 22px !important;
     border-color: #f59e0b;
     background: #000;
 }
-.baahubali-full-ep-box iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
+.baahubali-full-ep-box iframe { width: 100%; height: 100%; border: none; }
 
-/* ===== BAAHUBALI FACEBOOK REELS VERTICAL SWIPE OVERLAY ===== */
+/* ===== BAAHUBALI FACEBOOK REELS VERTICAL SWIPE OVERLAY (NO NAV BUTTONS) ===== */
 #baahubaliReelsOverlay {
     position: fixed;
     inset: 0;
     z-index: 4500;
-    background: rgba(0, 0, 0, 0.88);
+    background: rgba(0, 0, 0, 0.9);
     backdrop-filter: blur(22px) saturate(180%);
     -webkit-backdrop-filter: blur(22px) saturate(180%);
     display: none;
@@ -3190,9 +3274,7 @@ height: 22px !important;
     padding: 10px;
     touch-action: none;
 }
-#baahubaliReelsOverlay.active {
-    display: flex;
-}
+#baahubaliReelsOverlay.active { display: flex; }
 .bh-reel-stage {
     position: relative;
     width: 100%;
@@ -3221,74 +3303,92 @@ height: 22px !important;
     transform: translateY(100%) scale(0.92);
     opacity: 0;
 }
-.bh-reel-slide iframe {
+.bh-reel-slide iframe, .bh-reel-slide .fb-video {
     width: 100%;
     height: 100%;
     border: none;
-}
-/* রিলস সোয়াইপ জোন ও নেভিগেশন বাটন */
-.bh-reel-nav-controls {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 4650;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.bh-reel-nav-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(0,0,0,0.65);
-    border: 1.5px solid rgba(255,255,255,0.35);
-    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    backdrop-filter: blur(8px);
-    transition: all 0.25s ease;
 }
-.bh-reel-nav-btn:hover {
-    background: #f59e0b;
-    border-color: #fff;
-    transform: scale(1.1);
+/* টাচ-সোয়াইপ ক্যাপচার লেয়ার যাতে ফোনে আঙুল দিয়ে টেনে এবং ল্যাপটপে মাউস হুইলে রিলস স্ক্রল হয় */
+.bh-reel-swipe-gesture-layer {
+    position: absolute;
+    top: 68px;
+    bottom: 72px;
+    left: 0;
+    right: 0;
+    z-index: 4620;
+    background: transparent;
+    touch-action: none;
 }
-/* ৫০ সেকেন্ড পর "উপরে উঠাও" প্রম্পট অ্যানিমেশন */
+
+/* ৫০ সেকেন্ড পর প্রফেশনাল আঙুল সোয়াইপ (ফোন) ও মাউস স্ক্রল (ল্যাপটপ) অ্যানিমেশন */
 .bh-50s-swipe-prompt {
     position: absolute;
-    bottom: 95px;
+    bottom: 110px;
     left: 50%;
-    transform: translateX(-50%) translateY(20px);
+    transform: translateX(-50%) scale(0.85);
     z-index: 4700;
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.95), rgba(239, 68, 68, 0.95));
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1.5px solid rgba(245, 158, 11, 0.75);
     color: #fff;
-    padding: 10px 22px;
-    border-radius: 50px;
-    font-family: 'Hind Siliguri', sans-serif;
-    font-size: 15px;
-    font-weight: 800;
+    padding: 12px 24px;
+    border-radius: 40px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 25px rgba(245, 158, 11, 0.8);
-    border: 2px solid #fff;
+    gap: 6px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.85), 0 0 25px rgba(245, 158, 11, 0.45);
     opacity: 0;
     pointer-events: none;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .bh-50s-swipe-prompt.visible {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
-    pointer-events: auto;
-    cursor: pointer;
-    animation: promptBounceUp 1.2s ease-in-out infinite;
+    transform: translateX(-50%) scale(1);
 }
-@keyframes promptBounceUp {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(-10px); }
+.bh-hand-swipe-anim {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: handSwipeUpMotion 1.5s ease-in-out infinite;
+}
+.bh-mouse-scroll-anim {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+@media (min-width: 769px) {
+    .bh-hand-swipe-anim { display: none; }
+    .bh-mouse-scroll-anim { display: flex; }
+}
+@keyframes handSwipeUpMotion {
+    0% { transform: translateY(10px); opacity: 0.4; }
+    50% { transform: translateY(-10px); opacity: 1; }
+    100% { transform: translateY(-14px); opacity: 0; }
+}
+.bh-mouse-wheel-dot {
+    width: 4px;
+    height: 8px;
+    border-radius: 4px;
+    background: #fbbf24;
+    animation: mouseWheelScroll 1.3s ease-in-out infinite;
+}
+@keyframes mouseWheelScroll {
+    0% { transform: translateY(-4px); opacity: 1; }
+    100% { transform: translateY(6px); opacity: 0; }
+}
+.bh-prompt-label {
+    font-family: 'Orbitron', 'Hind Siliguri', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fde047;
 }
 </style>
 <style id="perf-boost">
@@ -3366,7 +3466,7 @@ html.tab-hidden *, html.tab-hidden *::before, html.tab-hidden *::after { animati
 <div class="welcome-page" id="baahubaliPage">
     <!-- Baahubali Page Header with Back Button & Logo -->
     <header class="header-wrapper welcome-header">
-        <button class="back-button active" id="baahubaliBackButton" onclick="hideBaahubaliPage()" aria-label="Back to main">
+        <button class="back-button active" id="baahubaliBackButton" onclick="hideBaahubaliPage()" aria-label="Back">
             <svg viewBox="0 0 24 24">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
@@ -3382,37 +3482,16 @@ html.tab-hidden *, html.tab-hidden *::before, html.tab-hidden *::after { animati
         <h2 class="baahubali-epic-title" id="baahubaliStyleHeading">BAAHUBALI</h2>
     </div>
 
-    <!-- বাহুবলীর নিচে বাম পাশে তলা মারা শর্টস ডেক এবং ডান পাশে ১৬:৯ ফুল এপিসোড বক্স -->
+    <!-- বাহুবলীর নিচে বাম পাশে ডাইনামিক তলা মারা শর্টস ডেক এবং ডান পাশে ১৬:৯ ফুল এপিসোড বক্স -->
     <section class="baahubali-media-showcase">
-        <!-- বাম পাশ: অনেকগুলো শর্ট ভিডিও এক জায়গায় তলা মারা রয়েছে -->
         <div class="baahubali-shorts-stack-wrap">
-            <!-- ১ম ভিডিওর ক্যাপশন উপরে দেখাবে -->
-            <div class="baahubali-first-caption-pill" id="bhFirstVideoCaptionPill">Baahubali 2D — Part 1 🔥</div>
-
+            <!-- যতগুলো ভিডিও কোডে দেওয়া থাকবে ঠিক ততগুলো তলা মারা কার্ড JS থেকে এখানে তৈরি হবে -->
             <div class="baahubali-shorts-stack" id="baahubaliShortsStack" onclick="openBaahubaliReels(0)" title="Click to Watch Baahubali Shorts">
-                <div class="baahubali-stack-layer layer-4">
-                    <img id="bhStackImg4" src="https://i.pinimg.com/736x/ae/8b/52/ae8b5292dedaa5786a78d497d37f48a2.jpg" alt="Stack 4">
-                </div>
-                <div class="baahubali-stack-layer layer-3">
-                    <img id="bhStackImg3" src="https://i.pinimg.com/1200x/76/f9/ef/76f9ef07bb0d60638b88612858ef5dd7.jpg" alt="Stack 3">
-                </div>
-                <div class="baahubali-stack-layer layer-2">
-                    <img id="bhStackImg2" src="https://i.pinimg.com/736x/33/3a/1f/333a1f69f10d82f9dacebb6867beae0c.jpg" alt="Stack 2">
-                </div>
-                <div class="baahubali-stack-layer layer-1">
-                    <img id="bhStackImg1" src="https://i.pinimg.com/736x/7c/fe/34/7cfe340848c018aed6c9f7ada169966b.jpg" alt="Baahubali Shorts">
-                    <div class="baahubali-stack-badge" id="bhStackCountBadge">📚 4 Shorts</div>
-                    <div class="baahubali-stack-play">
-                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    </div>
-                    <div class="baahubali-stack-footer" id="bhStackFooterText">Tap to Watch Shorts</div>
-                </div>
             </div>
         </div>
 
         <!-- ডান পাশ: ১৬:৯ সাইজের রেজোলিউশনের ফুল এপিসোড ফেসবুক ভিডিও -->
         <div class="baahubali-full-ep-box" id="baahubaliFullEpContainer">
-            <!-- JS থেকে অটোমেটিক রেন্ডার হবে -->
         </div>
     </section>
 
@@ -3423,27 +3502,37 @@ html.tab-hidden *, html.tab-hidden *::before, html.tab-hidden *::after { animati
     <footer class="opacity-30 text-[10px] font-black uppercase tracking-[0.4em] py-8 text-center">© @Honey_sajeeb</footer>
 </div>
 
-<!-- ===== BAAHUBALI FACEBOOK REELS SWIPE PLAYER OVERLAY ===== -->
+<!-- ===== BAAHUBALI FACEBOOK REELS SWIPE PLAYER OVERLAY (NO BUTTONS, PURE SWIPE/SCROLL) ===== -->
 <div id="baahubaliReelsOverlay">
     <div class="bh-reel-stage" id="bhReelStage">
         <button class="close-video-btn" id="bhReelCloseBtn" onclick="closeBaahubaliReels()" title="Close">×</button>
-        <div class="short-video-counter" id="bhReelCounter">1 / 4</div>
+        <div class="short-video-counter" id="bhReelCounter">1 / 2</div>
 
         <!-- রিলস ভিডিও স্লাইড কন্টেইনার -->
         <div class="bh-reel-slide" id="bhReelSlideContainer"></div>
 
-        <!-- উপরে/নিচে সোয়াইপ বা স্ক্রল করার বাটন -->
-        <div class="bh-reel-nav-controls">
-            <button class="bh-reel-nav-btn" id="bhReelPrevBtn" onclick="changeBaahubaliReel(-1)" title="Previous Video">▲</button>
-            <button class="bh-reel-nav-btn" id="bhReelNextBtn" onclick="changeBaahubaliReel(1)" title="Next Video (Swipe Up)">▼</button>
+        <!-- টাচ সোয়াইপ ও মাউস হুইল জেসচার লেয়ার -->
+        <div class="bh-reel-swipe-gesture-layer" id="bhReelSwipeLayer"></div>
+
+        <!-- ৫০ সেকেন্ড পর প্রফেশনাল আঙুল সোয়াইপ (ফোন) এবং মাউস হুইল স্ক্রল (ল্যাপটপ) অ্যানিমেশন -->
+        <div class="bh-50s-swipe-prompt" id="bh50sSwipePrompt">
+            <!-- ফোনের জন্য আঙুল দিয়ে সোয়াইপ আইকন -->
+            <div class="bh-hand-swipe-anim">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fde047" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                </svg>
+                <span style="font-size: 22px; line-height: 1;">👆</span>
+            </div>
+            <!-- ল্যাপটপের জন্য মাউস স্ক্রল আইকন -->
+            <div class="bh-mouse-scroll-anim">
+                <div style="width: 22px; height: 34px; border: 2px solid #fde047; border-radius: 12px; display: flex; justify-content: center; padding-top: 5px;">
+                    <div class="bh-mouse-wheel-dot"></div>
+                </div>
+            </div>
+            <span class="bh-prompt-label" id="bh50sSwipePromptText">Scroll</span>
         </div>
 
-        <!-- ৫০ সেকেন্ড পর অটোমেটিক "উপরে উঠাও / Swipe Up" মেসেজ -->
-        <div class="bh-50s-swipe-prompt" id="bh50sSwipePrompt" onclick="changeBaahubaliReel(1)">
-            <span id="bh50sSwipePromptText">⬆️ উপরে উঠাও</span>
-        </div>
-
-        <div class="short-caption-bar" id="bhReelCaptionBar">Baahubali 2D | Honey Entertainment</div>
+        <div class="short-caption-bar" id="bhReelCaptionBar">Baahubali Part 1</div>
     </div>
 </div>
 <!-- ===== WELCOME PAGE (FULL EPISODE VIEW) ===== -->
@@ -3575,13 +3664,24 @@ html.tab-hidden *, html.tab-hidden *::before, html.tab-hidden *::after { animati
         <!-- JS এখান থেকে ভিডিও লোড করবে -->
     </div>
 </section>
-<section class="full-episode-section">
-    <div class="full-episode-title" id="fullEpisodeTitle">Full episode</div>
-   <button class="full-episode-btn" onclick="showWelcomePage()">
-        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" opacity="0"/><rect x="2" y="4" width="20" height="16" rx="3" fill="white"/><polygon points="10,8 10,16 16,12" fill="#fb923c"/></svg>
-        <span id="fullEpisodeBtnText">Watch Full Episode</span>
-    </button>
-</section>
+<!-- বাম পাশে Full Episode এবং ডান পাশে Baahubali বাটন -->
+<div class="home-dual-action-row">
+    <section class="full-episode-section">
+        <div class="full-episode-title" id="fullEpisodeTitle">Full episode</div>
+        <button class="full-episode-btn" onclick="showWelcomePage()">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" opacity="0"/><rect x="2" y="4" width="20" height="16" rx="3" fill="white"/><polygon points="10,8 10,16 16,12" fill="#fb923c"/></svg>
+            <span id="fullEpisodeBtnText">Watch Full Episode</span>
+        </button>
+    </section>
+
+    <section class="full-episode-section">
+        <div class="baahubali-home-title" id="homeBaahubaliTopTitle">Baahubali</div>
+        <button class="full-episode-btn" id="homeBaahubaliMainBtn" onclick="openBaahubaliPageFromHome()">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" opacity="0"/><rect x="2" y="4" width="20" height="16" rx="3" fill="white"/><polygon points="10,8 10,16 16,12" fill="#fb923c"/></svg>
+            <span class="baahubali-home-btn-text" id="homeBaahubaliBtnText">BAAHUBALI</span>
+        </button>
+    </section>
+</div>
 
 
 <section class="w-full">
@@ -7251,20 +7351,12 @@ document.addEventListener('keydown', function(e) {
   document.querySelectorAll('img').forEach(function (img) { img.decoding = 'async'; });
 })();
 </script>
+
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0"></script>
 <script>
 // =========================================================================
-// ===== BAAHUBALI 2D SYSTEM (FACEBOOK EMBED CODE + THUMBNAIL + CAPTION) =====
+// ===== BAAHUBALI 2D SYSTEM (DYNAMIC STACK + INSTANT AUTOPLAY + SMART BACK) =====
 // =========================================================================
-
-/*
-📌 কীভাবে নতুন শর্টস ভিডিও যোগ করবেন (বিস্তারিত নিয়ম):
-১. ফেসবুকে আপনার ভিডিওতে যান ➔ Share বাটনে ক্লিক করুন ➔ "Embed" (এনহ্যান্স/এম্বেড কোড) অপশনে যান।
-২. সেখান থেকে যে `<iframe src="https://www.facebook.com/plugins/video.php?..." ...></iframe>` কোডটি পাবেন, সেটি কপি করুন।
-৩. নিচের `baahubaliFbShortsList` এর ভেতরে প্রতিটি আইটেমে ৩টি জিনিস বসাবেন:
-   - embedCode: এখানে সিঙ্গেল কোটেশন (' ') বা ব্যাকটিক (` `) এর ভেতরে ফেসবুকের পুরো `<iframe ...></iframe>` কোডটা বসাবেন।
-   - thumb: এখানে আপনার অন্যান্য ছবির মতোই Pinterest বা যেকোনো ছবির লিংক ("https://i.pinimg.com/...") বসাবেন।
-   - caption: এখানে ওই ভিডিওর ক্যাপশন লিখবেন।
-*/
 
 const baahubaliFbShortsList = [
     {
@@ -7281,35 +7373,109 @@ const baahubaliFbShortsList = [
     }
 ];
 
-/*
-📌 ডান পাশের ১৬:৯ ফুল এপিসোডের ফেসবুক ভিডিও ভবিষ্যতে যেভাবে অ্যাড করবেন:
-যখন আপনি ১৬:৯ ফুল এপিসোডের ভিডিওটি দিতে চাইবেন, তখন ফেসবুক থেকে সেই ভিডিওর Share ➔ Embed কোডটি (`<iframe ...></iframe>`) কপি করে নিচের `BAAHUBALI_FULL_EPISODE_EMBED_CODE = ``;` এর দুই ব্যাকটিকের (``) ভেতরে পেস্ট করে দেবেন!
-যতক্ষণ এটি খালি থাকবে, ততক্ষণ সেখানে "Coming Soon / শীঘ্রই আসছে" কার্ডটি দেখাবে।
-*/
+// ভবিষ্যতে ১৬:৯ ফুল এপিসোডের ফেসবুক ভিডিওর Embed Code (`<iframe ...></iframe>`) এই দুই ব্যাকটিকের ভেতরে বসাবেন:
 const BAAHUBALI_FULL_EPISODE_EMBED_CODE = ``;
 
-// Embed কোড থেকে অটো-প্লে সহ ফুল-সাইজ iframe তৈরি করার ফাংশন
+// কোথা থেকে বাহুবলী ট্যাবে আসা হয়েছে তা মনে রাখার ভেরিয়েবল ('home' অথবা 'photo')
+let baahubaliSourceContext = 'home';
+let savedPhotoIndexBeforeBaahubali = 0;
+let savedHomeScrollY = 0;
+
+// ফেসবুকের ভিডিও যাতে ট্যাপ করার সাথে সাথে এবং স্ক্রল করার সাথে সাথেই অটো-প্লে হয় (২ বার ট্যাপ না লাগে)
 function prepareFacebookEmbedHtml(rawCode) {
     if (!rawCode || !rawCode.trim()) return "";
     const trimmed = rawCode.trim();
-    // যদি সরাসরি <iframe ...> কোড দেওয়া হয়:
+    let videoHref = "";
+
     if (trimmed.toLowerCase().startsWith("<iframe")) {
-        // iframe-এর ভেতর থেকে src বের করে autoplay যোগ করা ও ১০০% সাইজ করা
         const srcMatch = trimmed.match(/src=["']([^"']+)["']/i);
         if (srcMatch && srcMatch[1]) {
-            let srcUrl = srcMatch[1];
-            if (!srcUrl.includes("autoplay=")) {
-                srcUrl += (srcUrl.includes("?") ? "&" : "?") + "autoplay=true";
+            try {
+                const urlObj = new URL(srcMatch[1]);
+                const hrefParam = urlObj.searchParams.get("href");
+                if (hrefParam) videoHref = hrefParam;
+            } catch (e) {}
+            if (!videoHref) {
+                let directSrc = srcMatch[1];
+                directSrc = directSrc.replace(/([?&])autoplay=[^&]*/gi, '');
+                directSrc += (directSrc.includes("?") ? "&" : "?") + "autoplay=1&mute=0&show_text=false";
+                return `<iframe src="${directSrc}" style="width:100%;height:100%;border:none;overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>`;
             }
-            return `<iframe src="${srcUrl}" style="width:100%;height:100%;border:none;overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>`;
         }
-        return trimmed;
+    } else {
+        videoHref = trimmed;
     }
-    // আর যদি ভুলবশত কেউ শুধু লিংকও দেয়, তাহলেও যেন কাজ করে:
-    return `<iframe src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(trimmed)}&show_text=false&autoplay=true" style="width:100%;height:100%;border:none;overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>`;
+
+    const finalPluginUrl = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(videoHref)}&show_text=false&autoplay=1&mute=0&t=0`;
+    return `<iframe src="${finalPluginUrl}" style="width:100%;height:100%;border:none;overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>`;
 }
 
-// শুধুমাত্র ১ম ছবি (index === 0 : "Baahubali আসছে HE তে 💖") ওপেন থাকলে বাটনটি দেখাবে
+// কোডের ভেতরে যতগুলো ভিডিও দেওয়া আছে (১টা হলে ১টা, ২টা হলে ২টা, ৩টা হলে ৩টা, সর্বোচ্চ ৪টা) ঠিক ততগুলো তলা মারা কার্ড তৈরি করবে
+function renderDynamicBaahubaliShortsStack() {
+    const stackContainer = document.getElementById('baahubaliShortsStack');
+    if (!stackContainer) return;
+
+    const total = baahubaliFbShortsList.length;
+    const isBN = (typeof currentLang !== 'undefined' && currentLang === 'BN');
+
+    if (total === 0) {
+        stackContainer.innerHTML = '';
+        return;
+    }
+
+    // সর্বোচ্চ ৪টি স্তর পর্যন্ত দেখাবে, কিন্তু ভিডিও ২টি থাকলে শুধু ২টি স্তরই দেখাবে
+    const visibleLayersCount = Math.min(total, 4);
+    let layersHtml = '';
+
+    // নিচের স্তরগুলো আগে রেন্ডার হবে (যেমন layer-2 বা layer-3)
+    for (let i = visibleLayersCount; i >= 2; i--) {
+        const vidObj = baahubaliFbShortsList[i - 1];
+        layersHtml += `
+            <div class="baahubali-stack-layer layer-${i}">
+                <img src="${vidObj.thumb}" alt="Short ${i}" loading="lazy">
+            </div>
+        `;
+    }
+
+    // সবার উপরের মূল কার্ড (layer-1), যার নিচে ১ম ভিডিওর ক্যাপশন লেখা থাকবে
+    const firstVid = baahubaliFbShortsList[0];
+    const badgeText = isBN ? `📚 ${total}টি শর্টস` : `📚 ${total} ${total === 1 ? 'Short' : 'Shorts'}`;
+    const firstCaption = firstVid.caption || (isBN ? 'বাহুবলী শর্টস' : 'Baahubali Shorts');
+
+    layersHtml += `
+        <div class="baahubali-stack-layer layer-1">
+            <img src="${firstVid.thumb}" alt="${firstCaption}">
+            <div class="baahubali-stack-badge" id="bhStackCountBadge">${badgeText}</div>
+            <div class="baahubali-stack-play">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div class="baahubali-stack-footer" id="bhStackFooterText">${firstCaption}</div>
+        </div>
+    `;
+
+    stackContainer.innerHTML = layersHtml;
+}
+
+// ডান পাশের ১৬:৯ ফুল এপিসোড সেকশন রেন্ডার ফাংশন (শুধু "Baahubali Full Episode is Coming" / "Baahubali শীঘ্রই আসছে")
+function renderBaahubaliFullEpisodeSection() {
+    const box = document.getElementById('baahubaliFullEpContainer');
+    if (!box) return;
+    const isBN = (typeof currentLang !== 'undefined' && currentLang === 'BN');
+
+    if (BAAHUBALI_FULL_EPISODE_EMBED_CODE && BAAHUBALI_FULL_EPISODE_EMBED_CODE.trim() !== "") {
+        box.classList.add('has-video');
+        box.innerHTML = prepareFacebookEmbedHtml(BAAHUBALI_FULL_EPISODE_EMBED_CODE);
+    } else {
+        box.classList.remove('has-video');
+        const msgText = isBN ? 'Baahubali শীঘ্রই আসছে' : 'Baahubali Full Episode is Coming';
+        box.innerHTML = `
+            <div style="font-family: 'Hind Siliguri', 'Inter', sans-serif; font-size: 20px; font-weight: 800; color: var(--text-color); letter-spacing: 0.5px;">
+                ${msgText}
+            </div>
+        `;
+    }
+}
+
 function updateBaahubali2dButtonVisibility() {
     const btn = document.getElementById('baahubali2dBtn');
     if (!btn) return;
@@ -7322,45 +7488,26 @@ function updateBaahubali2dButtonVisibility() {
     }
 }
 
-// ভাষা পরিবর্তন (EN / BN) অনুযায়ী বাটন, ওভারলে টুলটিপ ও বাহুবলী পেজের সব লেখা আপডেট করা
 function updateBaahubaliLanguageUI() {
     const isBN = (typeof currentLang !== 'undefined' && currentLang === 'BN');
 
-    // ১. ছবির ওপরের বাটনটির লেখা ও মাউস ধরলে ওভারলে টুলটিপ
+    // ১. ছবির ওপরের বাটনটির নাম ও টুলটিপ
     const btn = document.getElementById('baahubali2dBtn');
     const btnTxt = document.getElementById('baahubali2dBtnText');
     if (btnTxt) btnTxt.textContent = isBN ? 'বাহুবলী ২ডি' : 'Baahubali 2D';
     if (btn) btn.setAttribute('title', isBN ? 'বাহুবলী ২ডি ভিডিও দেখুন' : 'Watch Baahubali 2D Videos');
 
-    // ২. বাহুবলী পেজের মেইন রাজকীয় টাইটেল
+    // ২. হোমপেজের ডান পাশের বাহুবলী সেকশনের নাম ও বাটন
+    const homeTopTitle = document.getElementById('homeBaahubaliTopTitle');
+    const homeBtnText = document.getElementById('homeBaahubaliBtnText');
+    const homeMainBtn = document.getElementById('homeBaahubaliMainBtn');
+    if (homeTopTitle) homeTopTitle.textContent = isBN ? 'বাহুবলী' : 'Baahubali';
+    if (homeBtnText) homeBtnText.textContent = isBN ? 'বাহুবলী' : 'BAAHUBALI';
+    if (homeMainBtn) homeMainBtn.setAttribute('title', isBN ? 'বাহুবলী পেজে যান' : 'Open Baahubali Page');
+
+    // ৩. বাহুবলী পেজের টাইটেল
     const heading = document.getElementById('baahubaliStyleHeading');
     if (heading) heading.textContent = isBN ? 'বাহুবলী' : 'BAAHUBALI';
-
-    // ৩. বাম পাশের তলা মারা শর্টস কার্ডের থাম্বনেল, ক্যাপশন ও ব্যাজ আপডেট
-    if (baahubaliFbShortsList.length > 0) {
-        const capPill = document.getElementById('bhFirstVideoCaptionPill');
-        if (capPill) capPill.textContent = baahubaliFbShortsList[0].caption || (isBN ? 'বাহুবলী শর্টস' : 'Baahubali Shorts');
-
-        const img1 = document.getElementById('bhStackImg1');
-        const img2 = document.getElementById('bhStackImg2');
-        const img3 = document.getElementById('bhStackImg3');
-        const img4 = document.getElementById('bhStackImg4');
-        if (img1 && baahubaliFbShortsList[0]) img1.src = baahubaliFbShortsList[0].thumb;
-        if (img2 && baahubaliFbShortsList[1 % baahubaliFbShortsList.length]) img2.src = baahubaliFbShortsList[1 % baahubaliFbShortsList.length].thumb;
-        if (img3 && baahubaliFbShortsList[2 % baahubaliFbShortsList.length]) img3.src = baahubaliFbShortsList[2 % baahubaliFbShortsList.length].thumb;
-        if (img4 && baahubaliFbShortsList[3 % baahubaliFbShortsList.length]) img4.src = baahubaliFbShortsList[3 % baahubaliFbShortsList.length].thumb;
-    }
-
-    const countBadge = document.getElementById('bhStackCountBadge');
-    if (countBadge) {
-        countBadge.textContent = isBN
-            ? `📚 ${baahubaliFbShortsList.length}টি শর্টস` : `📚 ${baahubaliFbShortsList.length} Shorts`;
-    }
-
-    const footerTxt = document.getElementById('bhStackFooterText');
-    if (footerTxt) {
-        footerTxt.textContent = isBN ? 'শর্টস দেখতে ট্যাপ করুন' : 'Tap to Watch Shorts';
-    }
 
     const stackCard = document.getElementById('baahubaliShortsStack');
     if (stackCard) {
@@ -7369,7 +7516,7 @@ function updateBaahubaliLanguageUI() {
 
     const backBtn = document.getElementById('baahubaliBackButton');
     if (backBtn) {
-        backBtn.setAttribute('title', isBN ? 'মেইন পেজে ফিরে যান' : 'Back to Main Page');
+        backBtn.setAttribute('title', isBN ? 'ফিরে যান' : 'Go Back');
     }
 
     const thanksTxt = document.getElementById('baahubaliThankYouTxt');
@@ -7379,36 +7526,13 @@ function updateBaahubaliLanguageUI() {
 
     const promptTxt = document.getElementById('bh50sSwipePromptText');
     if (promptTxt) {
-        promptTxt.textContent = isBN ? '⬆️ উপরে উঠাও' : '⬆️ Swipe Up';
+        promptTxt.textContent = 'Scroll';
     }
 
+    renderDynamicBaahubaliShortsStack();
     renderBaahubaliFullEpisodeSection();
 }
 
-// ডান পাশের ১৬:৯ ফুল এপিসোড সেকশন রেন্ডার ফাংশন
-function renderBaahubaliFullEpisodeSection() {
-    const box = document.getElementById('baahubaliFullEpContainer');
-    if (!box) return;
-    const isBN = (typeof currentLang !== 'undefined' && currentLang === 'BN');
-
-    if (BAAHUBALI_FULL_EPISODE_EMBED_CODE && BAAHUBALI_FULL_EPISODE_EMBED_CODE.trim() !== "") {
-        box.classList.add('has-video');
-        box.innerHTML = prepareFacebookEmbedHtml(BAAHUBALI_FULL_EPISODE_EMBED_CODE);
-    } else {
-        box.classList.remove('has-video');
-        box.innerHTML = `
-            <div style="font-size: 44px; margin-bottom: 10px;">🎬</div>
-            <div style="font-family: 'Hind Siliguri', 'Inter', sans-serif; font-size: 18px; font-weight: 800; color: var(--text-color);">
-                ${isBN ? 'বাহুবলী সম্পূর্ণ পর্ব (১৬:৯)' : 'Baahubali Full Episode (16:9)'}
-            </div>
-            <div style="font-family: 'Hind Siliguri', 'Inter', sans-serif; font-size: 13px; color: var(--accent); margin-top: 6px; font-weight: 600;">
-                ${isBN ? 'সম্পূর্ণ পর্বের ফেসবুক ভিডিও শীঘ্রই আসছে...' : 'Full episode Facebook video coming soon...'}
-            </div>
-        `;
-    }
-}
-
-// openFull, navigateImage এবং toggleLang-এর সাথে হুক করা
 (function hookBaahubaliEvents() {
     const _prevOpenFull = window.openFull;
     if (typeof _prevOpenFull === 'function') {
@@ -7441,25 +7565,37 @@ function renderBaahubaliFullEpisodeSection() {
     }
 })();
 
-// মাউস ধরলে ও ক্লিক করলে যাতে অন্যান্য বাটনের মতো সাউন্ড হয়
 document.addEventListener('DOMContentLoaded', function() {
     updateBaahubaliLanguageUI();
-    const btn2d = document.getElementById('baahubali2dBtn');
-    if (btn2d) {
-        btn2d.addEventListener('mouseenter', () => { if (typeof SOUNDS !== 'undefined' && SOUNDS.hover) SOUNDS.hover(); });
-        btn2d.addEventListener('click', () => { if (typeof SOUNDS !== 'undefined' && SOUNDS.click) SOUNDS.click(); });
-    }
-    const stackEl = document.getElementById('baahubaliShortsStack');
-    if (stackEl) {
-        stackEl.addEventListener('mouseenter', () => { if (typeof SOUNDS !== 'undefined' && SOUNDS.hover) SOUNDS.hover(); });
-    }
+    ['baahubali2dBtn', 'homeBaahubaliMainBtn', 'baahubaliShortsStack'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('mouseenter', () => { if (typeof SOUNDS !== 'undefined' && SOUNDS.hover) SOUNDS.hover(); });
+            el.addEventListener('click', () => { if (typeof SOUNDS !== 'undefined' && SOUNDS.click) SOUNDS.click(); });
+        }
+    });
 });
 
-// "Baahubali 2D" বাটনে ক্লিক করলে ফুলস্ক্রিন ছবি বন্ধ করে বাহুবলী ট্যাবে নিয়ে যাবে
+// ১. ছবির ফুলস্ক্রিন থেকে বাহুবলী ট্যাবে যাওয়া (যাতে ব্যাক করলে আবার ছবির ফুলস্ক্রিনেই ফিরে আসে)
 function openBaahubaliPageFromPhoto() {
-    if (typeof closeFull === 'function') {
-        closeFull();
+    baahubaliSourceContext = 'photo';
+    savedPhotoIndexBeforeBaahubali = currentGalleryIndex;
+
+    // ফুলস্ক্রিন সাময়িকভাবে লুকানো এবং অডিও থামানো
+    const fullOverlay = document.getElementById('fullscreenOverlay');
+    if (fullOverlay) fullOverlay.style.display = 'none';
+    document.body.classList.remove('fullscreen-active');
+    if (typeof ytPlayer !== 'undefined' && ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+        try { ytPlayer.pauseVideo(); } catch (e) {}
     }
+
+    showBaahubaliPage();
+}
+
+// ২. হোমপেজের নতুন বাহুবলী বাটন থেকে বাহুবলী ট্যাবে যাওয়া (যাতে ব্যাক করলে আবার হোমপেজেই ফিরে আসে)
+function openBaahubaliPageFromHome() {
+    baahubaliSourceContext = 'home';
+    savedHomeScrollY = window.scrollY || window.pageYOffset || 0;
     showBaahubaliPage();
 }
 
@@ -7472,8 +7608,16 @@ function showBaahubaliPage() {
     if (welcomePage) welcomePage.classList.remove('active');
     if (baahubaliPage) baahubaliPage.classList.add('active');
 
+    // পেজ যাতে উপর-নিচে স্ক্রল করা যায় এবং একদম ট্যাবের সবার উপরে (Top: 0) নিয়ে যায়
+    document.body.style.overflow = '';
     updateBaahubaliLanguageUI();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }, 20);
 
     if (typeof pushHeHistoryLayer === 'function') {
         pushHeHistoryLayer('baahubaliPage');
@@ -7495,16 +7639,33 @@ function hideBaahubaliPage() {
         box.innerHTML = '';
     }
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     if (typeof popHeHistoryIfManual === 'function') {
         popHeHistoryIfManual();
     }
+
+    // যেখান থেকে এসেছিল ঠিক সেখানেই ফেরত নিয়ে যাওয়া
+    if (baahubaliSourceContext === 'photo') {
+        const fullOverlay = document.getElementById('fullscreenOverlay');
+        if (fullOverlay) {
+            fullOverlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            document.body.classList.add('fullscreen-active');
+            updateBaahubali2dButtonVisibility();
+            if (typeof loadAndPlayYt === 'function') {
+                loadAndPlayYt(savedPhotoIndexBeforeBaahubali);
+            }
+        }
+    } else {
+        document.body.style.overflow = '';
+        window.scrollTo({ top: savedHomeScrollY, behavior: 'instant' });
+    }
+
     if (typeof SOUNDS !== 'undefined' && SOUNDS.imageClose) {
         SOUNDS.imageClose();
     }
 }
 
-// ===== BAAHUBALI FACEBOOK REELS PLAYER + 50s TIMER + SMOOTH SWIPE SCROLL =====
+// ===== BAAHUBALI FACEBOOK REELS PLAYER + 50s SCROLL ANIMATION + SMOOTH SWIPE =====
 let currentBhReelIndex = 0;
 let bh50sTimer = null;
 let isBhReelAnimating = false;
@@ -7514,7 +7675,7 @@ function startBh50SecondSwipePrompt() {
     const promptEl = document.getElementById('bh50sSwipePrompt');
     if (promptEl) promptEl.classList.remove('visible');
 
-    // ৫০ সেকেন্ডের বেশি দেখলে "⬆️ উপরে উঠাও" অ্যানিমেশন দেখাবে
+    // ৫০ সেকেন্ড (50000ms) পর প্রফেশনাল আঙুল সোয়াইপ (ফোনে) ও মাউস স্ক্রল (ল্যাপটপে) অ্যানিমেশন দেখাবে
     bh50sTimer = setTimeout(() => {
         if (promptEl) {
             promptEl.classList.add('visible');
@@ -7525,7 +7686,6 @@ function startBh50SecondSwipePrompt() {
 
 function loadBaahubaliReelSlide(index, swipeDirection = 0) {
     if (!baahubaliFbShortsList.length) return;
-    // সবগুলো ভিডিও শেষ হয়ে গেলে আবার প্রথম ভিডিওতে চলে আসবে
     if (index >= baahubaliFbShortsList.length) index = 0;
     if (index < 0) index = baahubaliFbShortsList.length - 1;
 
@@ -7539,7 +7699,7 @@ function loadBaahubaliReelSlide(index, swipeDirection = 0) {
 
     const renderIframe = () => {
         slide.innerHTML = prepareFacebookEmbedHtml(item.embedCode);
-        if (counter) counter.textContent = `${currentBhReelIndex + 1} /${baahubaliFbShortsList.length}`;
+        if (counter) counter.textContent = `${currentBhReelIndex + 1} / ${baahubaliFbShortsList.length}`;
         if (caption) caption.textContent = item.caption || 'Baahubali 2D';
         startBh50SecondSwipePrompt();
     };
@@ -7558,7 +7718,7 @@ function loadBaahubaliReelSlide(index, swipeDirection = 0) {
             slide.style.transition = '';
             slide.className = 'bh-reel-slide';
             setTimeout(() => { isBhReelAnimating = false; }, 420);
-        }, 320);
+        }, 300);
     }
 }
 
@@ -7588,34 +7748,48 @@ function closeBaahubaliReels() {
 }
 
 function changeBaahubaliReel(direction) {
-    if (isBhReelAnimating) return;
+    if (isBhReelAnimating || baahubaliFbShortsList.length <= 1) return;
     if (typeof SOUNDS !== 'undefined' && SOUNDS.navigate) SOUNDS.navigate();
     loadBaahubaliReelSlide(currentBhReelIndex + direction, direction);
 }
 
-// ফোনের টাচ সোয়াইপ ও ল্যাপটপের মাউস হুইল/কীবোর্ড অ্যারো দিয়ে রিলস স্ক্রলিং
+// ফোনে আঙুল দিয়ে সোয়াইপ এবং ল্যাপটপে মাউস হুইল ঘুরিয়ে রিলস স্ক্রলিং
 document.addEventListener('DOMContentLoaded', function() {
     const stage = document.getElementById('bhReelStage');
+    const swipeLayer = document.getElementById('bhReelSwipeLayer');
     if (!stage) return;
-    let startY = 0;
 
-    stage.addEventListener('touchstart', function(e) {
+    let startY = 0;
+    let isDraggingTouch = false;
+    let wheelCooldown = false;
+
+    const targetEl = swipeLayer || stage;
+
+    targetEl.addEventListener('touchstart', function(e) {
         startY = e.touches[0].clientY;
+        isDraggingTouch = true;
     }, { passive: true });
 
-    stage.addEventListener('touchend', function(e) {
+    targetEl.addEventListener('touchend', function(e) {
+        if (!isDraggingTouch) return;
+        isDraggingTouch = false;
         const endY = e.changedTouches[0].clientY;
         const diffY = startY - endY;
-        if (Math.abs(diffY) > 45) {
-            if (diffY > 0) changeBaahubaliReel(1); // উপরের দিকে টানলে পরের ভিডিও
+        if (Math.abs(diffY) > 40) {
+            if (diffY > 0) changeBaahubaliReel(1); // আঙুল দিয়ে উপরের দিকে টানলে পরের ভিডিও
             else changeBaahubaliReel(-1);          // নিচের দিকে টানলে আগের ভিডিও
         }
     }, { passive: true });
 
     stage.addEventListener('wheel', function(e) {
         e.preventDefault();
-        if (e.deltaY > 25) changeBaahubaliReel(1);
-        else if (e.deltaY < -25) changeBaahubaliReel(-1);
+        if (wheelCooldown) return;
+        if (Math.abs(e.deltaY) > 18) {
+            wheelCooldown = true;
+            if (e.deltaY > 0) changeBaahubaliReel(1);
+            else changeBaahubaliReel(-1);
+            setTimeout(() => { wheelCooldown = false; }, 550);
+        }
     }, { passive: false });
 
     document.addEventListener('keydown', function(e) {
@@ -7626,7 +7800,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// ফোনের ব্যাক বাটন ও Esc বাটনে বাহুবলী রিলস ও বাহুবলী পেজ বন্ধ হওয়া
+// ফোনের ব্যাক বাটন ও Esc বাটনে যাতে যেখান থেকে এসেছিল ঠিক সেখানেই ফেরত যায়
 (function hookBaahubaliBackNavigation() {
     const _origBack = window.handleUniversalBackAction;
     if (typeof _origBack === 'function') {
