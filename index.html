@@ -2866,110 +2866,143 @@ height: 22px !important;
 .home-dual-action-row {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
     margin-top: 25px;
     margin-bottom: 10px;
-    align-items: center;
+    align-items: stretch;
+    /* ওয়েবসাইটের অন্যান্য সেকশনের মতো স্মুথ এন্ট্রি অ্যানিমেশন */
+    animation: fadeInUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.48s;
+    opacity: 0;
 }
-.full-episode-section {
+.home-dual-action-row .full-episode-section {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     gap: 12px;
-    margin: 0;
+    margin: 0 !important;
 }
-.full-episode-title {
-    font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-color);
-    text-align: center;
-    letter-spacing: 0.3px;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+.home-dual-action-row .full-episode-section:nth-child(1) {
+    animation: slideFromLeft 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
 }
-.baahubali-home-title {
-    font-family: 'Cinzel Decorative', 'Hind Siliguri', serif;
-    font-size: 16px;
-    font-weight: 900;
-    color: var(--text-color);
-    text-align: center;
-    letter-spacing: 1.2px;
+.home-dual-action-row .full-episode-section:nth-child(2) {
+    animation: slideFromRight 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.58s;
+    opacity: 0;
 }
-.full-episode-btn {
+/* দুটি বাটনের উপরের টাইটেল একদম সমান ফন্ট সাইজ ও একই উচ্চতায় থাকবে */
+.home-dual-action-row .full-episode-title,
+.home-dual-action-row .baahubali-home-title {
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 13px 22px;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    color: var(--text-color);
+    text-align: center;
+    margin: 0 !important;
+    white-space: nowrap;
+}
+.home-dual-action-row .full-episode-title {
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+.home-dual-action-row .baahubali-home-title {
+    font-family: 'Cinzel Decorative', 'Orbitron', 'Hind Siliguri', serif;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+/* দুটি বাটনই একদম সমান সাইজ, সমান ফন্ট সাইজ, সোজাসুজি পজিশন এবং স্মুথ হার্টবিট অ্যানিমেশনযুক্ত */
+.home-dual-action-row .full-episode-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100% !important;
+    max-width: 225px !important;
+    height: 48px !important;
+    padding: 0 14px !important;
     border-radius: 50px;
     background: linear-gradient(90deg, var(--accent), #fb923c);
     color: #fff;
     font-family: 'Hind Siliguri', sans-serif;
-    font-size: 14px;
+    font-size: 13.5px !important;
     font-weight: 800;
+    line-height: 1 !important;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
     border: none;
     cursor: pointer;
     box-shadow: 0 5px 18px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: fit-content;
-    max-width: 100%;
+    animation: heartbeat 2s infinite ease-in-out;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
     position: relative;
     overflow: hidden;
     white-space: nowrap;
+    box-sizing: border-box;
+    margin: 0 auto !important;
+    will-change: transform;
 }
-.full-episode-btn::before {
+.home-dual-action-row .full-episode-btn::before {
     content: '';
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
     transition: left 0.6s ease;
 }
-.full-episode-btn:hover::before {
+.home-dual-action-row .full-episode-btn:hover::before {
     left: 100%;
 }
-.full-episode-btn:hover {
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.25), 0 0 18px var(--glow-color);
+.home-dual-action-row .full-episode-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.25), 0 0 20px var(--accent);
 }
-.full-episode-btn:active {
-    transform: scale(0.97);
+.home-dual-action-row .full-episode-btn:active {
+    transform: scale(0.96);
 }
-.full-episode-btn svg {
-    width: 20px;
-    height: 20px;
+.home-dual-action-row .full-episode-btn svg {
+    width: 19px;
+    height: 19px;
     fill: #ffffff;
     flex-shrink: 0;
 }
-/* হোমপেজের ডান পাশের বাহুবলী বাটনের ভেতরের স্টাইলিশ ফন্ট */
+/* বাহুবলী বাটনের ভেতরের লেখার ফন্ট আলাদা কিন্তু ফন্ট সাইজ বাম পাশের বাটনের সমান */
 .baahubali-home-btn-text {
     font-family: 'Cinzel Decorative', 'Orbitron', 'Hind Siliguri', serif;
     font-weight: 900;
-    letter-spacing: 1.8px;
-    font-size: 14px;
+    font-size: inherit !important;
+    line-height: 1 !important;
+    letter-spacing: 1px;
     text-shadow: 0 2px 6px rgba(0,0,0,0.35);
 }
 @media (max-width: 480px) {
     .home-dual-action-row {
-        gap: 8px;
+        gap: 10px;
     }
-    .full-episode-btn {
-        padding: 11px 14px;
-        font-size: 12px;
+    .home-dual-action-row .full-episode-title,
+    .home-dual-action-row .baahubali-home-title {
+        font-size: 14px !important;
+        height: 24px;
+    }
+    .home-dual-action-row .full-episode-btn {
+        height: 44px !important;
+        padding: 0 10px !important;
+        font-size: 11.5px !important;
         gap: 6px;
     }
-    .baahubali-home-btn-text {
-        font-size: 12px;
-        letter-spacing: 1px;
-    }
-    .full-episode-title, .baahubali-home-title {
-        font-size: 14px;
+    .home-dual-action-row .full-episode-btn svg {
+        width: 16px;
+        height: 16px;
     }
 }
 
@@ -3010,8 +3043,22 @@ height: 22px !important;
     .thank-you-bar { width: 60%; padding: 16px 24px; }
     .post-caption { font-size: 17px; padding: 12px 16px; }
     .animated-title { font-size: 22px; margin-bottom: 20px; }
-    .full-episode-btn { padding: 15px 32px; font-size: 15px; }
-    .baahubali-home-btn-text { font-size: 15px; }
+    .home-dual-action-row {
+        max-width: 560px;
+        margin-left: auto;
+        margin-right: auto;
+        gap: 24px;
+    }
+    .home-dual-action-row .full-episode-title,
+    .home-dual-action-row .baahubali-home-title {
+        font-size: 18px !important;
+        height: 32px;
+    }
+    .home-dual-action-row .full-episode-btn {
+        max-width: 250px !important;
+        height: 52px !important;
+        font-size: 15px !important;
+    }
 }
 
 /* ===== BAAHUBALI 2D BUTTON (MOBILE & LAPTOP FULLSCREEN) ===== */
@@ -3106,6 +3153,7 @@ height: 22px !important;
     position: relative;
     display: inline-block;
     width: 100%;
+    animation: fadeInUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 .baahubali-epic-title::after {
     content: '━━━ ⚔️ 👑 ⚔️ ━━━';
@@ -3128,6 +3176,7 @@ height: 22px !important;
     align-items: center;
     justify-items: center;
     padding: 15px 15px 35px;
+    animation: fadeInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 @media (min-width: 850px) {
     .baahubali-media-showcase {
@@ -3207,18 +3256,27 @@ height: 22px !important;
     padding: 4px 11px; border-radius: 20px;
     backdrop-filter: blur(8px);
 }
+/* প্লে বাটন একদম থাম্বনেলের ঠিক মাঝখানে (Dead Center) থাকবে */
 .baahubali-stack-play {
     position: absolute;
-    top: 50%; left: 50%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     z-index: 5;
-    width: 62px; height: 62px;
+    width: 62px;
+    height: 62px;
     border-radius: 50%;
     background: linear-gradient(135deg, #f59e0b, #ef4444);
     border: 2.5px solid #fff;
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-shadow: 0 0 25px rgba(245, 158, 11, 0.85);
-    animation: heartbeat 2s infinite ease-in-out;
+    animation: bhCenterPlayPulse 2s infinite ease-in-out;
+}
+@keyframes bhCenterPlayPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 0 35px rgba(245, 158, 11, 1); }
 }
 .baahubali-stack-play svg { width: 26px; height: 26px; fill: #fff; margin-left: 3px; }
 /* কার্ডের নিচে ১ম ভিডিওর ক্যাপশন */
@@ -3234,7 +3292,7 @@ height: 22px !important;
     text-shadow: 0 2px 6px rgba(0,0,0,0.9);
 }
 
-/* ডান পাশের ১৬:৯ ফুল এপিসোড বক্স */
+/* ডান পাশের ১৬:৯ ফুল এপিসোড বক্স ও ডিপ-ডিপ ডট অ্যানিমেশন */
 .baahubali-full-ep-box {
     width: 100%;
     max-width: 580px;
@@ -3260,7 +3318,26 @@ height: 22px !important;
 }
 .baahubali-full-ep-box iframe { width: 100%; height: 100%; border: none; }
 
-/* ===== BAAHUBALI FACEBOOK REELS VERTICAL SWIPE OVERLAY (NO NAV BUTTONS) ===== */
+.bh-blinking-dots {
+    display: inline-flex;
+    margin-left: 2px;
+    font-weight: 900;
+    color: var(--accent);
+}
+.bh-blinking-dots span {
+    animation: bhDotBlink 1.4s infinite ease-in-out both;
+    display: inline-block;
+}
+.bh-blinking-dots span:nth-child(1) { animation-delay: 0s; }
+.bh-blinking-dots span:nth-child(2) { animation-delay: 0.25s; }
+.bh-blinking-dots span:nth-child(3) { animation-delay: 0.5s; }
+.bh-blinking-dots span:nth-child(4) { animation-delay: 0.75s; }
+@keyframes bhDotBlink {
+    0%, 80%, 100% { opacity: 0.15; transform: scale(0.85); }
+    40% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ===== BAAHUBALI FACEBOOK REELS VERTICAL SWIPE OVERLAY ===== */
 #baahubaliReelsOverlay {
     position: fixed;
     inset: 0;
@@ -3292,7 +3369,10 @@ height: 22px !important;
     inset: 0;
     width: 100%;
     height: 100%;
-    transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.42s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
     will-change: transform, opacity;
 }
 .bh-reel-slide.slide-up-out {
@@ -3303,15 +3383,17 @@ height: 22px !important;
     transform: translateY(100%) scale(0.92);
     opacity: 0;
 }
-.bh-reel-slide iframe, .bh-reel-slide .fb-video {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: flex;
+.bh-reel-slide .fb-video,
+.bh-reel-slide .fb-video span,
+.bh-reel-slide iframe {
+    width: 100% !important;
+    height: 100% !important;
+    border: none !important;
+    display: flex !important;
     align-items: center;
     justify-content: center;
 }
-/* টাচ-সোয়াইপ ক্যাপচার লেয়ার যাতে ফোনে আঙুল দিয়ে টেনে এবং ল্যাপটপে মাউস হুইলে রিলস স্ক্রল হয় */
+/* টাচ-সোয়াইপ ক্যাপচার লেয়ার */
 .bh-reel-swipe-gesture-layer {
     position: absolute;
     top: 68px;
@@ -3321,9 +3403,10 @@ height: 22px !important;
     z-index: 4620;
     background: transparent;
     touch-action: none;
+    cursor: pointer;
 }
 
-/* ৫০ সেকেন্ড পর প্রফেশনাল আঙুল সোয়াইপ (ফোন) ও মাউস স্ক্রল (ল্যাপটপ) অ্যানিমেশন */
+/* ৫০ সেকেন্ড পর প্রফেশনাল আঙুল সোয়াইপ (ফোন) ও মাউস স্ক্রল (ল্যাপটপ) অ্যানিমেশন */
 .bh-50s-swipe-prompt {
     position: absolute;
     bottom: 110px;
@@ -7352,10 +7435,37 @@ document.addEventListener('keydown', function(e) {
 })();
 </script>
 
+
+<script>
+// =========================================================================
+// ===== AUTOPLAY PERMISSION PATCH FOR FACEBOOK DYNAMIC IFRAMES =====
+// =========================================================================
+// ফেসবুকের SDK যখন ডাইনামিক iframe তৈরি করে, তখন ব্রাউজারে যাতে সাথে সাথে অটো-প্লে হয় তার পারমিশন যুক্ত করা
+(function enableFacebookIframeAutoplayPermission() {
+    const ALLOW_PERMS = 'autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share; fullscreen';
+    const _origCreateElement = document.createElement;
+    document.createElement = function(tagName, options) {
+        const el = _origCreateElement.call(document, tagName, options);
+        if (tagName && String(tagName).toLowerCase() === 'iframe') {
+            try { el.setAttribute('allow', ALLOW_PERMS); } catch (e) {}
+        }
+        return el;
+    };
+    const _origSetAttribute = Element.prototype.setAttribute;
+    Element.prototype.setAttribute = function(name, value) {
+        if (this.tagName === 'IFRAME' && String(name).toLowerCase() === 'allow') {
+            if (!String(value).includes('autoplay')) {
+                value = ALLOW_PERMS + '; ' + value;
+            }
+        }
+        return _origSetAttribute.call(this, name, value);
+    };
+})();
+</script>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0"></script>
 <script>
 // =========================================================================
-// ===== BAAHUBALI 2D SYSTEM (DYNAMIC STACK + INSTANT AUTOPLAY + SMART BACK) =====
+// ===== BAAHUBALI 2D SYSTEM (INSTANT AUTOPLAY + DYNAMIC STACK + SMART BACK) =====
 // =========================================================================
 
 const baahubaliFbShortsList = [
@@ -7376,41 +7486,37 @@ const baahubaliFbShortsList = [
 // ভবিষ্যতে ১৬:৯ ফুল এপিসোডের ফেসবুক ভিডিওর Embed Code (`<iframe ...></iframe>`) এই দুই ব্যাকটিকের ভেতরে বসাবেন:
 const BAAHUBALI_FULL_EPISODE_EMBED_CODE = ``;
 
-// কোথা থেকে বাহুবলী ট্যাবে আসা হয়েছে তা মনে রাখার ভেরিয়েবল ('home' অথবা 'photo')
+// কোথা থেকে বাহুবলী ট্যাবে আসা হয়েছে তা মনে রাখার ভেরিয়েবল ('home' অথবা 'photo')
 let baahubaliSourceContext = 'home';
 let savedPhotoIndexBeforeBaahubali = 0;
 let savedHomeScrollY = 0;
 
-// ফেসবুকের ভিডিও যাতে ট্যাপ করার সাথে সাথে এবং স্ক্রল করার সাথে সাথেই অটো-প্লে হয় (২ বার ট্যাপ না লাগে)
-function prepareFacebookEmbedHtml(rawCode) {
+// Embed Code (`<iframe ...>`) থেকে মূল ফেসবুক রিলস বা ভিডিওর লিংক বের করার ফাংশন
+function extractFbVideoHref(rawCode) {
     if (!rawCode || !rawCode.trim()) return "";
     const trimmed = rawCode.trim();
-    let videoHref = "";
-
     if (trimmed.toLowerCase().startsWith("<iframe")) {
         const srcMatch = trimmed.match(/src=["']([^"']+)["']/i);
         if (srcMatch && srcMatch[1]) {
             try {
                 const urlObj = new URL(srcMatch[1]);
                 const hrefParam = urlObj.searchParams.get("href");
-                if (hrefParam) videoHref = hrefParam;
+                if (hrefParam) return hrefParam;
             } catch (e) {}
-            if (!videoHref) {
-                let directSrc = srcMatch[1];
-                directSrc = directSrc.replace(/([?&])autoplay=[^&]*/gi, '');
-                directSrc += (directSrc.includes("?") ? "&" : "?") + "autoplay=1&mute=0&show_text=false";
-                return `<iframe src="${directSrc}" style="width:100%;height:100%;border:none;overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>`;
-            }
+            return srcMatch[1];
         }
-    } else {
-        videoHref = trimmed;
     }
-
-    const finalPluginUrl = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(videoHref)}&show_text=false&autoplay=1&mute=0&t=0`;
-    return `<iframe src="${finalPluginUrl}" style="width:100%;height:100%;border:none;overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>`;
+    return trimmed;
 }
 
-// কোডের ভেতরে যতগুলো ভিডিও দেওয়া আছে (১টা হলে ১টা, ২টা হলে ২টা, ৩টা হলে ৩টা, সর্বোচ্চ ৪টা) ঠিক ততগুলো তলা মারা কার্ড তৈরি করবে
+function prepareFacebookEmbedHtml(rawCode) {
+    const videoHref = extractFbVideoHref(rawCode);
+    if (!videoHref) return "";
+    const finalPluginUrl = `https://www.facebook.com/plugins/video.php?height=476&width=267&href=${encodeURIComponent(videoHref)}&show_text=false&autoplay=true&autoplay=1&t=0`;
+    return `<iframe src="${finalPluginUrl}" width="267" height="476" style="width:100%;height:100%;border:none;overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share; fullscreen" allowFullScreen="true"></iframe>`;
+}
+
+// কোডের ভেতরে যতগুলো ভিডিও দেওয়া আছে ঠিক ততগুলো তলা মারা কার্ড তৈরি করবে
 function renderDynamicBaahubaliShortsStack() {
     const stackContainer = document.getElementById('baahubaliShortsStack');
     if (!stackContainer) return;
@@ -7423,11 +7529,9 @@ function renderDynamicBaahubaliShortsStack() {
         return;
     }
 
-    // সর্বোচ্চ ৪টি স্তর পর্যন্ত দেখাবে, কিন্তু ভিডিও ২টি থাকলে শুধু ২টি স্তরই দেখাবে
     const visibleLayersCount = Math.min(total, 4);
     let layersHtml = '';
 
-    // নিচের স্তরগুলো আগে রেন্ডার হবে (যেমন layer-2 বা layer-3)
     for (let i = visibleLayersCount; i >= 2; i--) {
         const vidObj = baahubaliFbShortsList[i - 1];
         layersHtml += `
@@ -7437,7 +7541,6 @@ function renderDynamicBaahubaliShortsStack() {
         `;
     }
 
-    // সবার উপরের মূল কার্ড (layer-1), যার নিচে ১ম ভিডিওর ক্যাপশন লেখা থাকবে
     const firstVid = baahubaliFbShortsList[0];
     const badgeText = isBN ? `📚 ${total}টি শর্টস` : `📚 ${total} ${total === 1 ? 'Short' : 'Shorts'}`;
     const firstCaption = firstVid.caption || (isBN ? 'বাহুবলী শর্টস' : 'Baahubali Shorts');
@@ -7456,7 +7559,7 @@ function renderDynamicBaahubaliShortsStack() {
     stackContainer.innerHTML = layersHtml;
 }
 
-// ডান পাশের ১৬:৯ ফুল এপিসোড সেকশন রেন্ডার ফাংশন (শুধু "Baahubali Full Episode is Coming" / "Baahubali শীঘ্রই আসছে")
+// ডান পাশের ১৬:৯ ফুল এপিসোড বক্স (ইংরেজি: "Baahubali Full Episode is Coming Soon...." এবং বাংলা: "Baahubali সম্পূর্ণ পর্ব খুব শীঘ্রই আসছে...." + ডিপ-ডিপ ডট)
 function renderBaahubaliFullEpisodeSection() {
     const box = document.getElementById('baahubaliFullEpContainer');
     if (!box) return;
@@ -7467,10 +7570,12 @@ function renderBaahubaliFullEpisodeSection() {
         box.innerHTML = prepareFacebookEmbedHtml(BAAHUBALI_FULL_EPISODE_EMBED_CODE);
     } else {
         box.classList.remove('has-video');
-        const msgText = isBN ? 'Baahubali শীঘ্রই আসছে' : 'Baahubali Full Episode is Coming';
+        const msgHtml = isBN
+            ? `<span>Baahubali সম্পূর্ণ পর্ব খুব শীঘ্রই আসছে</span><span class="bh-blinking-dots"><span>.</span><span>.</span><span>.</span><span>.</span></span>`
+            : `<span>Baahubali Full Episode is Coming Soon</span><span class="bh-blinking-dots"><span>.</span><span>.</span><span>.</span><span>.</span></span>`;
         box.innerHTML = `
-            <div style="font-family: 'Hind Siliguri', 'Inter', sans-serif; font-size: 20px; font-weight: 800; color: var(--text-color); letter-spacing: 0.5px;">
-                ${msgText}
+            <div style="font-family: 'Hind Siliguri', 'Inter', sans-serif; font-size: 20px; font-weight: 800; color: var(--text-color); letter-spacing: 0.5px; line-height: 1.5;">
+                ${msgHtml}
             </div>
         `;
     }
@@ -7491,13 +7596,11 @@ function updateBaahubali2dButtonVisibility() {
 function updateBaahubaliLanguageUI() {
     const isBN = (typeof currentLang !== 'undefined' && currentLang === 'BN');
 
-    // ১. ছবির ওপরের বাটনটির নাম ও টুলটিপ
     const btn = document.getElementById('baahubali2dBtn');
     const btnTxt = document.getElementById('baahubali2dBtnText');
     if (btnTxt) btnTxt.textContent = isBN ? 'বাহুবলী ২ডি' : 'Baahubali 2D';
     if (btn) btn.setAttribute('title', isBN ? 'বাহুবলী ২ডি ভিডিও দেখুন' : 'Watch Baahubali 2D Videos');
 
-    // ২. হোমপেজের ডান পাশের বাহুবলী সেকশনের নাম ও বাটন
     const homeTopTitle = document.getElementById('homeBaahubaliTopTitle');
     const homeBtnText = document.getElementById('homeBaahubaliBtnText');
     const homeMainBtn = document.getElementById('homeBaahubaliMainBtn');
@@ -7505,7 +7608,6 @@ function updateBaahubaliLanguageUI() {
     if (homeBtnText) homeBtnText.textContent = isBN ? 'বাহুবলী' : 'BAAHUBALI';
     if (homeMainBtn) homeMainBtn.setAttribute('title', isBN ? 'বাহুবলী পেজে যান' : 'Open Baahubali Page');
 
-    // ৩. বাহুবলী পেজের টাইটেল
     const heading = document.getElementById('baahubaliStyleHeading');
     if (heading) heading.textContent = isBN ? 'বাহুবলী' : 'BAAHUBALI';
 
@@ -7565,23 +7667,11 @@ function updateBaahubaliLanguageUI() {
     }
 })();
 
-document.addEventListener('DOMContentLoaded', function() {
-    updateBaahubaliLanguageUI();
-    ['baahubali2dBtn', 'homeBaahubaliMainBtn', 'baahubaliShortsStack'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            el.addEventListener('mouseenter', () => { if (typeof SOUNDS !== 'undefined' && SOUNDS.hover) SOUNDS.hover(); });
-            el.addEventListener('click', () => { if (typeof SOUNDS !== 'undefined' && SOUNDS.click) SOUNDS.click(); });
-        }
-    });
-});
-
-// ১. ছবির ফুলস্ক্রিন থেকে বাহুবলী ট্যাবে যাওয়া (যাতে ব্যাক করলে আবার ছবির ফুলস্ক্রিনেই ফিরে আসে)
+// ১. ছবির ফুলস্ক্রিন থেকে বাহুবলী ট্যাবে যাওয়া
 function openBaahubaliPageFromPhoto() {
     baahubaliSourceContext = 'photo';
     savedPhotoIndexBeforeBaahubali = currentGalleryIndex;
 
-    // ফুলস্ক্রিন সাময়িকভাবে লুকানো এবং অডিও থামানো
     const fullOverlay = document.getElementById('fullscreenOverlay');
     if (fullOverlay) fullOverlay.style.display = 'none';
     document.body.classList.remove('fullscreen-active');
@@ -7592,7 +7682,7 @@ function openBaahubaliPageFromPhoto() {
     showBaahubaliPage();
 }
 
-// ২. হোমপেজের নতুন বাহুবলী বাটন থেকে বাহুবলী ট্যাবে যাওয়া (যাতে ব্যাক করলে আবার হোমপেজেই ফিরে আসে)
+// ২. হোমপেজের বাহুবলী বাটন থেকে বাহুবলী ট্যাবে যাওয়া
 function openBaahubaliPageFromHome() {
     baahubaliSourceContext = 'home';
     savedHomeScrollY = window.scrollY || window.pageYOffset || 0;
@@ -7608,7 +7698,6 @@ function showBaahubaliPage() {
     if (welcomePage) welcomePage.classList.remove('active');
     if (baahubaliPage) baahubaliPage.classList.add('active');
 
-    // পেজ যাতে উপর-নিচে স্ক্রল করা যায় এবং একদম ট্যাবের সবার উপরে (Top: 0) নিয়ে যায়
     document.body.style.overflow = '';
     updateBaahubaliLanguageUI();
 
@@ -7643,7 +7732,6 @@ function hideBaahubaliPage() {
         popHeHistoryIfManual();
     }
 
-    // যেখান থেকে এসেছিল ঠিক সেখানেই ফেরত নিয়ে যাওয়া
     if (baahubaliSourceContext === 'photo') {
         const fullOverlay = document.getElementById('fullscreenOverlay');
         if (fullOverlay) {
@@ -7665,23 +7753,133 @@ function hideBaahubaliPage() {
     }
 }
 
-// ===== BAAHUBALI FACEBOOK REELS PLAYER + 50s SCROLL ANIMATION + SMOOTH SWIPE =====
+// =========================================================================
+// ===== BAAHUBALI FACEBOOK REELS PLAYER (INSTANT AUTOPLAY ENGINE) =====
+// =========================================================================
 let currentBhReelIndex = 0;
 let bh50sTimer = null;
 let isBhReelAnimating = false;
+let isBhReelsOverlayOpen = false;
+let bhActiveFbController = null;
+let isCurrentBhPlaying = true;
+let bhSdkEventBound = false;
+
+function ensureFbSdkAutoplayBinding() {
+    if (bhSdkEventBound) return;
+    if (window.FB && window.FB.Event) {
+        bhSdkEventBound = true;
+        window.FB.Event.subscribe('xfbml.ready', function(msg) {
+            if (msg.type === 'video' && msg.id === 'bhActiveFbVideoPlayer') {
+                bhActiveFbController = msg.instance;
+                isCurrentBhPlaying = true;
+
+                // যদি কোনো কারণে ব্রাউজার আনমিউট অটোপ্লে ব্লক করতে চায়, তবে সাথে সাথে প্লে চালু রাখবে
+                let hasStarted = false;
+                try {
+                    msg.instance.subscribe('startedPlaying', function() {
+                        hasStarted = true;
+                        isCurrentBhPlaying = true;
+                        // ভিডিও চলতে শুরু করলে সোয়াইপ লেয়ার সক্রিয় থাকবে
+                        const swipeLayer = document.getElementById('bhReelSwipeLayer');
+                        if (swipeLayer) swipeLayer.style.pointerEvents = 'auto';
+                    });
+                    msg.instance.subscribe('finishedPlaying', function() {
+                        try {
+                            msg.instance.seek(0);
+                            msg.instance.play();
+                        } catch (e) {}
+                    });
+                } catch (e) {}
+
+                // সাথে সাথে প্লে এবং সাউন্ড আনমিউট কল করা
+                try { msg.instance.play(); } catch (e) {}
+                try { msg.instance.unmute(); } catch (e) {}
+                try { msg.instance.setVolume(1); } catch (e) {}
+
+                setTimeout(() => {
+                    if (!isBhReelsOverlayOpen || bhActiveFbController !== msg.instance) return;
+                    try { msg.instance.play(); } catch (e) {}
+                    try { msg.instance.unmute(); } catch (e) {}
+                }, 150);
+
+                // যদি ৩৫০ মিলিসেকেন্ডের মধ্যে ব্রাউজার আনমিউট অটোপ্লে আটকে দেয়, তবে অটোমেটিক প্লে ফোর্স করা
+                setTimeout(() => {
+                    if (!isBhReelsOverlayOpen || bhActiveFbController !== msg.instance) return;
+                    if (!hasStarted) {
+                        try { msg.instance.play(); } catch (e) {}
+                    }
+                }, 380);
+            }
+        });
+    }
+}
 
 function startBh50SecondSwipePrompt() {
     clearTimeout(bh50sTimer);
     const promptEl = document.getElementById('bh50sSwipePrompt');
     if (promptEl) promptEl.classList.remove('visible');
 
-    // ৫০ সেকেন্ড (50000ms) পর প্রফেশনাল আঙুল সোয়াইপ (ফোনে) ও মাউস স্ক্রল (ল্যাপটপে) অ্যানিমেশন দেখাবে
     bh50sTimer = setTimeout(() => {
-        if (promptEl) {
+        if (promptEl && isBhReelsOverlayOpen) {
             promptEl.classList.add('visible');
             if (typeof SOUNDS !== 'undefined' && SOUNDS.caption) SOUNDS.caption();
         }
     }, 50000);
+}
+
+function renderAndAutoplayBhReel(item) {
+    const slide = document.getElementById('bhReelSlideContainer');
+    const stage = document.getElementById('bhReelStage');
+    if (!slide) return;
+
+    bhActiveFbController = null;
+    const videoHref = extractFbVideoHref(item.embedCode);
+    const stageWidth = (stage && stage.clientWidth > 200) ? stage.clientWidth : 380;
+
+    if (window.FB && window.FB.XFBML && videoHref) {
+        ensureFbSdkAutoplayBinding();
+        slide.innerHTML = `
+            <div class="fb-video"
+                 id="bhActiveFbVideoPlayer"
+                 data-href="${videoHref}"
+                 data-width="${stageWidth}"
+                 data-autoplay="true"
+                 data-allowfullscreen="true"
+                 data-show-text="false"
+                 data-lazy="false"></div>
+        `;
+        try {
+            window.FB.XFBML.parse(slide);
+        } catch (e) {
+            slide.innerHTML = prepareFacebookEmbedHtml(item.embedCode);
+        }
+    } else {
+        // FB SDK লোড হতে দেরি হলে সরাসরি অটোপ্লে iframe + SDK রেডি হওয়া মাত্রই পার্স
+        slide.innerHTML = prepareFacebookEmbedHtml(item.embedCode);
+        let retryCount = 0;
+        const sdkCheckInterval = setInterval(() => {
+            retryCount++;
+            if (!isBhReelsOverlayOpen || retryCount > 15) {
+                clearInterval(sdkCheckInterval);
+                return;
+            }
+            if (window.FB && window.FB.XFBML && videoHref) {
+                clearInterval(sdkCheckInterval);
+                ensureFbSdkAutoplayBinding();
+                slide.innerHTML = `
+                    <div class="fb-video"
+                         id="bhActiveFbVideoPlayer"
+                         data-href="${videoHref}"
+                         data-width="${stageWidth}"
+                         data-autoplay="true"
+                         data-allowfullscreen="true"
+                         data-show-text="false"
+                         data-lazy="false"></div>
+                `;
+                try { window.FB.XFBML.parse(slide); } catch (e) {}
+            }
+        }, 200);
+    }
 }
 
 function loadBaahubaliReelSlide(index, swipeDirection = 0) {
@@ -7697,34 +7895,38 @@ function loadBaahubaliReelSlide(index, swipeDirection = 0) {
 
     if (!slide) return;
 
-    const renderIframe = () => {
-        slide.innerHTML = prepareFacebookEmbedHtml(item.embedCode);
+    const mountVideo = () => {
         if (counter) counter.textContent = `${currentBhReelIndex + 1} / ${baahubaliFbShortsList.length}`;
         if (caption) caption.textContent = item.caption || 'Baahubali 2D';
+        renderAndAutoplayBhReel(item);
         startBh50SecondSwipePrompt();
     };
 
     if (swipeDirection === 0) {
         slide.className = 'bh-reel-slide';
-        renderIframe();
+        mountVideo();
     } else {
         isBhReelAnimating = true;
+        if (bhActiveFbController) {
+            try { bhActiveFbController.pause(); } catch (e) {}
+        }
         slide.classList.add(swipeDirection > 0 ? 'slide-up-out' : 'slide-down-out');
         setTimeout(() => {
             slide.style.transition = 'none';
             slide.className = 'bh-reel-slide ' + (swipeDirection > 0 ? 'slide-down-out' : 'slide-up-out');
-            renderIframe();
+            mountVideo();
             void slide.offsetWidth;
             slide.style.transition = '';
             slide.className = 'bh-reel-slide';
-            setTimeout(() => { isBhReelAnimating = false; }, 420);
-        }, 300);
+            setTimeout(() => { isBhReelAnimating = false; }, 400);
+        }, 280);
     }
 }
 
 function openBaahubaliReels(startIndex = 0) {
     const overlay = document.getElementById('baahubaliReelsOverlay');
     if (!overlay) return;
+    isBhReelsOverlayOpen = true;
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
     loadBaahubaliReelSlide(startIndex, 0);
@@ -7737,7 +7939,12 @@ function openBaahubaliReels(startIndex = 0) {
 function closeBaahubaliReels() {
     const overlay = document.getElementById('baahubaliReelsOverlay');
     const slide = document.getElementById('bhReelSlideContainer');
+    isBhReelsOverlayOpen = false;
     clearTimeout(bh50sTimer);
+    if (bhActiveFbController) {
+        try { bhActiveFbController.pause(); } catch (e) {}
+        bhActiveFbController = null;
+    }
     if (slide) slide.innerHTML = '';
     if (overlay) overlay.classList.remove('active');
     document.body.style.overflow = '';
@@ -7753,13 +7960,36 @@ function changeBaahubaliReel(direction) {
     loadBaahubaliReelSlide(currentBhReelIndex + direction, direction);
 }
 
-// ফোনে আঙুল দিয়ে সোয়াইপ এবং ল্যাপটপে মাউস হুইল ঘুরিয়ে রিলস স্ক্রলিং
+function toggleBhActiveReelPlayPause() {
+    if (!bhActiveFbController) return;
+    if (isCurrentBhPlaying) {
+        try { bhActiveFbController.pause(); } catch (e) {}
+        isCurrentBhPlaying = false;
+    } else {
+        try { bhActiveFbController.unmute(); bhActiveFbController.play(); } catch (e) {}
+        isCurrentBhPlaying = true;
+    }
+}
+
+// ফোনে আঙুল দিয়ে সোয়াইপ এবং ল্যাপটপে মাউস হুইল ঘুরিয়ে রিলস স্ক্রলিং
 document.addEventListener('DOMContentLoaded', function() {
+    updateBaahubaliLanguageUI();
+    ensureFbSdkAutoplayBinding();
+
+    ['baahubali2dBtn', 'homeBaahubaliMainBtn', 'baahubaliShortsStack'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('mouseenter', () => { if (typeof SOUNDS !== 'undefined' && SOUNDS.hover) SOUNDS.hover(); });
+            el.addEventListener('click', () => { if (typeof SOUNDS !== 'undefined' && SOUNDS.click) SOUNDS.click(); });
+        }
+    });
+
     const stage = document.getElementById('bhReelStage');
     const swipeLayer = document.getElementById('bhReelSwipeLayer');
     if (!stage) return;
 
     let startY = 0;
+    let startTime = 0;
     let isDraggingTouch = false;
     let wheelCooldown = false;
 
@@ -7767,6 +7997,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     targetEl.addEventListener('touchstart', function(e) {
         startY = e.touches[0].clientY;
+        startTime = Date.now();
         isDraggingTouch = true;
     }, { passive: true });
 
@@ -7775,11 +8006,21 @@ document.addEventListener('DOMContentLoaded', function() {
         isDraggingTouch = false;
         const endY = e.changedTouches[0].clientY;
         const diffY = startY - endY;
+        const elapsed = Date.now() - startTime;
+
         if (Math.abs(diffY) > 40) {
-            if (diffY > 0) changeBaahubaliReel(1); // আঙুল দিয়ে উপরের দিকে টানলে পরের ভিডিও
+            if (diffY > 0) changeBaahubaliReel(1); // আঙুল দিয়ে উপরের দিকে টানলে পরের ভিডিও
             else changeBaahubaliReel(-1);          // নিচের দিকে টানলে আগের ভিডিও
+        } else if (Math.abs(diffY) < 12 && elapsed < 300) {
+            toggleBhActiveReelPlayPause();
         }
     }, { passive: true });
+
+    targetEl.addEventListener('click', function() {
+        if (window.matchMedia('(pointer: fine)').matches) {
+            toggleBhActiveReelPlayPause();
+        }
+    });
 
     stage.addEventListener('wheel', function(e) {
         e.preventDefault();
@@ -7797,10 +8038,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!overlay || !overlay.classList.contains('active')) return;
         if (e.key === 'ArrowDown') { e.preventDefault(); changeBaahubaliReel(1); }
         else if (e.key === 'ArrowUp') { e.preventDefault(); changeBaahubaliReel(-1); }
+        else if (e.key === ' ') { e.preventDefault(); toggleBhActiveReelPlayPause(); }
     });
 });
 
-// ফোনের ব্যাক বাটন ও Esc বাটনে যাতে যেখান থেকে এসেছিল ঠিক সেখানেই ফেরত যায়
+// ফোনের ব্যাক বাটন ও Esc বাটনে যাতে যেখান থেকে এসেছিল ঠিক সেখানেই ফেরত যায়
 (function hookBaahubaliBackNavigation() {
     const _origBack = window.handleUniversalBackAction;
     if (typeof _origBack === 'function') {
