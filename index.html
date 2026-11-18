@@ -3522,6 +3522,673 @@ html.tab-hidden *, html.tab-hidden *::before, html.tab-hidden *::after { animati
 
 .collection-card { contain: layout paint; }
 </style>
+<style id="he-admin-styles">
+.he-sec-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 99990;
+    background: rgba(5, 5, 10, 0.42);
+    backdrop-filter: blur(8px) saturate(140%);
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    transition: background 0.4s ease;
+}
+body.light-mode .he-sec-backdrop {
+    background: rgba(255, 255, 255, 0.34);
+}
+body.honey-mode .he-sec-backdrop {
+    background: rgba(254, 243, 199, 0.32);
+}
+.he-sec-backdrop.active {
+    display: flex;
+    animation: heSecFadeIn 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes heSecFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes heCardPop {
+    0% { opacity: 0; transform: scale(0.92) translateY(20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes heBoxSlideIn {
+    0% { opacity: 0; transform: translateY(14px) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes hePinShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-10px); }
+    40% { transform: translateX(10px); }
+    60% { transform: translateX(-7px); }
+    80% { transform: translateX(7px); }
+}
+@keyframes heShieldPulse {
+    0%, 100% { box-shadow: 0 0 18px var(--glow-color); transform: scale(1); }
+    50% { box-shadow: 0 0 32px var(--glow-color); transform: scale(1.05); }
+}
+
+/* ===== PIN MODAL ===== */
+.he-pin-card {
+    width: 100%;
+    max-width: 390px;
+    background: rgba(16, 16, 24, 0.68);
+    backdrop-filter: blur(22px) saturate(170%);
+    -webkit-backdrop-filter: blur(22px) saturate(170%);
+    border: 1.5px solid var(--accent);
+    border-radius: 28px;
+    padding: 32px 24px 26px;
+    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.45), 0 0 30px var(--glow-color);
+    color: var(--text-color);
+    position: relative;
+    text-align: center;
+    animation: heCardPop 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', 'Inter', sans-serif;
+    will-change: transform, opacity;
+}
+body.light-mode .he-pin-card {
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16), 0 0 24px var(--glow-color);
+}
+body.honey-mode .he-pin-card {
+    background: rgba(255, 251, 235, 0.72);
+    box-shadow: 0 20px 50px rgba(120, 53, 15, 0.18), 0 0 24px var(--glow-color);
+}
+.he-pin-card.shake {
+    animation: hePinShake 0.4s ease;
+}
+.he-shield-ring {
+    width: 66px;
+    height: 66px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(244, 114, 182, 0.18));
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    animation: heShieldPulse 2.2s infinite ease-in-out;
+}
+.he-pin-title {
+    font-family: 'Orbitron', 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    margin: 0 0 6px;
+    background: linear-gradient(90deg, var(--text-color), var(--accent), #fb923c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.he-pin-sub {
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--text-color);
+    opacity: 0.78;
+    margin: 0 0 18px;
+}
+.he-input-eye-wrap {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.he-sec-input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1.5px solid rgba(128, 128, 128, 0.35);
+    border-radius: 14px;
+    padding: 12px 44px 12px 14px;
+    color: var(--text-color);
+    font-size: 14px;
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    user-select: text !important;
+    -webkit-user-select: text !important;
+}
+body.light-mode .he-sec-input,
+body.honey-mode .he-sec-input {
+    background: rgba(255, 255, 255, 0.65);
+    border-color: rgba(0, 0, 0, 0.18);
+}
+.he-sec-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--glow-color);
+}
+.he-sec-input:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+.he-eye-btn {
+    position: absolute;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    opacity: 0.7;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, transform 0.2s, opacity 0.2s;
+}
+.he-eye-btn:hover { color: var(--accent); opacity: 1; transform: scale(1.12); }
+.he-pin-error {
+    min-height: 20px;
+    margin-top: 10px;
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', 'Inter', sans-serif;
+    font-size: 12.5px;
+    color: #ef4444;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+/* ===== BUTTONS & SHINE HOVER OVERLAY ===== */
+.he-btn-primary {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px 18px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, var(--accent), #fb923c);
+    color: #fff;
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px var(--glow-color);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    will-change: transform;
+}
+.he-btn-primary::before,
+.he-logo-toggle-btn::before,
+.he-tab-btn::before,
+.he-quick-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+    transition: left 0.55s ease;
+    pointer-events: none;
+}
+.he-btn-primary:hover::before,
+.he-logo-toggle-btn:hover::before,
+.he-tab-btn:hover::before,
+.he-quick-btn:hover::before {
+    left: 100%;
+}
+.he-btn-primary:hover {
+    transform: translateY(-2.5px) scale(1.012);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28), 0 0 22px var(--glow-color);
+    border-color: rgba(255, 255, 255, 0.55);
+}
+.he-btn-primary:active { transform: scale(0.97); }
+.he-btn-primary:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.he-back-arrow-btn,
+.he-settings-gear-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+.he-back-arrow-btn:hover {
+    background: var(--accent);
+    color: #fff;
+    transform: scale(1.1) translateX(-3px);
+    box-shadow: 0 6px 20px var(--glow-color);
+}
+.he-settings-gear-btn:hover {
+    background: var(--accent);
+    color: #fff;
+    transform: scale(1.1) rotate(60deg);
+    box-shadow: 0 6px 20px var(--glow-color);
+}
+.he-settings-gear-btn svg {
+    width: 19px;
+    height: 19px;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.he-settings-gear-btn.open {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 6px 22px var(--glow-color);
+}
+.he-settings-gear-btn.open svg {
+    transform: rotate(180deg);
+}
+.he-back-arrow-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ===== ADMIN DASHBOARD PANEL (TRANSLUCENT THEME-AWARE GLASS UI) ===== */
+.he-admin-panel {
+    width: 100%;
+    max-width: 840px;
+    max-height: 92vh;
+    background: rgba(14, 14, 22, 0.62);
+    backdrop-filter: blur(22px) saturate(165%);
+    -webkit-backdrop-filter: blur(22px) saturate(165%);
+    border: 1.5px solid rgba(255, 255, 255, 0.16);
+    border-radius: 28px;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.55), 0 0 36px var(--glow-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: heCardPop 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', 'Inter', sans-serif;
+    transition: background 0.45s ease, color 0.45s ease, border-color 0.45s ease;
+    will-change: transform, opacity;
+}
+body.light-mode .he-admin-panel {
+    background: rgba(255, 255, 255, 0.68);
+    border-color: rgba(219, 39, 119, 0.3);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.14), 0 0 28px var(--glow-color);
+}
+body.honey-mode .he-admin-panel {
+    background: rgba(255, 251, 235, 0.68);
+    border-color: rgba(217, 119, 6, 0.35);
+    box-shadow: 0 22px 60px rgba(120, 53, 15, 0.16), 0 0 28px var(--glow-color);
+}
+
+.he-admin-header {
+    flex-shrink: 0;
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(128,128,128,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: rgba(255,255,255,0.04);
+}
+.he-admin-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.he-admin-header h2 {
+    margin: 0;
+    font-family: 'Orbitron', 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.7px;
+    background: linear-gradient(90deg, var(--text-color), var(--accent), #fb923c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ===== SETTINGS DRAWER (COLLAPSIBLE 6-BUTTON QUICKBAR) ===== */
+.he-admin-quickbar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 20px;
+    max-height: 0;
+    opacity: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-bottom: 0 solid transparent;
+    background: rgba(0, 0, 0, 0.08);
+    scrollbar-width: none;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: max-height 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+                padding 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.32s ease,
+                transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.3s ease;
+    will-change: max-height, opacity, transform;
+}
+.he-admin-quickbar.open {
+    max-height: 76px;
+    padding: 11px 20px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    border-bottom: 1px solid rgba(128,128,128,0.15);
+}
+body.light-mode .he-admin-quickbar,
+body.honey-mode .he-admin-quickbar {
+    background: rgba(255, 255, 255, 0.25);
+}
+.he-admin-quickbar::-webkit-scrollbar { display: none; }
+.he-quick-btn {
+    flex-shrink: 0;
+    padding: 7px 14px;
+    border-radius: 10px;
+    font-family: 'Hind Siliguri', 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid rgba(128,128,128,0.28);
+    background: var(--card-bg);
+    color: var(--text-color);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.he-quick-btn:hover {
+    transform: translateY(-2px) scale(1.04);
+    border-color: var(--accent);
+    box-shadow: 0 5px 15px var(--glow-color);
+}
+.he-quick-btn.honey { background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff; border-color: transparent; }
+.he-quick-btn.dark { background: linear-gradient(135deg, #18181b, #3f3f46); color: #fff; border-color: transparent; }
+.he-quick-btn.light { background: linear-gradient(135deg, #ffffff, #f3f4f6); color: #18181b; border-color: rgba(0,0,0,0.15); }
+.he-quick-btn.share { background: linear-gradient(135deg, var(--accent), #fb923c); color: #fff; border-color: transparent; }
+
+/* অ্যাডমিন প্যানেল খোলা থাকলে থ্রি-বার মেনুতে শুধু ৬টি বাটন দেখাবে */
+body.admin-panel-open .dropdown-menu .menu-divider,
+body.admin-panel-open .dropdown-menu .menu-h-social,
+body.admin-panel-open .dropdown-menu #heAdminLockBtn {
+    display: none !important;
+}
+
+/* ===== TABS (NEVER SHRINK WHEN CONTENT SCROLLS) ===== */
+.he-admin-tabs {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    overflow-x: auto;
+    border-bottom: 1px solid rgba(128,128,128,0.15);
+    scrollbar-width: none;
+}
+.he-admin-tabs::-webkit-scrollbar { display: none; }
+.he-tab-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 9px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(128,128,128,0.25);
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.he-tab-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 6px 18px var(--glow-color);
+}
+.he-tab-btn.active {
+    background: linear-gradient(135deg, var(--accent), #fb923c);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 6px 20px var(--glow-color);
+}
+
+.he-admin-feedback {
+    flex-shrink: 0;
+    display: none;
+    margin: 12px 20px 0;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    animation: heSecFadeIn 0.25s ease;
+}
+.he-admin-feedback.success {
+    display: block;
+    background: rgba(34, 197, 94, 0.2);
+    border: 1px solid rgba(34, 197, 94, 0.55);
+    color: #16a34a;
+}
+body.dark-mode .he-admin-feedback.success { color: #4ade80; }
+.he-admin-feedback.error {
+    display: block;
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.55);
+    color: #dc2626;
+}
+body.dark-mode .he-admin-feedback.error { color: #f87171; }
+
+.he-admin-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 16px 20px 26px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.he-tab-pane {
+    display: none;
+    flex-direction: column;
+    gap: 14px;
+}
+.he-tab-pane.active {
+    display: flex;
+}
+.he-tab-pane.active .he-admin-card {
+    animation: heBoxSlideIn 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.he-tab-pane.active .he-admin-card:nth-child(1) { animation-delay: 0.03s; }
+.he-tab-pane.active .he-admin-card:nth-child(2) { animation-delay: 0.09s; }
+.he-tab-pane.active .he-admin-card:nth-child(3) { animation-delay: 0.15s; }
+
+/* ===== STYLISH BOXED CARDS ===== */
+.he-admin-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1.5px solid rgba(128, 128, 128, 0.22);
+    border-left: 4px solid var(--accent);
+    border-radius: 18px;
+    padding: 18px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
+}
+body.light-mode .he-admin-card,
+body.honey-mode .he-admin-card {
+    background: rgba(255, 255, 255, 0.45);
+    border-color: rgba(0, 0, 0, 0.1);
+    border-left: 4px solid var(--accent);
+}
+.he-admin-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14), 0 0 18px var(--glow-color);
+}
+.he-admin-card-title {
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--accent);
+    margin: 0 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    letter-spacing: 0.2px;
+}
+.he-logo-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), #fb923c);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 4px 14px var(--glow-color);
+}
+.he-logo-toggle-btn:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 22px var(--glow-color);
+}
+.he-logo-drawer {
+    display: none;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(128,128,128,0.3);
+    animation: heSecFadeIn 0.25s ease;
+}
+.he-logo-drawer.open { display: block; }
+.he-field-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+@media (min-width: 640px) {
+    .he-field-grid.two-col { grid-template-columns: 1fr 1fr; }
+}
+.he-label {
+    display: block;
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-color);
+    opacity: 0.85;
+    margin-bottom: 5px;
+    letter-spacing: 0.2px;
+}
+.he-input, .he-textarea, .he-select {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.32);
+    border: 1.5px solid rgba(128, 128, 128, 0.28);
+    border-radius: 12px;
+    padding: 10px 12px;
+    color: var(--text-color);
+    font-size: 13.5px;
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    user-select: text !important;
+    -webkit-user-select: text !important;
+}
+body.light-mode .he-input,
+body.light-mode .he-textarea,
+body.light-mode .he-select,
+body.honey-mode .he-input,
+body.honey-mode .he-textarea,
+body.honey-mode .he-select {
+    background: rgba(255, 255, 255, 0.65);
+    border-color: rgba(0, 0, 0, 0.16);
+}
+.he-input:focus, .he-textarea:focus, .he-select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--glow-color);
+}
+.he-select option {
+    background: #141418;
+    color: #fff;
+}
+body.light-mode .he-select option,
+body.honey-mode .he-select option {
+    background: #fff;
+    color: #1a1a1a;
+}
+.he-check-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-top: 6px;
+    cursor: pointer;
+}
+.he-check-row input { width: 16px; height: 16px; accent-color: var(--accent); }
+.he-ep-new-list {
+    max-height: 220px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+    padding-right: 4px;
+}
+.he-ep-new-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: var(--card-bg);
+    border: 1px solid rgba(128,128,128,0.2);
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    color: var(--text-color);
+}
+.he-ep-new-row img {
+    width: 44px;
+    height: 26px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+.he-sync-pill {
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', 'Inter', sans-serif;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: rgba(34, 197, 94, 0.16);
+    border: 1px solid rgba(34, 197, 94, 0.45);
+    color: #16a34a;
+    font-weight: 700;
+}
+body.dark-mode .he-sync-pill { color: #4ade80; }
+</style>
 </head>
 <body class="honey-mode" onclick="resetAllCaptions(event)">
     <!-- ===== OFFLINE OVERLAY ===== -->
@@ -3717,6 +4384,9 @@ html.tab-hidden *, html.tab-hidden *::before, html.tab-hidden *::after { animati
     </button>
    
     <button class="menu-h-btn" onclick="toggleLang()" id="langBtn">EN 🇬🇧</button>
+    <button class="menu-h-btn" id="heAdminLockBtn" onclick="openHePinModal(); event.stopPropagation()" title="Admin Access">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </button>
    
     <div class="menu-divider"></div>
     <button class="menu-h-btn share-btn" onclick="shareWebsite(); event.stopPropagation()" title="Share Website">
@@ -8128,5 +8798,1302 @@ document.addEventListener('DOMContentLoaded', function() {
 </button>
     </div>
 </div>
+<!-- ===== PIN ENTRY MODAL ===== -->
+<div class="he-sec-backdrop" id="hePinModal" onclick="if(event.target===this) closeHePinModal();">
+    <div class="he-pin-card" id="hePinCard" onclick="event.stopPropagation()">
+        <button class="he-back-arrow-btn" id="hePinCloseBtn" style="position:absolute;top:14px;left:14px;width:36px;height:36px;" onclick="closeHePinModal()" aria-label="Back">
+            <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="he-shield-ring">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><rect x="9" y="10" width="6" height="5" rx="1"/><path d="M10 10V8a2 2 0 1 1 4 0v2"/></svg>
+        </div>
+        <h3 class="he-pin-title" id="hePinTitle">Security Access</h3>
+        <p class="he-pin-sub" id="hePinSub">Type your PIN to open Admin Control Panel</p>
+        <div class="he-input-eye-wrap">
+            <input type="password" id="heLoginPinInput" class="he-sec-input" maxlength="16" placeholder="Enter PIN" autocomplete="off" onpaste="return false;" ondrop="return false;" onkeydown="if(event.key==='Enter') verifyHeAdminPin();">
+            <button type="button" class="he-eye-btn" id="heLoginEyeBtn" onclick="toggleHeEye('heLoginPinInput')" title="Show / Hide PIN">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+        </div>
+        <div class="he-pin-error" id="hePinErrorMsg"></div>
+        <button type="button" class="he-btn-primary" id="heUnlockBtn" onclick="verifyHeAdminPin()">Unlock Panel</button>
+    </div>
+</div>
+
+<!-- ===== ADMIN CONTROL PANEL MODAL ===== -->
+<div class="he-sec-backdrop" id="heAdminDashboardModal" onclick="if(event.target===this) closeHeAdminDashboard();">
+    <div class="he-admin-panel" onclick="event.stopPropagation()">
+        <div class="he-admin-header">
+            <div class="he-admin-header-left">
+                <button type="button" class="he-back-arrow-btn" id="heAdmCloseBtn" onclick="closeHeAdminDashboard()" aria-label="Back">
+                    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                </button>
+                <h2 id="heAdmMainHeading">HONEY ADMIN PANEL</h2>
+                <span class="he-sync-pill" id="heSyncStatusPill">Local Ready</span>
+            </div>
+            <!-- ঘূর্ণায়মান সেটিংস আইকন (ক্লিক করলে ৬টি বাটন আসবে ও ১০ সেকেন্ড পর অটো বন্ধ হবে) -->
+            <button type="button" class="he-settings-gear-btn" id="heAdmSettingsBtn" onclick="toggleHeAdmSettingsDrawer(); event.stopPropagation();" aria-label="Settings">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
+        </div>
+
+        <!-- সেটিংস আইকনে চাপ দিলে এই ৬টি কুইক বাটন খুলে আসবে -->
+        <div class="he-admin-quickbar" id="heAdmQuickbar" onmousemove="resetHeAdmSettingsTimer()" ontouchstart="resetHeAdmSettingsTimer()">
+            <button type="button" class="he-quick-btn honey" id="heAdmQuickHoney" onclick="heAdmSetMode('honey'); resetHeAdmSettingsTimer();">Honey</button>
+            <button type="button" class="he-quick-btn dark" id="heAdmQuickDark" onclick="heAdmSetMode('dark'); resetHeAdmSettingsTimer();">Dark</button>
+            <button type="button" class="he-quick-btn light" id="heAdmQuickLight" onclick="heAdmSetMode('light'); resetHeAdmSettingsTimer();">Light</button>
+            <button type="button" class="he-quick-btn" id="heAdmSoundBtn" onclick="toggleSound(); syncHeAdmQuickControls(); resetHeAdmSettingsTimer(); event.stopPropagation();">🔇</button>
+            <button type="button" class="he-quick-btn" id="heAdmLangBtn" onclick="heAdmToggleLang(); resetHeAdmSettingsTimer();">🌐🇬🇧</button>
+            <button type="button" class="he-quick-btn share" id="heAdmShareBtn" onclick="shareWebsite(); resetHeAdmSettingsTimer(); event.stopPropagation();">🔗 <span id="heAdmShareText">Share</span></button>
+        </div>
+
+        <!-- সহজ ৫টি ক্যাটাগরি ট্যাব -->
+        <div class="he-admin-tabs" id="heAdminTabs">
+            <button type="button" class="he-tab-btn active" id="heTabBrand" onclick="switchHeAdminTab('brand', this)">🎨 Branding</button>
+            <button type="button" class="he-tab-btn" id="heTabVideos" onclick="switchHeAdminTab('videos', this)">🎬 Videos</button>
+            <button type="button" class="he-tab-btn" id="heTabBaahubali" onclick="switchHeAdminTab('baahubali', this)">⚔️ Baahubali 2D</button>
+            <button type="button" class="he-tab-btn" id="heTabGallery" onclick="switchHeAdminTab('gallery', this)">🖼️ Gallery</button>
+            <button type="button" class="he-tab-btn" id="heTabSecurity" onclick="switchHeAdminTab('security', this)">🔐 Security</button>
+        </div>
+
+        <!-- লাইভ সফল / ব্যর্থ মেসেজ ব্যানার -->
+        <div class="he-admin-feedback" id="heAdminFeedbackBanner"></div>
+
+        <div class="he-admin-body">
+            <!-- TAB 1: BRANDING -->
+            <div class="he-tab-pane active" id="hePaneBrand">
+                <div class="he-admin-card">
+                    <div class="he-admin-card-title">
+                        <span id="admTitleLogo">1. Change Website Logo</span>
+                        <button type="button" class="he-logo-toggle-btn" id="admLogoDrawerBtn" onclick="document.getElementById('heLogoDrawer').classList.toggle('open')">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                            <span id="admLogoBtnText">Logo</span>
+                        </button>
+                    </div>
+                    <div class="he-logo-drawer" id="heLogoDrawer">
+                        <label class="he-label" id="admLblLogoUrl">Logo Image URL</label>
+                        <input type="url" id="admLogoUrl" class="he-input" placeholder="https://example.com/logo.jpg">
+                        <button type="button" class="he-btn-primary" id="admBtnSaveLogo" onclick="admSaveLogo()">Update Website Logo</button>
+                    </div>
+                </div>
+
+                <div class="he-admin-card">
+                    <h3 class="he-admin-card-title" id="admTitleSiteName">2. Change Website Name</h3>
+                    <div class="he-field-grid two-col">
+                        <div>
+                            <label class="he-label" id="admLblLine1">First Line</label>
+                            <input type="text" id="admSiteNameLine1" class="he-input" placeholder="HONEY">
+                        </div>
+                        <div>
+                            <label class="he-label" id="admLblLine2">Second Line</label>
+                            <input type="text" id="admSiteNameLine2" class="he-input" placeholder="ENTERTAINMENT">
+                        </div>
+                    </div>
+                    <button type="button" class="he-btn-primary" id="admBtnSaveName" onclick="admSaveSiteName()">Update Website Name</button>
+                </div>
+
+                <div class="he-admin-card">
+                    <h3 class="he-admin-card-title" id="admTitleCover">3. Change Bottom Cover Photo</h3>
+                    <label class="he-label" id="admLblCoverUrl">Cover Photo Image URL</label>
+                    <input type="url" id="admCoverUrl" class="he-input" placeholder="https://example.com/cover.jpg">
+                    <button type="button" class="he-btn-primary" id="admBtnSaveCover" onclick="admSaveCoverPhoto()">Update Cover Photo</button>
+                </div>
+            </div>
+
+            <!-- TAB 2: VIDEOS -->
+            <div class="he-tab-pane" id="hePaneVideos">
+                <div class="he-admin-card">
+                    <h3 class="he-admin-card-title" id="admTitleAddShort">4. Add New Short Video</h3>
+                    <div class="he-field-grid two-col">
+                        <div>
+                            <label class="he-label" id="admLblShortYt">YouTube Video ID or Link</label>
+                            <input type="text" id="admShortYt" class="he-input" placeholder="e.g. 0JZgC6I7_lU or YouTube URL">
+                        </div>
+                        <div>
+                            <label class="he-label" id="admLblShortThumb">Thumbnail Image URL</label>
+                            <input type="url" id="admShortThumb" class="he-input" placeholder="https://...">
+                        </div>
+                        <div>
+                            <label class="he-label" id="admLblShortTitle">Video Caption / Title</label>
+                            <input type="text" id="admShortTitle" class="he-input" placeholder="Enter caption...">
+                        </div>
+                        <div>
+                            <label class="he-label" id="admLblShortPos">Insert Position (1 = First)</label>
+                            <select id="admShortPos" class="he-select"></select>
+                        </div>
+                    </div>
+                    <label class="he-check-row"><input type="checkbox" id="admShortIsNew" checked> <span id="admLblShortNew">Show "NEW" Badge</span></label>
+                    <button type="button" class="he-btn-primary" id="admBtnAddShort" onclick="admAddShortVideo()">Add Short Video</button>
+                </div>
+
+                <div class="he-admin-card">
+                    <h3 class="he-admin-card-title" id="admTitleFullEp">5. Full Episode Videos (Always Added at Top-Left)</h3>
+                    <div class="he-field-grid two-col">
+                        <div>
+                            <label class="he-label" id="admLblFullEpYt">YouTube Video ID or Link</label>
+                            <input type="text" id="admFullEpYt" class="he-input" placeholder="e.g. nzj1DI2OZrA or YouTube URL">
+                        </div>
+                        <div>
+                            <label class="he-label" id="admLblFullEpThumb">Thumbnail Image URL</label>
+                            <input type="url" id="admFullEpThumb" class="he-input" placeholder="https://...">
+                        </div>
+                    </div>
+                    <label class="he-check-row"><input type="checkbox" id="admFullEpIsNew" checked> <span id="admLblFullEpNew">Show "NEW" Badge</span></label>
+                    <button type="button" class="he-btn-primary" id="admBtnAddFullEp" onclick="admAddFullEpisode()">Add Full Episode</button>
+
+                    <div style="margin-top:14px;">
+                        <label class="he-label" id="admLblManageNew">Manage "NEW" Badge on Existing Full Episodes</label>
+                        <div class="he-ep-new-list" id="admFullEpManageList"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: BAAHUBALI 2D -->
+            <div class="he-tab-pane" id="hePaneBaahubali">
+                <div class="he-admin-card">
+                    <h3 class="he-admin-card-title" id="admTitleBh">6. Baahubali 2D Manager</h3>
+                    <div class="he-field-grid two-col">
+                        <div>
+                            <label class="he-label" id="admLblBhThumb">Short Video Thumbnail URL</label>
+                            <input type="url" id="admBhThumb" class="he-input" placeholder="https://...">
+                        </div>
+                        <div>
+                            <label class="he-label" id="admLblBhTitle">Short Video Title</label>
+                            <input type="text" id="admBhTitle" class="he-input" placeholder="Baahubali Part 4">
+                        </div>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <label class="he-label" id="admLblBhEmbed">Facebook Embed Code (&lt;iframe ...&gt;)</label>
+                        <textarea id="admBhEmbed" class="he-textarea" rows="2" placeholder="Paste Facebook <iframe ...></iframe> code"></textarea>
+                    </div>
+                    <button type="button" class="he-btn-primary" id="admBtnAddBhShort" onclick="admAddBaahubaliShort()">Add Baahubali 2D Short</button>
+
+                    <div style="margin-top:16px;padding-top:14px;border-top:1px dashed rgba(128,128,128,0.28);">
+                        <label class="he-label" id="admLblBhFull">Baahubali 2D Full Episode Facebook Embed Code</label>
+                        <textarea id="admBhFullEmbed" class="he-textarea" rows="2" placeholder="Paste 16:9 Facebook <iframe ...></iframe> code"></textarea>
+                        <button type="button" class="he-btn-primary" id="admBtnSaveBhFull" onclick="admSaveBaahubaliFullEp()">Save Baahubali Full Episode</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: GALLERY -->
+            <div class="he-tab-pane" id="hePaneGallery">
+                <div class="he-admin-card">
+                    <h3 class="he-admin-card-title" id="admTitlePhoto">7. Add New Gallery Photo</h3>
+                    <div class="he-field-grid two-col">
+                        <div>
+                            <label class="he-label" id="admLblPhotoImg">Photo Image URL</label>
+                            <input type="url" id="admPhotoImg" class="he-input" placeholder="https://...">
+                        </div>
+                        <div>
+                            <label class="he-label" id="admLblPhotoCap">Photo Caption</label>
+                            <input type="text" id="admPhotoCap" class="he-input" placeholder="Caption with emoji...">
+                        </div>
+                        <div>
+                            <label class="he-label" id="admLblPhotoDate">Date</label>
+                            <input type="date" id="admPhotoDate" class="he-input">
+                        </div>
+                        <div>
+                            <label class="he-label" id="admLblPhotoTime">Time (e.g. 6:30 PM)</label>
+                            <input type="text" id="admPhotoTime" class="he-input" placeholder="6:30 PM">
+                        </div>
+                        <div>
+                            <label class="he-label" id="admLblPhotoYt">Song YouTube ID or Link</label>
+                            <input type="text" id="admPhotoYt" class="he-input" placeholder="e.g. ebZj_nrmH-c">
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                            <div>
+                                <label class="he-label" id="admLblPhotoStart">Start (Sec)</label>
+                                <input type="number" id="admPhotoStart" class="he-input" min="0" value="0">
+                            </div>
+                            <div>
+                                <label class="he-label" id="admLblPhotoEnd">End (Sec)</label>
+                                <input type="number" id="admPhotoEnd" class="he-input" min="1" value="30">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="he-btn-primary" id="admBtnAddPhoto" onclick="admAddNewPhoto()">Add New Photo</button>
+                </div>
+            </div>
+
+            <!-- TAB 5: SECURITY -->
+            <div class="he-tab-pane" id="hePaneSecurity">
+                <div class="he-admin-card">
+                    <h3 class="he-admin-card-title" id="admTitleSecurity">8. Security — Change PIN</h3>
+                    <div class="he-field-grid">
+                        <div>
+                            <label class="he-label" id="admLblOldPin">Current PIN</label>
+                            <div class="he-input-eye-wrap">
+                                <input type="password" id="admOldPin" class="he-sec-input" maxlength="16" placeholder="Type current PIN" autocomplete="off" onpaste="return false;" ondrop="return false;">
+                                <button type="button" class="he-eye-btn" id="admEyeOldPin" onclick="toggleHeEye('admOldPin')">👁</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="he-label" id="admLblMaster">Master Key (Max 10 chars)</label>
+                            <div class="he-input-eye-wrap">
+                                <input type="password" id="admMasterKey" class="he-sec-input" maxlength="10" placeholder="Type Master Key" autocomplete="off" onpaste="return false;" ondrop="return false;">
+                                <button type="button" class="he-eye-btn" id="admEyeMasterKey" onclick="toggleHeEye('admMasterKey')">👁</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="he-label" id="admLblNewPin">New PIN (Max 10 chars)</label>
+                            <div class="he-input-eye-wrap">
+                                <input type="password" id="admNewPin" class="he-sec-input" maxlength="10" placeholder="Type new PIN" autocomplete="off" onpaste="return false;" ondrop="return false;">
+                                <button type="button" class="he-eye-btn" id="admEyeNewPin" onclick="toggleHeEye('admNewPin')">👁</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="he-pin-error" id="admPinChangeMsg"></div>
+                    <button type="button" class="he-btn-primary" id="admBtnChangePin" onclick="admChangePin()">Change PIN</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===== HONEY ENTERTAINMENT ADMIN, BILINGUAL I18N, LOCKOUT & CLOUD SYNC ENGINE =====
+const HONEY_FIREBASE_DB_URL = "https://honey-65aad-default-rtdb.asia-southeast1.firebasedatabase.app";
+const HONEY_ADMIN_STORAGE_KEY = "he_admin_live_config_v1";
+const HONEY_LOCKOUT_STORAGE_KEY = "he_admin_pin_lockout_v1";
+const HONEY_DEFAULT_PIN = "633038sajeeb";
+const HONEY_MASTER_KEY = "SajeebSaha";
+
+let heLiveConfig = {
+    pin: HONEY_DEFAULT_PIN,
+    logoUrl: "",
+    siteNameLine1: "",
+    siteNameLine2: "",
+    coverUrl: "",
+    addedShorts: [],
+    addedFullEpisodes: [],
+    fullEpNewOverrides: {},
+    addedBaahubaliShorts: [],
+    baahubaliFullEmbed: null,
+    addedPhotos: []
+};
+
+const HE_ADMIN_I18N = {
+    EN: {
+        lockTip: "Admin Access",
+        pinTitle: "Security Access",
+        pinSub: "Type your PIN to open Admin Control Panel",
+        pinPlaceholder: "Enter PIN",
+        unlockBtn: "Unlock Panel",
+        eyeTip: "Show / Hide PIN",
+        eyeMasterTip: "Show / Hide Master Key",
+        backTip: "Go Back (Esc)",
+        settingsTip: "Theme, Sound, Language & Share Settings",
+        honeyTip: "Switch to Honey Mode",
+        darkTip: "Switch to Dark Mode",
+        lightTip: "Switch to Light Mode",
+        soundTipOn: "Turn Off Sound",
+        soundTipOff: "Turn On Sound",
+        langTip: "Switch Language (English / Bangla)",
+        shareTip: "Copy & Share Website Link",
+        admHeading: "HONEY ADMIN PANEL",
+        syncReady: "Local Ready",
+        syncLocal: "Saved Locally",
+        syncCloud: "Cloud Synced",
+        syncFail: "Cloud Sync Failed",
+        shareText: "Share",
+        tabBrand: "🎨 Branding",
+        tabVideos: "🎬 Videos",
+        tabBaahubali: "⚔️ Baahubali 2D",
+        tabGallery: "🖼️ Gallery",
+        tabSecurity: "🔐 Security",
+        tLogo: "1. Change Website Logo",
+        logoBtn: "Logo",
+        logoDrawerTip: "Open / Close Logo Editor",
+        lLogoUrl: "Logo Image URL",
+        bSaveLogo: "Update Website Logo",
+        tSiteName: "2. Change Website Name",
+        lLine1: "First Line",
+        lLine2: "Second Line",
+        bSaveName: "Update Website Name",
+        tCover: "3. Change Bottom Cover Photo",
+        lCoverUrl: "Cover Photo Image URL",
+        bSaveCover: "Update Cover Photo",
+        tAddShort: "4. Add New Short Video",
+        lShortYt: "YouTube Video ID or Link",
+        lShortThumb: "Thumbnail Image URL",
+        lShortTitle: "Video Caption / Title",
+        lShortPos: "Insert Position (1 = First)",
+        lShortNew: 'Show "NEW" Badge',
+        bAddShort: "Add Short Video",
+        tFullEp: "5. Full Episode Videos (Top-Left)",
+        lFullEpYt: "YouTube Video ID or Link",
+        lFullEpThumb: "Thumbnail Image URL",
+        lFullEpNew: 'Show "NEW" Badge',
+        bAddFullEp: "Add Full Episode",
+        lManageNew: 'Manage "NEW" Badge on Existing Full Episodes',
+        tBh: "6. Baahubali 2D Manager",
+        lBhThumb: "Short Video Thumbnail URL",
+        lBhTitle: "Short Video Title",
+        lBhEmbed: "Facebook Embed Code (<iframe ...>)",
+        bAddBhShort: "Add Baahubali 2D Short",
+        lBhFull: "Baahubali 2D Full Episode Facebook Embed Code",
+        bSaveBhFull: "Save Baahubali Full Episode",
+        tPhoto: "7. Add New Gallery Photo",
+        lPhotoImg: "Photo Image URL",
+        lPhotoCap: "Photo Caption",
+        lPhotoDate: "Date",
+        lPhotoTime: "Time (e.g. 6:30 PM)",
+        lPhotoYt: "Song YouTube ID or Link",
+        lPhotoStart: "Start (Sec)",
+        lPhotoEnd: "End (Sec)",
+        bAddPhoto: "Add New Photo",
+        tSecurity: "8. Security — Change PIN",
+        lOldPin: "Current PIN",
+        lMaster: "Master Key (Max 10 chars)",
+        lNewPin: "New PIN (Max 10 chars)",
+        bChangePin: "Change PIN",
+        pLogoUrl: "https://example.com/logo.jpg",
+        pLine1: "HONEY",
+        pLine2: "ENTERTAINMENT",
+        pCoverUrl: "https://example.com/cover.jpg",
+        pYtId: "e.g. 0JZgC6I7_lU or YouTube URL",
+        pThumb: "https://...",
+        pTitle: "Enter caption...",
+        pBhTitle: "Baahubali Part 4",
+        pBhEmbed: "Paste Facebook <iframe ...></iframe> code",
+        pPhotoCap: "Caption with emoji...",
+        pTime: "6:30 PM",
+        pOldPin: "Type current PIN",
+        pMaster: "Type Master Key",
+        pNewPin: "Type new PIN",
+        posFirst: "1 (Very First)",
+        posAfter: "After #",
+        errLogo: "⚠️ Please enter a valid Logo Image URL.",
+        okLogo: "✅ Website Logo updated successfully!",
+        errName: "⚠️ Please enter at least one line for Website Name.",
+        okName: "✅ Website Name updated successfully!",
+        errCover: "⚠️ Please enter a valid Cover Photo URL.",
+        okCover: "✅ Bottom Cover Photo updated successfully!",
+        errShort: "⚠️ Please enter YouTube ID/Link, Thumbnail URL, and Caption.",
+        okShort: "✅ New Short Video added successfully!",
+        errFullEp: "⚠️ Please enter a valid YouTube ID or Link.",
+        okFullEp: "✅ Full Episode added at the top-left!",
+        okToggleNew: "✅ NEW badge status updated!",
+        errBhShort: "⚠️ Please enter Thumbnail URL and Facebook Embed Code.",
+        okBhShort: "✅ Baahubali 2D Short Video added!",
+        errBhFull: "⚠️ Please paste the Facebook Full Episode Embed Code.",
+        okBhFull: "✅ Baahubali Full Episode saved!",
+        errPhoto: "⚠️ Please enter Photo URL and Caption.",
+        okPhoto: "✅ New Photo added to Gallery!",
+        errOldPin: "❌ Current PIN is incorrect.",
+        errMaster: "❌ Invalid Master Key.",
+        errNewPin: "⚠️ New PIN must be 1 to 10 characters.",
+        okPinChanged: "✅ PIN updated successfully!",
+        wrongPinWarn: (used, max) => `❌ Incorrect PIN! (${used}/${max} attempts used)`,
+        lockedMsg: (timeStr, hrs) => `⏳ Too many wrong PINs! Blocked for ${hrs} hour(s). Try again in ${timeStr}`
+    },
+    BN: {
+        lockTip: "অ্যাডমিন অ্যাক্সেস",
+        pinTitle: "সিকিউরিটি অ্যাক্সেস",
+        pinSub: "অ্যাডমিন কন্ট্রোল প্যানেল খুলতে আপনার পিন দিন",
+        pinPlaceholder: "পিন লিখুন",
+        unlockBtn: "প্যানেল খুলুন",
+        eyeTip: "পিন দেখুন / লুকান",
+        eyeMasterTip: "মাস্টার কী দেখুন / লুকান",
+        backTip: "ফিরে যান (Esc)",
+        settingsTip: "থিম, সাউন্ড, ভাষা ও শেয়ার সেটিংস",
+        honeyTip: "হানি মোড চালু করুন",
+        darkTip: "ডার্ক মোড চালু করুন",
+        lightTip: "লাইট মোড চালু করুন",
+        soundTipOn: "সাউন্ড বন্ধ করুন",
+        soundTipOff: "সাউন্ড চালু করুন",
+        langTip: "ভাষা পরিবর্তন করুন (বাংলা / ইংরেজি)",
+        shareTip: "ওয়েবসাইটের লিংক কপি ও শেয়ার করুন",
+        admHeading: "হানি অ্যাডমিন প্যানেল",
+        syncReady: "লোকাল প্রস্তুত",
+        syncLocal: "লোকাল সেভ হয়েছে",
+        syncCloud: "ক্লাউড সিঙ্ক সম্পন্ন",
+        syncFail: "ক্লাউড সিঙ্ক ব্যর্থ",
+        shareText: "শেয়ার",
+        tabBrand: "🎨 ব্র্যান্ডিং",
+        tabVideos: "🎬 ভিডিও",
+        tabBaahubali: "⚔️ বাহুবলী 2D",
+        tabGallery: "🖼️ গ্যালারি",
+        tabSecurity: "🔐 সিকিউরিটি",
+        tLogo: "১. ওয়েবসাইটের লোগো পরিবর্তন",
+        logoBtn: "লোগো",
+        logoDrawerTip: "লোগো এডিটর খুলুন / বন্ধ করুন",
+        lLogoUrl: "লোগো ছবির লিংক (URL)",
+        bSaveLogo: "লোগো আপডেট করুন",
+        tSiteName: "২. ওয়েবসাইটের নাম পরিবর্তন",
+        lLine1: "প্রথম লাইন",
+        lLine2: "দ্বিতীয় লাইন",
+        bSaveName: "ওয়েবসাইটের নাম আপডেট করুন",
+        tCover: "৩. নিচের কভার ফটো পরিবর্তন",
+        lCoverUrl: "কভার ফটোর লিংক (URL)",
+        bSaveCover: "কভার ফটো আপডেট করুন",
+        tAddShort: "৪. নতুন শর্টস ভিডিও যোগ করুন",
+        lShortYt: "ইউটিউব ভিডিও আইডি বা লিংক",
+        lShortThumb: "থাম্বনেইল ছবির লিংক",
+        lShortTitle: "ভিডিওর ক্যাপশন / টাইটেল",
+        lShortPos: "কোথায় বসবে (১ = সবার আগে)",
+        lShortNew: '"NEW" ব্যাজ দেখান',
+        bAddShort: "শর্টস ভিডিও যোগ করুন",
+        tFullEp: "৫. সম্পূর্ণ পর্বের ভিডিও (সবার আগে বসবে)",
+        lFullEpYt: "ইউটিউব ভিডিও আইডি বা লিংক",
+        lFullEpThumb: "থাম্বনেইল ছবির লিংক",
+        lFullEpNew: '"NEW" ব্যাজ দেখান',
+        bAddFullEp: "ফুল এপিসোড যোগ করুন",
+        lManageNew: 'পুরোনো ভিডিওগুলোর "NEW" ব্যাজ চালু/বন্ধ করুন',
+        tBh: "৬. বাহুবলী 2D ম্যানেজার",
+        lBhThumb: "শর্টস ভিডিওর থাম্বনেইল লিংক",
+        lBhTitle: "শর্টস ভিডিওর টাইটেল",
+        lBhEmbed: "ফেসবুক এম্বেড কোড (<iframe ...>)",
+        bAddBhShort: "বাহুবলী 2D শর্টস যোগ করুন",
+        lBhFull: "বাহুবলী 2D ফুল এপিসোডের ফেসবুক এম্বেড কোড",
+        bSaveBhFull: "বাহুবলী ফুল এপিসোড সেভ করুন",
+        tPhoto: "৭. গ্যালারিতে নতুন ছবি যোগ করুন",
+        lPhotoImg: "ছবির লিংক (URL)",
+        lPhotoCap: "ছবির ক্যাপশন",
+        lPhotoDate: "তারিখ",
+        lPhotoTime: "সময় (যেমন: 6:30 PM)",
+        lPhotoYt: "গানের ইউটিউব আইডি বা লিংক",
+        lPhotoStart: "শুরু (সেকেন্ড)",
+        lPhotoEnd: "শেষ (সেকেন্ড)",
+        bAddPhoto: "নতুন ছবি যোগ করুন",
+        tSecurity: "৮. সিকিউরিটি — পিন পরিবর্তন",
+        lOldPin: "বর্তমান পিন",
+        lMaster: "মাস্টার কী (সর্বোচ্চ ১০ অক্ষর)",
+        lNewPin: "নতুন পিন (সর্বোচ্চ ১০ অক্ষর)",
+        bChangePin: "পিন পরিবর্তন করুন",
+        pLogoUrl: "https://example.com/logo.jpg",
+        pLine1: "HONEY",
+        pLine2: "ENTERTAINMENT",
+        pCoverUrl: "https://example.com/cover.jpg",
+        pYtId: "যেমন: 0JZgC6I7_lU বা ইউটিউব লিংক",
+        pThumb: "https://...",
+        pTitle: "ক্যাপশন লিখুন...",
+        pBhTitle: "Baahubali Part 4",
+        pBhEmbed: "ফেসবুকের <iframe ...></iframe> কোড পেস্ট করুন",
+        pPhotoCap: "ইমোজি সহ ক্যাপশন লিখুন...",
+        pTime: "6:30 PM",
+        pOldPin: "বর্তমান পিন লিখুন",
+        pMaster: "মাস্টার কী লিখুন",
+        pNewPin: "নতুন পিন লিখুন",
+        posFirst: "১ (সবার প্রথমে)",
+        posAfter: "এর পরে #",
+        errLogo: "⚠️ অনুগ্রহ করে একটি সঠিক লোগো ছবির লিংক দিন।",
+        okLogo: "✅ ওয়েবসাইটের লোগো সফলভাবে আপডেট হয়েছে!",
+        errName: "⚠️ অনুগ্রহ করে ওয়েবসাইটের নামের অন্তত একটি লাইন লিখুন।",
+        okName: "✅ ওয়েবসাইটের নাম সফলভাবে আপডেট হয়েছে!",
+        errCover: "⚠️ অনুগ্রহ করে একটি সঠিক কভার ফটোর লিংক দিন।",
+        okCover: "✅ নিচের কভার ফটো সফলভাবে আপডেট হয়েছে!",
+        errShort: "⚠️ অনুগ্রহ করে ইউটিউব আইডি/লিংক, থাম্বনেইল এবং ক্যাপশন দিন।",
+        okShort: "✅ নতুন শর্টস ভিডিও সফলভাবে যোগ হয়েছে!",
+        errFullEp: "⚠️ অনুগ্রহ করে সঠিক ইউটিউব আইডি বা লিংক দিন।",
+        okFullEp: "✅ ফুল এপিসোড সবার আগে বাম পাশে যোগ হয়েছে!",
+        okToggleNew: "✅ NEW ব্যাজ আপডেট হয়েছে!",
+        errBhShort: "⚠️ অনুগ্রহ করে থাম্বনেইল লিংক এবং ফেসবুক এম্বেড কোড দিন।",
+        okBhShort: "✅ বাহুবলী 2D শর্টস ভিডিও যোগ হয়েছে!",
+        errBhFull: "⚠️ অনুগ্রহ করে ফুল এপিসোডের ফেসবুক এম্বেড কোড পেস্ট করুন।",
+        okBhFull: "✅ বাহুবলী ফুল এপিসোড সেভ হয়েছে!",
+        errPhoto: "⚠️ অনুগ্রহ করে ছবির লিংক এবং ক্যাপশন দিন।",
+        okPhoto: "✅ নতুন ছবি গ্যালারিতে যোগ হয়েছে!",
+        errOldPin: "❌ বর্তমান পিনটি সঠিক নয়।",
+        errMaster: "❌ মাস্টার কী সঠিক নয়।",
+        errNewPin: "⚠️ নতুন পিন ১ থেকে ১০ অক্ষরের মধ্যে হতে হবে।",
+        okPinChanged: "✅ পিন সফলভাবে পরিবর্তন হয়েছে!",
+        wrongPinWarn: (used, max) => `❌ ভুল পিন! (${used}/${max} বার ভুল হয়েছে)`,
+        lockedMsg: (timeStr, hrs) => `⏳ অনেকবার ভুল পিন দিয়েছেন! ${hrs} ঘণ্টার জন্য লক করা হয়েছে। বাকি সময়: ${timeStr}`
+    }
+};
+
+function getHeAdminLang() {
+    return (typeof currentLang !== "undefined" && currentLang === "BN") ? HE_ADMIN_I18N.BN : HE_ADMIN_I18N.EN;
+}
+
+/* ===== SETTINGS GEAR DRAWER (ROTATE + 10s AUTO-CLOSE) ===== */
+let heAdmSettingsAutoTimer = null;
+
+function openHeAdmSettingsDrawer() {
+    const bar = document.getElementById("heAdmQuickbar");
+    const btn = document.getElementById("heAdmSettingsBtn");
+    if (bar) bar.classList.add("open");
+    if (btn) btn.classList.add("open");
+    resetHeAdmSettingsTimer();
+}
+
+function closeHeAdmSettingsDrawer() {
+    const bar = document.getElementById("heAdmQuickbar");
+    const btn = document.getElementById("heAdmSettingsBtn");
+    if (bar) bar.classList.remove("open");
+    if (btn) btn.classList.remove("open");
+    clearTimeout(heAdmSettingsAutoTimer);
+}
+
+function resetHeAdmSettingsTimer() {
+    clearTimeout(heAdmSettingsAutoTimer);
+    const bar = document.getElementById("heAdmQuickbar");
+    if (bar && bar.classList.contains("open")) {
+        heAdmSettingsAutoTimer = setTimeout(() => {
+            closeHeAdmSettingsDrawer();
+        }, 10000); // ১০ সেকেন্ড পর এমনি এমনি বন্ধ হয়ে যাবে
+    }
+}
+
+function toggleHeAdmSettingsDrawer() {
+    const bar = document.getElementById("heAdmQuickbar");
+    if (!bar) return;
+    if (bar.classList.contains("open")) {
+        closeHeAdmSettingsDrawer();
+        if (typeof SOUNDS !== "undefined" && SOUNDS.menuClose) SOUNDS.menuClose();
+    } else {
+        openHeAdmSettingsDrawer();
+        if (typeof SOUNDS !== "undefined" && SOUNDS.menuOpen) SOUNDS.menuOpen();
+    }
+}
+
+function heAdmSetMode(mode) {
+    document.body.className = mode + "-mode";
+    if (document.getElementById("heAdminDashboardModal")?.classList.contains("active")) {
+        document.body.classList.add("admin-panel-open");
+    }
+    if (typeof SOUNDS !== "undefined" && SOUNDS.modeChange) SOUNDS.modeChange();
+}
+
+function heAdmToggleLang() {
+    if (typeof toggleLang === "function") {
+        const dd = document.getElementById("dropdown");
+        const wasMenuOpen = dd && dd.classList.contains("active");
+        toggleLang();
+        if (!wasMenuOpen && dd && dd.classList.contains("active")) {
+            toggleMenu();
+        }
+    }
+    syncHeAdmQuickControls();
+}
+
+function syncHeAdmQuickControls() {
+    const t = getHeAdminLang();
+    const sBtn = document.getElementById("heAdmSoundBtn");
+    const lBtn = document.getElementById("heAdmLangBtn");
+    const shTxt = document.getElementById("heAdmShareText");
+    const isSoundOn = (typeof soundEnabled !== "undefined" && soundEnabled);
+    if (sBtn) {
+        sBtn.textContent = isSoundOn ? "🔊" : "🔇";
+        sBtn.setAttribute("title", isSoundOn ? t.soundTipOn : t.soundTipOff);
+    }
+    if (lBtn && typeof translations !== "undefined" && translations[currentLang]) {
+        lBtn.textContent = translations[currentLang].lang;
+        lBtn.setAttribute("title", t.langTip);
+    }
+    if (shTxt) shTxt.textContent = t.shareText;
+}
+
+let heLockoutTimerInterval = null;
+
+function getHeLockoutState() {
+    try {
+        const raw = localStorage.getItem(HONEY_LOCKOUT_STORAGE_KEY);
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            return {
+                wrongAttempts: Number(parsed.wrongAttempts) || 0,
+                lockLevel: Number(parsed.lockLevel) || 0,
+                lockUntil: Number(parsed.lockUntil) || 0
+            };
+        }
+    } catch (e) {}
+    return { wrongAttempts: 0, lockLevel: 0, lockUntil: 0 };
+}
+
+function saveHeLockoutState(state) {
+    try { localStorage.setItem(HONEY_LOCKOUT_STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+}
+
+function formatCountdownMs(ms) {
+    const totalSec = Math.max(0, Math.ceil(ms / 1000));
+    const hrs = Math.floor(totalSec / 3600);
+    const mins = Math.floor((totalSec % 3600) / 60);
+    const secs = totalSec % 60;
+    const pad = n => String(n).padStart(2, "0");
+    return `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
+}
+
+function refreshHeLockoutUI() {
+    const t = getHeAdminLang();
+    const state = getHeLockoutState();
+    const inp = document.getElementById("heLoginPinInput");
+    const btn = document.getElementById("heUnlockBtn");
+    const err = document.getElementById("hePinErrorMsg");
+    const now = Date.now();
+
+    if (state.lockUntil > now) {
+        if (inp) inp.disabled = true;
+        if (btn) btn.disabled = true;
+        if (err) {
+            err.style.color = "#ef4444";
+            err.textContent = t.lockedMsg(formatCountdownMs(state.lockUntil - now), state.lockLevel || 1);
+        }
+        return true;
+    } else if (state.lockUntil > 0 && now >= state.lockUntil) {
+        state.lockUntil = 0;
+        state.wrongAttempts = 0;
+        saveHeLockoutState(state);
+        if (inp) inp.disabled = false;
+        if (btn) btn.disabled = false;
+        if (err) err.textContent = "";
+    } else {
+        if (inp) inp.disabled = false;
+        if (btn) btn.disabled = false;
+    }
+    return false;
+}
+
+function switchHeAdminTab(tabName, btnEl) {
+    document.querySelectorAll("#heAdminTabs .he-tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".he-tab-pane").forEach(p => p.classList.remove("active"));
+    if (btnEl) btnEl.classList.add("active");
+    const paneMap = {
+        brand: "hePaneBrand",
+        videos: "hePaneVideos",
+        baahubali: "hePaneBaahubali",
+        gallery: "hePaneGallery",
+        security: "hePaneSecurity"
+    };
+    const target = document.getElementById(paneMap[tabName]);
+    if (target) target.classList.add("active");
+    const fb = document.getElementById("heAdminFeedbackBanner");
+    if (fb) fb.className = "he-admin-feedback";
+    if (typeof SOUNDS !== "undefined" && SOUNDS.click) SOUNDS.click();
+}
+
+let heFeedbackTimer = null;
+function showHeAdminFeedback(message, isSuccess) {
+    const fb = document.getElementById("heAdminFeedbackBanner");
+    if (fb) {
+        fb.textContent = message;
+        fb.className = "he-admin-feedback " + (isSuccess ? "success" : "error");
+        clearTimeout(heFeedbackTimer);
+        heFeedbackTimer = setTimeout(() => { fb.className = "he-admin-feedback"; }, 4500);
+    }
+    if (typeof showToast === "function") showToast(message, 3000);
+    if (typeof SOUNDS !== "undefined" && isSuccess && SOUNDS.success) SOUNDS.success();
+}
+
+function applyHeAdminLanguageUI() {
+    const t = getHeAdminLang();
+    const setTxt = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+    const setPh = (id, txt) => { const el = document.getElementById(id); if (el) el.placeholder = txt; };
+    const setTip = (id, txt) => { const el = document.getElementById(id); if (el) el.setAttribute("title", txt); };
+
+    // সব বাটনের বাংলা-ইংরেজি টুলটিপ (ওভারলে)
+    setTip("heAdminLockBtn", t.lockTip);
+    setTip("hePinCloseBtn", t.backTip);
+    setTip("heLoginEyeBtn", t.eyeTip);
+    setTip("heUnlockBtn", t.unlockBtn);
+    setTip("heAdmCloseBtn", t.backTip);
+    setTip("heAdmSettingsBtn", t.settingsTip);
+    setTip("heAdmQuickHoney", t.honeyTip);
+    setTip("heAdmQuickDark", t.darkTip);
+    setTip("heAdmQuickLight", t.lightTip);
+    setTip("heAdmShareBtn", t.shareTip);
+
+    setTip("heTabBrand", t.tabBrand);
+    setTip("heTabVideos", t.tabVideos);
+    setTip("heTabBaahubali", t.tabBaahubali);
+    setTip("heTabGallery", t.tabGallery);
+    setTip("heTabSecurity", t.tabSecurity);
+
+    setTip("admLogoDrawerBtn", t.logoDrawerTip);
+    setTip("admBtnSaveLogo", t.bSaveLogo);
+    setTip("admBtnSaveName", t.bSaveName);
+    setTip("admBtnSaveCover", t.bSaveCover);
+    setTip("admBtnAddShort", t.bAddShort);
+    setTip("admBtnAddFullEp", t.bAddFullEp);
+    setTip("admBtnAddBhShort", t.bAddBhShort);
+    setTip("admBtnSaveBhFull", t.bSaveBhFull);
+    setTip("admBtnAddPhoto", t.bAddPhoto);
+    setTip("admBtnChangePin", t.bChangePin);
+    setTip("admEyeOldPin", t.eyeTip);
+    setTip("admEyeMasterKey", t.eyeMasterTip);
+    setTip("admEyeNewPin", t.eyeTip);
+
+    // লেখা ও প্লেসহোল্ডার
+    setTxt("hePinTitle", t.pinTitle);
+    setTxt("hePinSub", t.pinSub);
+    setPh("heLoginPinInput", t.pinPlaceholder);
+    setTxt("heUnlockBtn", t.unlockBtn);
+
+    setTxt("heAdmMainHeading", t.admHeading);
+    setTxt("heTabBrand", t.tabBrand);
+    setTxt("heTabVideos", t.tabVideos);
+    setTxt("heTabBaahubali", t.tabBaahubali);
+    setTxt("heTabGallery", t.tabGallery);
+    setTxt("heTabSecurity", t.tabSecurity);
+
+    setTxt("admTitleLogo", t.tLogo);
+    setTxt("admLogoBtnText", t.logoBtn);
+    setTxt("admLblLogoUrl", t.lLogoUrl);
+    setTxt("admBtnSaveLogo", t.bSaveLogo);
+    setTxt("admTitleSiteName", t.tSiteName);
+    setTxt("admLblLine1", t.lLine1);
+    setTxt("admLblLine2", t.lLine2);
+    setTxt("admBtnSaveName", t.bSaveName);
+    setTxt("admTitleCover", t.tCover);
+    setTxt("admLblCoverUrl", t.lCoverUrl);
+    setTxt("admBtnSaveCover", t.bSaveCover);
+
+    setTxt("admTitleAddShort", t.tAddShort);
+    setTxt("admLblShortYt", t.lShortYt);
+    setTxt("admLblShortThumb", t.lShortThumb);
+    setTxt("admLblShortTitle", t.lShortTitle);
+    setTxt("admLblShortPos", t.lShortPos);
+    setTxt("admLblShortNew", t.lShortNew);
+    setTxt("admBtnAddShort", t.bAddShort);
+    setTxt("admTitleFullEp", t.tFullEp);
+    setTxt("admLblFullEpYt", t.lFullEpYt);
+    setTxt("admLblFullEpThumb", t.lFullEpThumb);
+    setTxt("admLblFullEpNew", t.lFullEpNew);
+    setTxt("admBtnAddFullEp", t.bAddFullEp);
+    setTxt("admLblManageNew", t.lManageNew);
+
+    setTxt("admTitleBh", t.tBh);
+    setTxt("admLblBhThumb", t.lBhThumb);
+    setTxt("admLblBhTitle", t.lBhTitle);
+    setTxt("admLblBhEmbed", t.lBhEmbed);
+    setTxt("admBtnAddBhShort", t.bAddBhShort);
+    setTxt("admLblBhFull", t.lBhFull);
+    setTxt("admBtnSaveBhFull", t.bSaveBhFull);
+
+    setTxt("admTitlePhoto", t.tPhoto);
+    setTxt("admLblPhotoImg", t.lPhotoImg);
+    setTxt("admLblPhotoCap", t.lPhotoCap);
+    setTxt("admLblPhotoDate", t.lPhotoDate);
+    setTxt("admLblPhotoTime", t.lPhotoTime);
+    setTxt("admLblPhotoYt", t.lPhotoYt);
+    setTxt("admLblPhotoStart", t.lPhotoStart);
+    setTxt("admLblPhotoEnd", t.lPhotoEnd);
+    setTxt("admBtnAddPhoto", t.bAddPhoto);
+
+    setTxt("admTitleSecurity", t.tSecurity);
+    setTxt("admLblOldPin", t.lOldPin);
+    setTxt("admLblMaster", t.lMaster);
+    setTxt("admLblNewPin", t.lNewPin);
+    setTxt("admBtnChangePin", t.bChangePin);
+
+    setPh("admLogoUrl", t.pLogoUrl);
+    setPh("admSiteNameLine1", t.pLine1);
+    setPh("admSiteNameLine2", t.pLine2);
+    setPh("admCoverUrl", t.pCoverUrl);
+    setPh("admShortYt", t.pYtId);
+    setPh("admShortThumb", t.pThumb);
+    setPh("admShortTitle", t.pTitle);
+    setPh("admFullEpYt", t.pYtId);
+    setPh("admFullEpThumb", t.pThumb);
+    setPh("admBhThumb", t.pThumb);
+    setPh("admBhTitle", t.pBhTitle);
+    setPh("admBhEmbed", t.pBhEmbed);
+    setPh("admBhFullEmbed", t.pBhEmbed);
+    setPh("admPhotoImg", t.pThumb);
+    setPh("admPhotoCap", t.pPhotoCap);
+    setPh("admPhotoTime", t.pTime);
+    setPh("admPhotoYt", t.pYtId);
+    setPh("admOldPin", t.pOldPin);
+    setPh("admMasterKey", t.pMaster);
+    setPh("admNewPin", t.pNewPin);
+
+    syncHeAdmQuickControls();
+    refreshHeLockoutUI();
+}
+
+function extractYtIdSmart(input) {
+    if (!input) return "";
+    const val = input.trim();
+    const m = val.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/))([a-zA-Z0-9_-]{11})/);
+    return m ? m[1] : val;
+}
+
+function toggleHeEye(inputId) {
+    const el = document.getElementById(inputId);
+    if (!el) return;
+    el.type = (el.type === "password") ? "text" : "password";
+}
+
+function openHePinModal() {
+    if (typeof toggleMenu === "function") {
+        const dd = document.getElementById("dropdown");
+        if (dd && dd.classList.contains("active")) toggleMenu();
+    }
+    applyHeAdminLanguageUI();
+    const modal = document.getElementById("hePinModal");
+    const wasActive = modal && modal.classList.contains("active");
+    const inp = document.getElementById("heLoginPinInput");
+    const err = document.getElementById("hePinErrorMsg");
+    if (inp) { inp.value = ""; inp.type = "password"; }
+    if (err) err.textContent = "";
+    if (modal) modal.classList.add("active");
+    if (!wasActive && typeof pushHeHistoryLayer === "function") {
+        pushHeHistoryLayer("hePinModal");
+    }
+    const isLocked = refreshHeLockoutUI();
+    clearInterval(heLockoutTimerInterval);
+    heLockoutTimerInterval = setInterval(refreshHeLockoutUI, 1000);
+    if (!isLocked) setTimeout(() => { if (inp) inp.focus(); }, 150);
+}
+
+function closeHePinModal() {
+    const modal = document.getElementById("hePinModal");
+    const wasActive = modal && modal.classList.contains("active");
+    if (modal) modal.classList.remove("active");
+    clearInterval(heLockoutTimerInterval);
+    if (wasActive && typeof popHeHistoryIfManual === "function") {
+        popHeHistoryIfManual();
+    }
+}
+
+function verifyHeAdminPin() {
+    if (refreshHeLockoutUI()) return;
+    const t = getHeAdminLang();
+    const inp = document.getElementById("heLoginPinInput");
+    const card = document.getElementById("hePinCard");
+    const err = document.getElementById("hePinErrorMsg");
+    const entered = inp ? inp.value : "";
+    const activePin = heLiveConfig.pin || HONEY_DEFAULT_PIN;
+
+    if (entered === activePin) {
+        saveHeLockoutState({ wrongAttempts: 0, lockLevel: 0, lockUntil: 0 });
+        closeHePinModal();
+        openHeAdminDashboard();
+        if (typeof SOUNDS !== "undefined" && SOUNDS.success) SOUNDS.success();
+    } else {
+        const state = getHeLockoutState();
+        state.wrongAttempts += 1;
+        const maxAllowed = (state.lockLevel === 0) ? 2 : 1;
+
+        if (state.wrongAttempts > maxAllowed) {
+            state.lockLevel = (state.lockLevel === 0) ? 1 : (state.lockLevel + 1);
+            state.lockUntil = Date.now() + (state.lockLevel * 60 * 60 * 1000);
+            state.wrongAttempts = 0;
+            saveHeLockoutState(state);
+            refreshHeLockoutUI();
+        } else {
+            saveHeLockoutState(state);
+            if (err) {
+                err.style.color = "#ef4444";
+                err.textContent = t.wrongPinWarn(state.wrongAttempts, 2);
+            }
+        }
+        if (card) {
+            card.classList.remove("shake");
+            void card.offsetWidth;
+            card.classList.add("shake");
+        }
+    }
+}
+
+function openHeAdminDashboard() {
+    const modal = document.getElementById("heAdminDashboardModal");
+    if (!modal) return;
+    const wasActive = modal.classList.contains("active");
+    document.body.classList.add("admin-panel-open");
+    closeHeAdmSettingsDrawer();
+    applyHeAdminLanguageUI();
+    populateAdminControls();
+    modal.classList.add("active");
+    if (!wasActive && typeof pushHeHistoryLayer === "function") {
+        pushHeHistoryLayer("heAdminDashboardModal");
+    }
+}
+
+function closeHeAdminDashboard() {
+    const modal = document.getElementById("heAdminDashboardModal");
+    const wasActive = modal && modal.classList.contains("active");
+    closeHeAdmSettingsDrawer();
+    if (modal) modal.classList.remove("active");
+    document.body.classList.remove("admin-panel-open");
+    if (wasActive && typeof popHeHistoryIfManual === "function") {
+        popHeHistoryIfManual();
+    }
+    if (typeof SOUNDS !== "undefined" && SOUNDS.imageClose) SOUNDS.imageClose();
+}
+
+function populateAdminControls() {
+    const t = getHeAdminLang();
+    const posSelect = document.getElementById("admShortPos");
+    if (posSelect && typeof originalFeedData !== "undefined") {
+        let opts = `<option value="0">${t.posFirst}</option>`;
+        originalFeedData.forEach((v, i) => {
+            opts += `<option value="${i + 1}">${t.posAfter}${i + 1}: ${(v.title || "Video").substring(0, 28)}</option>`;
+        });
+        posSelect.innerHTML = opts;
+    }
+
+    const listEl = document.getElementById("admFullEpManageList");
+    if (listEl && typeof welcomeVideoData !== "undefined") {
+        listEl.innerHTML = welcomeVideoData.map((v, idx) => {
+            const thumb = (typeof getWelcomeThumb === "function") ? getWelcomeThumb(v) : (v.thumb || "");
+            return `
+                <div class="he-ep-new-row">
+                    <div style="display:flex;align-items:center;gap:8px;min-width:0;">
+                        <img src="${thumb}" alt="Ep">
+                        <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">#${idx + 1} — ${v.id}</span>
+                    </div>
+                    <label class="he-check-row" style="margin:0;flex-shrink:0;">
+                        <input type="checkbox" ${v.isNew ? "checked" : ""} onchange="admToggleExistingFullEpNew('${v.id}', this.checked)">
+                        <span>NEW</span>
+                    </label>
+                </div>
+            `;
+        }).join("");
+    }
+}
+
+function rerenderMainGalleryDom() {
+    const gal = document.getElementById("gallery");
+    if (!gal || !window.galleryItems) return;
+    gal.innerHTML = "";
+    window.galleryItems.forEach((item, index) => {
+        const year = item.date ? item.date.substring(0, 4) : "";
+        const emojiOnly = (typeof isEmojiOnly === "function") ? isEmojiOnly(item.cap) : false;
+        const fifa = (typeof isFifa2026 === "function") ? isFifa2026(item.cap) : false;
+        const hasHoneySticker = item.cap.toLowerCase().includes("honey sticker");
+        const dateDisplay = item.date ? `<span class="post-date">${formatDate(item.date)}</span>` : "";
+        const timeDisplay = item.time ? `<span class="post-time">${item.time}</span>` : "";
+        const datetimeHtml = (dateDisplay || timeDisplay) ? `<div class="post-datetime">${dateDisplay}${timeDisplay}</div>` : "";
+        gal.insertAdjacentHTML("beforeend", `
+            <div class="flex flex-col gap-2 scroll-reveal gallery-item-wrapper" data-year="${year}" data-emoji-only="${emojiOnly}" data-fifa="${fifa}" data-honey-sticker="${hasHoneySticker}">
+                <p class="post-caption" onclick="toggleCaption(this, event)">${item.cap}</p>
+                ${datetimeHtml}
+                <div class="collection-card" onclick="openFull(${index}); event.stopPropagation()">
+                    <div class="inner-img">
+                        <img src="${item.img}" alt="Coll" loading="lazy" onerror="this.src='https://i.pinimg.com/736x/96/5f/f8/965ff82713b7a1ef6e3ffb782fcdc412.jpg'">
+                    </div>
+                </div>
+            </div>
+        `);
+    });
+}
+
+function applyHeLiveConfigToSite(cfg) {
+    if (!cfg) return;
+    if (cfg.logoUrl) {
+        document.querySelectorAll(".custom-logo-placeholder img").forEach(img => { img.src = cfg.logoUrl; });
+        const fav = document.querySelector('link[rel="icon"]');
+        if (fav) fav.href = cfg.logoUrl;
+    }
+    if (cfg.siteNameLine1 || cfg.siteNameLine2) {
+        const l1 = cfg.siteNameLine1 || "HONEY";
+        const l2 = cfg.siteNameLine2 || "ENTERTAINMENT";
+        document.querySelectorAll(".header-wrapper h1").forEach(h => { h.innerHTML = `${l1}<br>${l2}`; });
+    }
+    if (cfg.coverUrl) {
+        const cov = document.querySelector(".bottom-cover-photo-wrap img");
+        if (cov) cov.src = cfg.coverUrl;
+    }
+
+    if (Array.isArray(cfg.addedShorts) && cfg.addedShorts.length && typeof originalFeedData !== "undefined") {
+        cfg.addedShorts.forEach(s => {
+            if (!originalFeedData.some(x => x.ytId === s.ytId && x.title === s.title)) {
+                const pos = Math.max(0, Math.min(originalFeedData.length, Number(s.pos) || 0));
+                originalFeedData.splice(pos, 0, { thumb: s.thumb, title: s.title, ytId: s.ytId, isNew: !!s.isNew });
+            }
+        });
+        if (typeof videoFeedData !== "undefined") {
+            videoFeedData.length = 0;
+            videoFeedData.push(...originalFeedData, ...originalFeedData, ...originalFeedData);
+        }
+        if (typeof renderVideoFeed === "function") renderVideoFeed();
+    }
+
+    if (typeof welcomeVideoData !== "undefined") {
+        if (Array.isArray(cfg.addedFullEpisodes) && cfg.addedFullEpisodes.length) {
+            for (let i = cfg.addedFullEpisodes.length - 1; i >= 0; i--) {
+                const ep = cfg.addedFullEpisodes[i];
+                if (!welcomeVideoData.some(x => x.id === ep.id)) {
+                    welcomeVideoData.unshift({ type: "youtube", id: ep.id, thumb: ep.thumb || "", isNew: !!ep.isNew });
+                }
+            }
+        }
+        if (cfg.fullEpNewOverrides) {
+            welcomeVideoData.forEach(v => {
+                if (Object.prototype.hasOwnProperty.call(cfg.fullEpNewOverrides, v.id)) {
+                    v.isNew = !!cfg.fullEpNewOverrides[v.id];
+                }
+            });
+        }
+        if (typeof renderWelcomeVideoGrid === "function") renderWelcomeVideoGrid();
+    }
+
+    if (Array.isArray(cfg.addedBaahubaliShorts) && cfg.addedBaahubaliShorts.length && typeof baahubaliFbShortsList !== "undefined") {
+        cfg.addedBaahubaliShorts.forEach(b => {
+            if (!baahubaliFbShortsList.some(x => x.caption === b.caption && x.thumb === b.thumb)) {
+                baahubaliFbShortsList.push({ embedCode: b.embedCode, thumb: b.thumb, caption: b.caption });
+            }
+        });
+        if (typeof renderDynamicBaahubaliShortsStack === "function") renderDynamicBaahubaliShortsStack();
+    }
+
+    if (typeof cfg.baahubaliFullEmbed === "string" && cfg.baahubaliFullEmbed.trim() !== "") {
+        BAAHUBALI_FULL_EPISODE_EMBED_CODE = cfg.baahubaliFullEmbed;
+        if (typeof renderBaahubaliFullEpisodeSection === "function") renderBaahubaliFullEpisodeSection();
+    }
+
+    if (Array.isArray(cfg.addedPhotos) && cfg.addedPhotos.length && window.galleryItems) {
+        let changed = false;
+        for (let i = cfg.addedPhotos.length - 1; i >= 0; i--) {
+            const p = cfg.addedPhotos[i];
+            if (!window.galleryItems.some(x => x.img === p.img && x.cap === p.cap)) {
+                window.galleryItems.unshift(p);
+                changed = true;
+            }
+        }
+        if (changed) rerenderMainGalleryDom();
+    }
+}
+
+async function saveHeLiveConfig() {
+    const t = getHeAdminLang();
+    try { localStorage.setItem(HONEY_ADMIN_STORAGE_KEY, JSON.stringify(heLiveConfig)); } catch (e) {}
+    const pill = document.getElementById("heSyncStatusPill");
+    if (HONEY_FIREBASE_DB_URL && HONEY_FIREBASE_DB_URL.startsWith("http")) {
+        try {
+            const url = HONEY_FIREBASE_DB_URL.replace(/\/$/, "") + "/honey_entertainment_config.json";
+            const res = await fetch(url, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(heLiveConfig)
+            });
+            if (res.ok) {
+                if (pill) pill.textContent = t.syncCloud;
+                return true;
+            }
+            if (pill) pill.textContent = t.syncFail;
+            return false;
+        } catch (e) {
+            if (pill) pill.textContent = t.syncFail;
+            return false;
+        }
+    } else {
+        if (pill) pill.textContent = t.syncLocal;
+        return true;
+    }
+}
+
+async function loadHeLiveConfigOnBoot() {
+    const t = getHeAdminLang();
+    try {
+        const local = localStorage.getItem(HONEY_ADMIN_STORAGE_KEY);
+        if (local) heLiveConfig = Object.assign({}, heLiveConfig, JSON.parse(local));
+    } catch (e) {}
+
+    if (HONEY_FIREBASE_DB_URL && HONEY_FIREBASE_DB_URL.startsWith("http")) {
+        try {
+            const url = HONEY_FIREBASE_DB_URL.replace(/\/$/, "") + "/honey_entertainment_config.json";
+            const res = await fetch(url);
+            if (res.ok) {
+                const remote = await res.json();
+                if (remote && typeof remote === "object") {
+                    heLiveConfig = Object.assign({}, heLiveConfig, remote);
+                    try { localStorage.setItem(HONEY_ADMIN_STORAGE_KEY, JSON.stringify(heLiveConfig)); } catch (e) {}
+                    const pill = document.getElementById("heSyncStatusPill");
+                    if (pill) pill.textContent = t.syncCloud;
+                }
+            }
+        } catch (e) {}
+    }
+    applyHeLiveConfigToSite(heLiveConfig);
+    applyHeAdminLanguageUI();
+}
+
+// ===== ADMIN ACTION HANDLERS =====
+async function admSaveLogo() {
+    const t = getHeAdminLang();
+    const url = document.getElementById("admLogoUrl").value.trim();
+    if (!url) return showHeAdminFeedback(t.errLogo, false);
+    heLiveConfig.logoUrl = url;
+    applyHeLiveConfigToSite(heLiveConfig);
+    const ok = await saveHeLiveConfig();
+    showHeAdminFeedback(ok ? t.okLogo : t.syncFail, ok);
+}
+
+async function admSaveSiteName() {
+    const t = getHeAdminLang();
+    const l1 = document.getElementById("admSiteNameLine1").value.trim();
+    const l2 = document.getElementById("admSiteNameLine2").value.trim();
+    if (!l1 && !l2) return showHeAdminFeedback(t.errName, false);
+    heLiveConfig.siteNameLine1 = l1 || "HONEY";
+    heLiveConfig.siteNameLine2 = l2 || "ENTERTAINMENT";
+    applyHeLiveConfigToSite(heLiveConfig);
+    const ok = await saveHeLiveConfig();
+    showHeAdminFeedback(ok ? t.okName : t.syncFail, ok);
+}
+
+async function admSaveCoverPhoto() {
+    const t = getHeAdminLang();
+    const url = document.getElementById("admCoverUrl").value.trim();
+    if (!url) return showHeAdminFeedback(t.errCover, false);
+    heLiveConfig.coverUrl = url;
+    applyHeLiveConfigToSite(heLiveConfig);
+    const ok = await saveHeLiveConfig();
+    showHeAdminFeedback(ok ? t.okCover : t.syncFail, ok);
+}
+
+async function admAddShortVideo() {
+    const t = getHeAdminLang();
+    const ytId = extractYtIdSmart(document.getElementById("admShortYt").value);
+    const thumb = document.getElementById("admShortThumb").value.trim();
+    const title = document.getElementById("admShortTitle").value.trim();
+    const pos = Number(document.getElementById("admShortPos").value) || 0;
+    const isNew = document.getElementById("admShortIsNew").checked;
+    if (!ytId || !thumb || !title) return showHeAdminFeedback(t.errShort, false);
+
+    heLiveConfig.addedShorts.push({ ytId, thumb, title, pos, isNew });
+    applyHeLiveConfigToSite(heLiveConfig);
+    const ok = await saveHeLiveConfig();
+    populateAdminControls();
+    showHeAdminFeedback(ok ? t.okShort : t.syncFail, ok);
+}
+
+async function admAddFullEpisode() {
+    const t = getHeAdminLang();
+    const id = extractYtIdSmart(document.getElementById("admFullEpYt").value);
+    const thumb = document.getElementById("admFullEpThumb").value.trim();
+    const isNew = document.getElementById("admFullEpIsNew").checked;
+    if (!id) return showHeAdminFeedback(t.errFullEp, false);
+
+    heLiveConfig.addedFullEpisodes.unshift({ id, thumb, isNew });
+    applyHeLiveConfigToSite(heLiveConfig);
+    const ok = await saveHeLiveConfig();
+    populateAdminControls();
+    showHeAdminFeedback(ok ? t.okFullEp : t.syncFail, ok);
+}
+
+async function admToggleExistingFullEpNew(videoId, checked) {
+    const t = getHeAdminLang();
+    heLiveConfig.fullEpNewOverrides[videoId] = !!checked;
+    applyHeLiveConfigToSite(heLiveConfig);
+    const ok = await saveHeLiveConfig();
+    showHeAdminFeedback(ok ? t.okToggleNew : t.syncFail, ok);
+}
+
+async function admAddBaahubaliShort() {
+    const t = getHeAdminLang();
+    const thumb = document.getElementById("admBhThumb").value.trim();
+    const caption = document.getElementById("admBhTitle").value.trim();
+    const embedCode = document.getElementById("admBhEmbed").value.trim();
+    if (!thumb || !embedCode) return showHeAdminFeedback(t.errBhShort, false);
+
+    heLiveConfig.addedBaahubaliShorts.push({ thumb, caption: caption || "Baahubali Short", embedCode });
+    applyHeLiveConfigToSite(heLiveConfig);
+    const ok = await saveHeLiveConfig();
+    showHeAdminFeedback(ok ? t.okBhShort : t.syncFail, ok);
+}
+
+async function admSaveBaahubaliFullEp() {
+    const t = getHeAdminLang();
+    const embed = document.getElementById("admBhFullEmbed").value.trim();
+    if (!embed) return showHeAdminFeedback(t.errBhFull, false);
+    heLiveConfig.baahubaliFullEmbed = embed;
+    applyHeLiveConfigToSite(heLiveConfig);
+    const ok = await saveHeLiveConfig();
+    showHeAdminFeedback(ok ? t.okBhFull : t.syncFail, ok);
+}
+
+async function admAddNewPhoto() {
+    const t = getHeAdminLang();
+    const img = document.getElementById("admPhotoImg").value.trim();
+    const cap = document.getElementById("admPhotoCap").value.trim();
+    const date = document.getElementById("admPhotoDate").value.trim();
+    const time = document.getElementById("admPhotoTime").value.trim();
+    const ytId = extractYtIdSmart(document.getElementById("admPhotoYt").value);
+    const start = Number(document.getElementById("admPhotoStart").value) || 0;
+    const end = Number(document.getElementById("admPhotoEnd").value) || 30;
+    if (!img || !cap) return showHeAdminFeedback(t.errPhoto, false);
+
+    heLiveConfig.addedPhotos.unshift({ img, cap, date, time, ytId, start, end });
+    applyHeLiveConfigToSite(heLiveConfig);
+    const ok = await saveHeLiveConfig();
+    showHeAdminFeedback(ok ? t.okPhoto : t.syncFail, ok);
+}
+
+async function admChangePin() {
+    const t = getHeAdminLang();
+    const oldPin = document.getElementById("admOldPin").value;
+    const master = document.getElementById("admMasterKey").value;
+    const newPin = document.getElementById("admNewPin").value;
+    const msg = document.getElementById("admPinChangeMsg");
+    const activePin = heLiveConfig.pin || HONEY_DEFAULT_PIN;
+
+    if (oldPin !== activePin) {
+        msg.style.color = "#ef4444";
+        msg.textContent = t.errOldPin;
+        return showHeAdminFeedback(t.errOldPin, false);
+    }
+    if (master !== HONEY_MASTER_KEY) {
+        msg.style.color = "#ef4444";
+        msg.textContent = t.errMaster;
+        return showHeAdminFeedback(t.errMaster, false);
+    }
+    if (!newPin || newPin.length > 10) {
+        msg.style.color = "#ef4444";
+        msg.textContent = t.errNewPin;
+        return showHeAdminFeedback(t.errNewPin, false);
+    }
+    heLiveConfig.pin = newPin;
+    const ok = await saveHeLiveConfig();
+    msg.style.color = ok ? "#22c55e" : "#ef4444";
+    msg.textContent = ok ? t.okPinChanged : t.syncFail;
+    showHeAdminFeedback(ok ? t.okPinChanged : t.syncFail, ok);
+    if (ok) {
+        document.getElementById("admOldPin").value = "";
+        document.getElementById("admMasterKey").value = "";
+        document.getElementById("admNewPin").value = "";
+    }
+}
+
+// ===== HOOK LANGUAGE SWITCH, PHONE BACK / ESC & HOVER SOUNDS =====
+(function hookHeAdminSystem() {
+    const _origToggleLang = window.toggleLang;
+    if (typeof _origToggleLang === "function") {
+        window.toggleLang = function() {
+            _origToggleLang();
+            applyHeAdminLanguageUI();
+        };
+    }
+    const _origTooltips = window.updateAllButtonTooltips;
+    if (typeof _origTooltips === "function") {
+        window.updateAllButtonTooltips = function() {
+            _origTooltips();
+            applyHeAdminLanguageUI();
+        };
+    }
+    const _origToggleSound = window.toggleSound;
+    if (typeof _origToggleSound === "function") {
+        window.toggleSound = function() {
+            _origToggleSound();
+            syncHeAdmQuickControls();
+        };
+    }
+    const _origBackAction = window.handleUniversalBackAction;
+    if (typeof _origBackAction === "function") {
+        window.handleUniversalBackAction = function() {
+            const admModal = document.getElementById("heAdminDashboardModal");
+            if (admModal && admModal.classList.contains("active")) {
+                closeHeAdminDashboard();
+                return true;
+            }
+            const pinModal = document.getElementById("hePinModal");
+            if (pinModal && pinModal.classList.contains("active")) {
+                closeHePinModal();
+                return true;
+            }
+            return _origBackAction();
+        };
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+        loadHeLiveConfigOnBoot();
+        document.querySelectorAll("#hePinModal button, #heAdminDashboardModal button, #heAdminLockBtn").forEach(btn => {
+            btn.addEventListener("mouseenter", () => { if (typeof SOUNDS !== "undefined" && SOUNDS.hover) SOUNDS.hover(); });
+        });
+    });
+})();
+</script>
 </body>
 </html>
