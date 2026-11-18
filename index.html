@@ -4187,7 +4187,278 @@ body.honey-mode .he-select option {
     color: #16a34a;
     font-weight: 700;
 }
+
 body.dark-mode .he-sync-pill { color: #4ade80; }
+/* ===== DYNAMIC WEBSITE FONT OVERRIDES (CAPTIONS UNTOUCHED) ===== */
+html[data-he-f-brand="1"] .header-wrapper h1 { font-family: var(--he-f-brand) !important; }
+html[data-he-f-heading="1"] .animated-title,
+html[data-he-f-heading="1"] .animated-title #feedTitleText { font-family: var(--he-f-heading) !important; }
+html[data-he-f-toplabel="1"] .home-dual-action-row .full-episode-title,
+html[data-he-f-toplabel="1"] .home-dual-action-row .baahubali-home-title { font-family: var(--he-f-toplabel) !important; }
+html[data-he-f-button="1"] .btn-premium,
+html[data-he-f-button="1"] .full-episode-btn,
+html[data-he-f-button="1"] .baahubali-home-btn-text,
+html[data-he-f-button="1"] .filter-btn,
+html[data-he-f-button="1"] .menu-h-btn,
+html[data-he-f-button="1"] .short-subscribe-btn,
+html[data-he-f-button="1"] .baahubali-2d-btn,
+html[data-he-f-button="1"] .offline-retry-btn { font-family: var(--he-f-button) !important; }
+html[data-he-f-search="1"] .search-input,
+html[data-he-f-search="1"] .search-result-info,
+html[data-he-f-search="1"] .search-no-result,
+html[data-he-f-search="1"] .no-result-title,
+html[data-he-f-search="1"] .no-result-subtitle { font-family: var(--he-f-search) !important; }
+html[data-he-f-subtext="1"] .ai-status-text,
+html[data-he-f-subtext="1"] .visit-status-text { font-family: var(--he-f-subtext) !important; }
+html[data-he-f-footer="1"] #followTxt,
+html[data-he-f-footer="1"] .thank-you-text,
+html[data-he-f-footer="1"] footer,
+html[data-he-f-footer="1"] .welcome-video-title,
+html[data-he-f-footer="1"] #baahubaliFullEpContainer,
+html[data-he-f-footer="1"] #baahubaliFullEpContainer * { font-family: var(--he-f-footer) !important; }
+html[data-he-f-baahubali="1"] .baahubali-epic-title { font-family: var(--he-f-baahubali) !important; }
+html[data-he-f-toast="1"] #customToast,
+html[data-he-f-toast="1"] .he-admin-feedback { font-family: var(--he-f-toast) !important; }
+html[data-he-f-admin="1"] #hePinModal .he-pin-card,
+html[data-he-f-admin="1"] #hePinModal .he-pin-title,
+html[data-he-f-admin="1"] #hePinModal .he-pin-sub,
+html[data-he-f-admin="1"] #hePinModal input,
+html[data-he-f-admin="1"] #hePinModal button,
+html[data-he-f-admin="1"] #heAdminDashboardModal .he-admin-panel,
+html[data-he-f-admin="1"] #heAdminDashboardModal h2,
+html[data-he-f-admin="1"] #heAdminDashboardModal h3,
+html[data-he-f-admin="1"] #heAdminDashboardModal label,
+html[data-he-f-admin="1"] #heAdminDashboardModal input,
+html[data-he-f-admin="1"] #heAdminDashboardModal textarea,
+html[data-he-f-admin="1"] #heAdminDashboardModal select,
+html[data-he-f-admin="1"] #heAdminDashboardModal button:not(.he-font-option):not(.he-font-trigger) { font-family: var(--he-f-admin) !important; }
+
+/* ===== TEXT SELECTION PROTECTION (ONLY CAPTIONS & NORMAL INPUTS ALLOWED) ===== */
+body, body * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.post-caption,
+#fullscreenCaption,
+#shortCaptionBar,
+#bhReelCaptionBar,
+.search-input,
+.he-input,
+.he-textarea,
+.he-font-search {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+    -webkit-touch-callout: default !important;
+}
+.he-sec-input {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+}
+
+/* ===== ULTRA-STYLISH GLASSMORPHIC TOAST MESSAGE ===== */
+#customToast {
+    position: fixed !important;
+    bottom: 28px !important;
+    right: 22px !important;
+    left: auto !important;
+    z-index: 999999 !important;
+    background: linear-gradient(135deg, rgba(16, 16, 26, 0.92), rgba(28, 22, 38, 0.92)) !important;
+    backdrop-filter: blur(22px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(180%) !important;
+    border: 1.5px solid var(--accent) !important;
+    border-left: 5px solid var(--accent) !important;
+    border-radius: 18px !important;
+    padding: 13px 20px !important;
+    color: #ffffff !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    line-height: 1.45 !important;
+    letter-spacing: 0.3px !important;
+    max-width: 320px !important;
+    min-width: 190px !important;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 24px var(--glow-color), inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+    transform: translateY(24px) scale(0.94) !important;
+    transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.35s ease !important;
+}
+body.light-mode #customToast,
+body.honey-mode #customToast {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 248, 235, 0.94)) !important;
+    color: #1f2937 !important;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.16), 0 0 20px var(--glow-color), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+#customToast::before,
+#customToast::after {
+    display: none !important;
+    content: none !important;
+}
+#customToast.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) scale(1) !important;
+}
+@media (max-width: 600px) {
+    #customToast {
+        right: 14px !important;
+        left: 14px !important;
+        bottom: 20px !important;
+        max-width: none !important;
+        text-align: center !important;
+    }
+}
+
+/* ===== SEARCHABLE FONT DROPDOWN UI ===== */
+.he-font-lang-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+.he-font-lang-pills {
+    display: inline-flex;
+    gap: 6px;
+    background: rgba(0,0,0,0.22);
+    padding: 4px;
+    border-radius: 12px;
+    border: 1px solid rgba(128,128,128,0.25);
+}
+body.light-mode .he-font-lang-pills,
+body.honey-mode .he-font-lang-pills {
+    background: rgba(0,0,0,0.06);
+}
+.he-font-lang-pill {
+    padding: 7px 14px;
+    border-radius: 9px;
+    border: none;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.he-font-lang-pill.active {
+    background: linear-gradient(135deg, var(--accent), #fb923c);
+    color: #fff;
+    box-shadow: 0 3px 12px var(--glow-color);
+}
+.he-font-dropdown {
+    position: relative;
+    width: 100%;
+}
+.he-font-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.32);
+    border: 1.5px solid rgba(128, 128, 128, 0.28);
+    border-radius: 12px;
+    padding: 10px 12px;
+    color: var(--text-color);
+    font-size: 13.5px;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+body.light-mode .he-font-trigger,
+body.honey-mode .he-font-trigger {
+    background: rgba(255, 255, 255, 0.65);
+    border-color: rgba(0, 0, 0, 0.16);
+}
+.he-font-trigger:hover,
+.he-font-dropdown.open .he-font-trigger {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--glow-color);
+}
+.he-font-menu {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 6px);
+    z-index: 200;
+    background: rgba(18, 18, 26, 0.96);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1.5px solid var(--accent);
+    border-radius: 14px;
+    padding: 8px;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.55);
+}
+body.light-mode .he-font-menu,
+body.honey-mode .he-font-menu {
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.16);
+}
+.he-font-dropdown.open .he-font-menu {
+    display: block;
+    animation: heSecFadeIn 0.2s ease;
+}
+.he-font-search {
+    width: 100%;
+    background: rgba(128, 128, 128, 0.14);
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 9px;
+    padding: 8px 10px;
+    color: var(--text-color);
+    font-size: 13px;
+    outline: none;
+    margin-bottom: 6px;
+}
+.he-font-search:focus {
+    border-color: var(--accent);
+}
+.he-font-list {
+    max-height: 210px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.he-font-option {
+    width: 100%;
+    text-align: left;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 13.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.2s;
+}
+.he-font-option:hover,
+.he-font-option.selected {
+    background: linear-gradient(135deg, var(--accent), #fb923c);
+    color: #fff;
+}
+.he-font-reset-btn {
+    padding: 7px 13px;
+    border-radius: 10px;
+    border: 1px solid rgba(239, 68, 68, 0.45);
+    background: rgba(239, 68, 68, 0.14);
+    color: #ef4444;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.he-font-reset-btn:hover {
+    background: #ef4444;
+    color: #fff;
+}
 </style>
 </head>
 <body class="honey-mode" onclick="resetAllCaptions(event)">
@@ -8047,25 +8318,25 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 window.addEventListener('load', updateAllButtonTooltips);
 // ===== SOURCE CODE PROTECTION SYSTEM (ENHANCED) =====
-// ১. রাইট ক্লিক মেনু বন্ধ করা (আপনার আগের কোড)
 document.addEventListener('contextmenu', function(e) {
-const target = e.target;
-// শুধু Toast message এর উপর হলে কিছু করবো না
-if (target.closest('#customToast')) {
-return; // Toast এর উপর রাইট ক্লিক/লং প্রেস allow
-}
-// শুধু সার্চ ইনপুট বক্সের ভেতরে হলে কিছু করবো না (পেস্ট করার জন্য)
-if (target.closest('.search-input')) {
-return; // শুধু ইনপুট বক্সে রাইট ক্লিক/লং প্রেস allow
-}
-// বাকি সব জায়গায় (সার্চ বাটন, ক্লিয়ার বাটন, No Found, সার্চ আইকন, পুরো সাইট) ডিসেবল
-e.preventDefault();
-// ডিটেক্ট করা হচ্ছে ফোন নাকি কম্পিউটার
-const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || e.pointerType === 'touch';
-const msg = isMobile ? translations[currentLang].longPressDisabled : translations[currentLang].rightClickDisabled;
-if (typeof showToast === 'function') {
-showToast(msg, 2500);
-}
+    const target = e.target;
+    // পিন ও মাস্টার কী ইনপুটে রাইট ক্লিক/লং প্রেস ও পেস্ট সম্পূর্ণ নিষিদ্ধ
+    if (target.closest('.he-sec-input')) {
+        e.preventDefault();
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || e.pointerType === 'touch';
+        const msg = isMobile ? translations[currentLang].longPressDisabled : translations[currentLang].rightClickDisabled;
+        if (typeof showToast === 'function') showToast(msg, 2500);
+        return;
+    }
+    // টোস্ট, ক্যাপশন, সার্চ ইনপুট ও অ্যাডমিনের সাধারণ লেখার বক্সে allow
+    if (target.closest('#customToast, .post-caption, #fullscreenCaption, #shortCaptionBar, #bhReelCaptionBar, .search-input, .he-input, .he-textarea, .he-font-search')) {
+        return;
+    }
+    // বাকি সব জায়গায় (অ্যাডমিন প্যানেলের লেখা/বাটন ও মেইন সাইটে) বন্ধ
+    e.preventDefault();
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || e.pointerType === 'touch';
+    const msg = isMobile ? translations[currentLang].longPressDisabled : translations[currentLang].rightClickDisabled;
+    if (typeof showToast === 'function') showToast(msg, 2500);
 });
 // ২. কিবোর্ড শর্টকাট ব্লক করা (Source Code & DevTools)
 document.addEventListener('keydown', function(e) {
@@ -8799,7 +9070,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </div>
 <!-- ===== PIN ENTRY MODAL ===== -->
-<div class="he-sec-backdrop" id="hePinModal" onclick="if(event.target===this) closeHePinModal();">
+<div class="he-sec-backdrop" id="hePinModal">
     <div class="he-pin-card" id="hePinCard" onclick="event.stopPropagation()">
         <button class="he-back-arrow-btn" id="hePinCloseBtn" style="position:absolute;top:14px;left:14px;width:36px;height:36px;" onclick="closeHePinModal()" aria-label="Back">
             <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -8821,7 +9092,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- ===== ADMIN CONTROL PANEL MODAL ===== -->
-<div class="he-sec-backdrop" id="heAdminDashboardModal" onclick="if(event.target===this) closeHeAdminDashboard();">
+<div class="he-sec-backdrop" id="heAdminDashboardModal">
     <div class="he-admin-panel" onclick="event.stopPropagation()">
         <div class="he-admin-header">
             <div class="he-admin-header-left">
@@ -8831,7 +9102,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <h2 id="heAdmMainHeading">HONEY ADMIN PANEL</h2>
                 <span class="he-sync-pill" id="heSyncStatusPill">Local Ready</span>
             </div>
-            <!-- ঘূর্ণায়মান সেটিংস আইকন (ক্লিক করলে ৬টি বাটন আসবে ও ১০ সেকেন্ড পর অটো বন্ধ হবে) -->
+            <!-- ঘূর্ণায়মান সেটিংস আইকন (ক্লিক করলে ৬টি বাটন আসবে ও ১০ সেকেন্ড পর অটো বন্ধ হবে) -->
             <button type="button" class="he-settings-gear-btn" id="heAdmSettingsBtn" onclick="toggleHeAdmSettingsDrawer(); event.stopPropagation();" aria-label="Settings">
                 <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             </button>
@@ -8847,12 +9118,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <button type="button" class="he-quick-btn share" id="heAdmShareBtn" onclick="shareWebsite(); resetHeAdmSettingsTimer(); event.stopPropagation();">🔗 <span id="heAdmShareText">Share</span></button>
         </div>
 
-        <!-- সহজ ৫টি ক্যাটাগরি ট্যাব -->
+        <!-- ৬টি ক্যাটাগরি ট্যাব -->
         <div class="he-admin-tabs" id="heAdminTabs">
             <button type="button" class="he-tab-btn active" id="heTabBrand" onclick="switchHeAdminTab('brand', this)">🎨 Branding</button>
             <button type="button" class="he-tab-btn" id="heTabVideos" onclick="switchHeAdminTab('videos', this)">🎬 Videos</button>
             <button type="button" class="he-tab-btn" id="heTabBaahubali" onclick="switchHeAdminTab('baahubali', this)">⚔️ Baahubali 2D</button>
             <button type="button" class="he-tab-btn" id="heTabGallery" onclick="switchHeAdminTab('gallery', this)">🖼️ Gallery</button>
+            <button type="button" class="he-tab-btn" id="heTabFonts" onclick="switchHeAdminTab('fonts', this)">🔤 Fonts</button>
             <button type="button" class="he-tab-btn" id="heTabSecurity" onclick="switchHeAdminTab('security', this)">🔐 Security</button>
         </div>
 
@@ -9016,10 +9288,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
 
-            <!-- TAB 5: SECURITY -->
+            <!-- TAB 5: FONTS -->
+            <div class="he-tab-pane" id="hePaneFonts">
+                <div class="he-admin-card">
+                    <h3 class="he-admin-card-title" id="admTitleFonts">8. Website Fonts (Captions Excluded)</h3>
+                    <div class="he-font-lang-bar">
+                        <div class="he-font-lang-pills">
+                            <button type="button" class="he-font-lang-pill active" id="heFontModeEnBtn" onclick="switchHeFontEditLang('EN')">🇬🇧 English Fonts</button>
+                            <button type="button" class="he-font-lang-pill" id="heFontModeBnBtn" onclick="switchHeFontEditLang('BN')">🇧🇩 বাংলা ফন্ট</button>
+                        </div>
+                        <button type="button" class="he-font-reset-btn" id="heFontResetBtn" onclick="admResetFontsForLang()">Reset Fonts</button>
+                    </div>
+                    <div class="he-field-grid two-col" id="heFontControlsGrid"></div>
+                </div>
+            </div>
+
+            <!-- TAB 6: SECURITY -->
             <div class="he-tab-pane" id="hePaneSecurity">
                 <div class="he-admin-card">
-                    <h3 class="he-admin-card-title" id="admTitleSecurity">8. Security — Change PIN</h3>
+                    <h3 class="he-admin-card-title" id="admTitleSecurity">9. Security — Change PIN</h3>
                     <div class="he-field-grid">
                         <div>
                             <label class="he-label" id="admLblOldPin">Current PIN</label>
@@ -9050,9 +9337,8 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </div>
-
 <script>
-// ===== HONEY ENTERTAINMENT ADMIN, BILINGUAL I18N, LOCKOUT & CLOUD SYNC ENGINE =====
+    // ===== HONEY ENTERTAINMENT ADMIN, BILINGUAL I18N, LOCKOUT, FONTS & CLOUD SYNC ENGINE =====
 const HONEY_FIREBASE_DB_URL = "https://honey-65aad-default-rtdb.asia-southeast1.firebasedatabase.app";
 const HONEY_ADMIN_STORAGE_KEY = "he_admin_live_config_v1";
 const HONEY_LOCKOUT_STORAGE_KEY = "he_admin_pin_lockout_v1";
@@ -9070,8 +9356,215 @@ let heLiveConfig = {
     fullEpNewOverrides: {},
     addedBaahubaliShorts: [],
     baahubaliFullEmbed: null,
-    addedPhotos: []
+    addedPhotos: [],
+    fonts: { EN: {}, BN: {} }
 };
+
+/* ===== ALL GOOGLE FONTS LIST (ENGLISH & BANGLA) ===== */
+const HE_BANGLA_FONTS = [
+    "Hind Siliguri", "Noto Sans Bengali", "Noto Serif Bengali", "Baloo Da 2",
+    "Galada", "Mina", "Atma", "Tiro Bangla", "Anek Bengali", "Alkatra", "Shantell Sans"
+];
+
+const HE_ENGLISH_FONTS = [
+    "Inter", "Roboto", "Open Sans", "Lato", "Montserrat", "Poppins", "Source Sans 3",
+    "Oswald", "Raleway", "Nunito", "Ubuntu", "Merriweather", "Playfair Display",
+    "Rubik", "PT Sans", "Noto Sans", "Work Sans", "Fira Sans", "Quicksand", "Karla",
+    "Barlow", "Mulish", "Titillium Web", "Heebo", "IBM Plex Sans", "DM Sans",
+    "Manrope", "Plus Jakarta Sans", "Space Grotesk", "Outfit", "Syne", "Urbanist",
+    "Figtree", "Lexend", "Sora", "Archivo", "Chivo", "Jost", "Kanit", "Prompt",
+    "Bebas Neue", "Anton", "Orbitron", "Cinzel", "Cinzel Decorative", "Cormorant Garamond",
+    "EB Garamond", "Libre Baskerville", "Lora", "Bitter", "Crimson Text", "PT Serif",
+    "DM Serif Display", "Abril Fatface", "Righteous", "Alfa Slab One", "Russo One",
+    "Bungee", "Black Ops One", "Teko", "Fjalla One", "Fredoka", "Comfortaa",
+    "Varela Round", "Pacifico", "Lobster", "Dancing Script", "Caveat", "Satisfy",
+    "Great Vibes", "Sacramento", "Courgette", "Kaushan Script", "Permanent Marker",
+    "Shadows Into Light", "Indie Flower", "Amatic SC", "Patrick Hand", "Cookie",
+    "Yellowtail", "Tangerine", "Allura", "Alex Brush", "Parisienne", "Mr Dafoe",
+    "JetBrains Mono", "Fira Code", "Source Code Pro", "Roboto Mono", "Space Mono",
+    "IBM Plex Mono", "Inconsolata", "Ubuntu Mono", "Courier Prime", "Share Tech Mono",
+    "Exo 2", "Rajdhani", "Audiowide", "Chakra Petch", "Michroma", "Electrolize",
+    "Press Start 2P", "VT323", "Silkscreen", "Bangers", "Creepster", "Bungee Shade",
+    "Monoton", "Unbounded", "Syne Mono", "Instrument Serif", "Fraunces", "Bodoni Moda",
+    "Spectral", "Vollkorn", "Zilla Slab", "Arvo", "Rokkitt", "Crete Round",
+    "Josefin Sans", "Catamaran", "Cabin", "Oxygen", "Dosis", "Abel", "Asap",
+    "Signika", "Varela", "Exo", "Maven Pro", "Questrial", "Didact Gothic",
+    "Alegreya", "Alegreya Sans", "Yanone Kaffeesatz", "Passion One", "Staatliches",
+    "Patua One", "Concert One", "Titan One", "Luckiest Guy", "Boogaloo", "Chewy"
+];
+const HE_FONT_CATEGORIES = [
+    { key: "brand", en: "Website Title (HONEY ENTERTAINMENT)", bn: "মূল টাইটেল (HONEY ENTERTAINMENT)" },
+    { key: "heading", en: "Section Headings (Shorts Video, Collections, etc.)", bn: "সেকশন হেডিং (Shorts ভিডিও, কালেকশন ইত্যাদি)" },
+    { key: "topLabel", en: "Top Labels (Full episode / Baahubali 2D)", bn: "বাটনের উপরের লেখা (সম্পূর্ণ পর্ব / বাহুবলী 2D)" },
+    { key: "button", en: "All Buttons (Watch, Filters, Menu, Subscribe)", bn: "সব বাটনের লেখা (Watch, ফিল্টার, মেনু, Subscribe)" },
+    { key: "search", en: "Search Bar & Results", bn: "সার্চ বার ও ফলাফল" },
+    { key: "subtext", en: "YouTube Subscribe Status Text", bn: "YouTube সাবস্ক্রাইব স্ট্যাটাস লেখা" },
+    { key: "footer", en: "Follow Us, Thank You, Footer, Full Ep Title & Coming Soon", bn: "Follow Us, ধন্যবাদ, ফুটার, ফুল এপিসোড টাইটেল ও Coming Soon" },
+    { key: "baahubali", en: "Baahubali Epic Heading (BAAHUBALI)", bn: "বাহুবলী মূল টাইটেল (BAAHUBALI)" },
+    { key: "toast", en: "Notification & Toast Messages", bn: "নোটিফিকেশন ও মেসেজ (Toast)" },
+    { key: "admin", en: "Admin Panel & PIN Box", bn: "অ্যাডমিন প্যানেল ও পিন বক্স" }
+];
+
+let heFontEditLang = "EN";
+const heLoadedGoogleFonts = new Set();
+
+function loadHeGoogleFont(fontName) {
+    if (!fontName || fontName === "default" || heLoadedGoogleFonts.has(fontName)) return;
+    heLoadedGoogleFonts.add(fontName);
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://fonts.googleapis.com/css2?family=" + encodeURIComponent(fontName).replace(/%20/g, "+") + ":wght@400;600;700;800;900&display=swap";
+    document.head.appendChild(link);
+}
+
+function applyHeFontsToSite() {
+    const activeLang = (typeof currentLang !== "undefined" && currentLang === "BN") ? "BN" : "EN";
+    const map = (heLiveConfig.fonts && heLiveConfig.fonts[activeLang]) ? heLiveConfig.fonts[activeLang] : {};
+    const root = document.documentElement;
+
+    HE_FONT_CATEGORIES.forEach(cat => {
+        const fontName = (map[cat.key] || "").trim();
+        const attr = "data-he-f-" + cat.key.toLowerCase();
+        const cssVar = "--he-f-" + cat.key.toLowerCase();
+        if (fontName) {
+            loadHeGoogleFont(fontName);
+            root.setAttribute(attr, "1");
+            root.style.setProperty(cssVar, `'${fontName}', 'Hind Siliguri', 'Inter', sans-serif`);
+        } else {
+            root.removeAttribute(attr);
+            root.style.removeProperty(cssVar);
+        }
+    });
+}
+
+function switchHeFontEditLang(langCode) {
+    heFontEditLang = (langCode === "BN") ? "BN" : "EN";
+    const enBtn = document.getElementById("heFontModeEnBtn");
+    const bnBtn = document.getElementById("heFontModeBnBtn");
+    if (enBtn) enBtn.classList.toggle("active", heFontEditLang === "EN");
+    if (bnBtn) bnBtn.classList.toggle("active", heFontEditLang === "BN");
+    renderHeFontControls();
+}
+
+function renderHeFontControls() {
+    const grid = document.getElementById("heFontControlsGrid");
+    if (!grid) return;
+    const t = getHeAdminLang();
+    const isSiteBN = (typeof currentLang !== "undefined" && currentLang === "BN");
+    if (!heLiveConfig.fonts) heLiveConfig.fonts = { EN: {}, BN: {} };
+    if (!heLiveConfig.fonts[heFontEditLang]) heLiveConfig.fonts[heFontEditLang] = {};
+
+    const selectedMap = heLiveConfig.fonts[heFontEditLang];
+    const fontList = (heFontEditLang === "BN") ? HE_BANGLA_FONTS : HE_ENGLISH_FONTS;
+
+    grid.innerHTML = HE_FONT_CATEGORIES.map(cat => {
+        const curVal = selectedMap[cat.key] || "";
+        const labelTxt = isSiteBN ? cat.bn : cat.en;
+        const displayVal = curVal || t.fontDefault;
+        if (curVal) loadHeGoogleFont(curVal);
+        return `
+            <div>
+                <label class="he-label">${labelTxt}</label>
+                <div class="he-font-dropdown" id="heFontDrop_${cat.key}">
+                    <button type="button" class="he-font-trigger" onclick="toggleHeFontDropdown('${cat.key}', event)" style="${curVal ? `font-family:'${curVal}',sans-serif;` : ''}">
+                        <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${displayVal}</span>
+                        <span>▾</span>
+                    </button>
+                    <div class="he-font-menu" onclick="event.stopPropagation()">
+                        <input type="text" class="he-font-search" id="heFontSearch_${cat.key}" placeholder="${t.fontSearchPh}" oninput="filterHeFontList('${cat.key}', this.value)">
+                        <div class="he-font-list" id="heFontList_${cat.key}"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join("");
+
+    HE_FONT_CATEGORIES.forEach(cat => {
+        populateHeFontOptions(cat.key, "");
+    });
+}
+
+function populateHeFontOptions(catKey, query) {
+    const listEl = document.getElementById("heFontList_" + catKey);
+    if (!listEl) return;
+    const t = getHeAdminLang();
+    const fontList = (heFontEditLang === "BN") ? HE_BANGLA_FONTS : HE_ENGLISH_FONTS;
+    const curVal = (heLiveConfig.fonts && heLiveConfig.fonts[heFontEditLang] && heLiveConfig.fonts[heFontEditLang][catKey]) || "";
+    const q = (query || "").trim().toLowerCase();
+
+    let matches = fontList.filter(f => !q || f.toLowerCase().includes(q));
+    if (q) {
+        matches.sort((a, b) => {
+            const aStarts = a.toLowerCase().startsWith(q) ? 0 : 1;
+            const bStarts = b.toLowerCase().startsWith(q) ? 0 : 1;
+            return aStarts - bStarts || a.localeCompare(b);
+        });
+    }
+
+    let html = '';
+    if (!q) {
+        html += `<button type="button" class="he-font-option ${curVal === '' ? 'selected' : ''}" onclick="admSelectFont('${catKey}', '')"><span>${t.fontDefault}</span></button>`;
+    }
+    matches.slice(0, 60).forEach(f => {
+        loadHeGoogleFont(f);
+        html += `<button type="button" class="he-font-option ${curVal === f ? 'selected' : ''}" style="font-family:'${f}',sans-serif;" onclick="admSelectFont('${catKey}', '${f.replace(/'/g, "\\'")}')"><span>${f}</span></button>`;
+    });
+
+    const trimmedRaw = (query || "").trim();
+    if (trimmedRaw && !fontList.some(f => f.toLowerCase() === q)) {
+        html += `<button type="button" class="he-font-option" onclick="admSelectFont('${catKey}', '${trimmedRaw.replace(/'/g, "\\'")}')"><span>✨ Use Google Font: "${trimmedRaw}"</span></button>`;
+    }
+    listEl.innerHTML = html;
+}
+
+function toggleHeFontDropdown(catKey, ev) {
+    if (ev) ev.stopPropagation();
+    const target = document.getElementById("heFontDrop_" + catKey);
+    const wasOpen = target && target.classList.contains("open");
+    document.querySelectorAll(".he-font-dropdown.open").forEach(el => el.classList.remove("open"));
+    if (target && !wasOpen) {
+        target.classList.add("open");
+        const inp = document.getElementById("heFontSearch_" + catKey);
+        if (inp) {
+            inp.value = "";
+            populateHeFontOptions(catKey, "");
+            setTimeout(() => inp.focus(), 40);
+        }
+    }
+}
+
+function filterHeFontList(catKey, query) {
+    populateHeFontOptions(catKey, query);
+}
+
+async function admSelectFont(catKey, fontName) {
+    const t = getHeAdminLang();
+    if (!heLiveConfig.fonts) heLiveConfig.fonts = { EN: {}, BN: {} };
+    if (!heLiveConfig.fonts[heFontEditLang]) heLiveConfig.fonts[heFontEditLang] = {};
+    heLiveConfig.fonts[heFontEditLang][catKey] = fontName;
+
+    document.querySelectorAll(".he-font-dropdown.open").forEach(el => el.classList.remove("open"));
+    applyHeFontsToSite();
+    renderHeFontControls();
+    const ok = await saveHeLiveConfig();
+    showHeAdminFeedback(ok ? t.okFontSaved : t.syncFail, ok);
+}
+
+async function admResetFontsForLang() {
+    const t = getHeAdminLang();
+    if (!heLiveConfig.fonts) heLiveConfig.fonts = { EN: {}, BN: {} };
+    heLiveConfig.fonts[heFontEditLang] = {};
+    applyHeFontsToSite();
+    renderHeFontControls();
+    const ok = await saveHeLiveConfig();
+    showHeAdminFeedback(ok ? t.okFontReset : t.syncFail, ok);
+}
+
+document.addEventListener("click", (e) => {
+    if (!e.target.closest(".he-font-dropdown")) {
+        document.querySelectorAll(".he-font-dropdown.open").forEach(el => el.classList.remove("open"));
+    }
+});
 
 const HE_ADMIN_I18N = {
     EN: {
@@ -9101,7 +9594,14 @@ const HE_ADMIN_I18N = {
         tabVideos: "🎬 Videos",
         tabBaahubali: "⚔️ Baahubali 2D",
         tabGallery: "🖼️ Gallery",
+        tabFonts: "🔤 Fonts",
         tabSecurity: "🔐 Security",
+        tFonts: "8. Website Fonts (Captions Excluded)",
+        fontReset: "Reset All",
+        fontDefault: "Default (Original)",
+        fontSearchPh: "Search font name...",
+        okFontSaved: "✅ Font updated & synced!",
+        okFontReset: "✅ Fonts reset to default!",
         tLogo: "1. Change Website Logo",
         logoBtn: "Logo",
         logoDrawerTip: "Open / Close Logo Editor",
@@ -9143,7 +9643,7 @@ const HE_ADMIN_I18N = {
         lPhotoStart: "Start (Sec)",
         lPhotoEnd: "End (Sec)",
         bAddPhoto: "Add New Photo",
-        tSecurity: "8. Security — Change PIN",
+        tSecurity: "9. Security — Change PIN",
         lOldPin: "Current PIN",
         lMaster: "Master Key (Max 10 chars)",
         lNewPin: "New PIN (Max 10 chars)",
@@ -9197,14 +9697,14 @@ const HE_ADMIN_I18N = {
         eyeTip: "পিন দেখুন / লুকান",
         eyeMasterTip: "মাস্টার কী দেখুন / লুকান",
         backTip: "ফিরে যান (Esc)",
-        settingsTip: "থিম, সাউন্ড, ভাষা ও শেয়ার সেটিংস",
+        settingsTip: "থিম, সাউন্ড, ভাষা ও শেয়ার সেটিংস",
         honeyTip: "হানি মোড চালু করুন",
         darkTip: "ডার্ক মোড চালু করুন",
         lightTip: "লাইট মোড চালু করুন",
         soundTipOn: "সাউন্ড বন্ধ করুন",
         soundTipOff: "সাউন্ড চালু করুন",
         langTip: "ভাষা পরিবর্তন করুন (বাংলা / ইংরেজি)",
-        shareTip: "ওয়েবসাইটের লিংক কপি ও শেয়ার করুন",
+        shareTip: "ওয়েবসাইটের লিংক কপি ও শেয়ার করুন",
         admHeading: "হানি অ্যাডমিন প্যানেল",
         syncReady: "লোকাল প্রস্তুত",
         syncLocal: "লোকাল সেভ হয়েছে",
@@ -9215,7 +9715,14 @@ const HE_ADMIN_I18N = {
         tabVideos: "🎬 ভিডিও",
         tabBaahubali: "⚔️ বাহুবলী 2D",
         tabGallery: "🖼️ গ্যালারি",
+        tabFonts: "🔤 ফন্ট",
         tabSecurity: "🔐 সিকিউরিটি",
+        tFonts: "৮. ওয়েবসাইট ফন্ট (ক্যাপশন বাদে)",
+        fontReset: "সব রিসেট",
+        fontDefault: "ডিফল্ট (আসল ফন্ট)",
+        fontSearchPh: "ফন্টের নাম লিখে সার্চ করুন...",
+        okFontSaved: "✅ ফন্ট আপডেট ও সিঙ্ক হয়েছে!",
+        okFontReset: "✅ ফন্ট ডিফল্টে ফিরে গেছে!",
         tLogo: "১. ওয়েবসাইটের লোগো পরিবর্তন",
         logoBtn: "লোগো",
         logoDrawerTip: "লোগো এডিটর খুলুন / বন্ধ করুন",
@@ -9257,7 +9764,7 @@ const HE_ADMIN_I18N = {
         lPhotoStart: "শুরু (সেকেন্ড)",
         lPhotoEnd: "শেষ (সেকেন্ড)",
         bAddPhoto: "নতুন ছবি যোগ করুন",
-        tSecurity: "৮. সিকিউরিটি — পিন পরিবর্তন",
+        tSecurity: "৯. সিকিউরিটি — পিন পরিবর্তন",
         lOldPin: "বর্তমান পিন",
         lMaster: "মাস্টার কী (সর্বোচ্চ ১০ অক্ষর)",
         lNewPin: "নতুন পিন (সর্বোচ্চ ১০ অক্ষর)",
@@ -9333,7 +9840,7 @@ function resetHeAdmSettingsTimer() {
     if (bar && bar.classList.contains("open")) {
         heAdmSettingsAutoTimer = setTimeout(() => {
             closeHeAdmSettingsDrawer();
-        }, 10000); // ১০ সেকেন্ড পর এমনি এমনি বন্ধ হয়ে যাবে
+        }, 10000);
     }
 }
 
@@ -9455,10 +9962,12 @@ function switchHeAdminTab(tabName, btnEl) {
         videos: "hePaneVideos",
         baahubali: "hePaneBaahubali",
         gallery: "hePaneGallery",
+        fonts: "hePaneFonts",
         security: "hePaneSecurity"
     };
     const target = document.getElementById(paneMap[tabName]);
     if (target) target.classList.add("active");
+    if (tabName === "fonts") renderHeFontControls();
     const fb = document.getElementById("heAdminFeedbackBanner");
     if (fb) fb.className = "he-admin-feedback";
     if (typeof SOUNDS !== "undefined" && SOUNDS.click) SOUNDS.click();
@@ -9483,7 +9992,6 @@ function applyHeAdminLanguageUI() {
     const setPh = (id, txt) => { const el = document.getElementById(id); if (el) el.placeholder = txt; };
     const setTip = (id, txt) => { const el = document.getElementById(id); if (el) el.setAttribute("title", txt); };
 
-    // সব বাটনের বাংলা-ইংরেজি টুলটিপ (ওভারলে)
     setTip("heAdminLockBtn", t.lockTip);
     setTip("hePinCloseBtn", t.backTip);
     setTip("heLoginEyeBtn", t.eyeTip);
@@ -9499,6 +10007,7 @@ function applyHeAdminLanguageUI() {
     setTip("heTabVideos", t.tabVideos);
     setTip("heTabBaahubali", t.tabBaahubali);
     setTip("heTabGallery", t.tabGallery);
+    setTip("heTabFonts", t.tabFonts);
     setTip("heTabSecurity", t.tabSecurity);
 
     setTip("admLogoDrawerBtn", t.logoDrawerTip);
@@ -9515,7 +10024,6 @@ function applyHeAdminLanguageUI() {
     setTip("admEyeMasterKey", t.eyeMasterTip);
     setTip("admEyeNewPin", t.eyeTip);
 
-    // লেখা ও প্লেসহোল্ডার
     setTxt("hePinTitle", t.pinTitle);
     setTxt("hePinSub", t.pinSub);
     setPh("heLoginPinInput", t.pinPlaceholder);
@@ -9526,7 +10034,11 @@ function applyHeAdminLanguageUI() {
     setTxt("heTabVideos", t.tabVideos);
     setTxt("heTabBaahubali", t.tabBaahubali);
     setTxt("heTabGallery", t.tabGallery);
+    setTxt("heTabFonts", t.tabFonts);
     setTxt("heTabSecurity", t.tabSecurity);
+
+    setTxt("admTitleFonts", t.tFonts);
+    setTxt("heFontResetBtn", t.fontReset);
 
     setTxt("admTitleLogo", t.tLogo);
     setTxt("admLogoBtnText", t.logoBtn);
@@ -9601,6 +10113,8 @@ function applyHeAdminLanguageUI() {
 
     syncHeAdmQuickControls();
     refreshHeLockoutUI();
+    renderHeFontControls();
+    applyHeFontsToSite();
 }
 
 function extractYtIdSmart(input) {
@@ -9641,6 +10155,8 @@ function openHePinModal() {
 function closeHePinModal() {
     const modal = document.getElementById("hePinModal");
     const wasActive = modal && modal.classList.contains("active");
+    const inp = document.getElementById("heLoginPinInput");
+    if (inp) inp.value = "";
     if (modal) modal.classList.remove("active");
     clearInterval(heLockoutTimerInterval);
     if (wasActive && typeof popHeHistoryIfManual === "function") {
@@ -9846,6 +10362,8 @@ function applyHeLiveConfigToSite(cfg) {
         }
         if (changed) rerenderMainGalleryDom();
     }
+
+    applyHeFontsToSite();
 }
 
 async function saveHeLiveConfig() {
@@ -10048,6 +10566,22 @@ async function admChangePin() {
     }
 }
 
+/* ===== AUTO-CLOSE ADMIN PANEL & PIN MODAL ON TAB SWITCH / BROWSER CLOSE ===== */
+function forceCloseHeSecurityOnLeave() {
+    const adm = document.getElementById("heAdminDashboardModal");
+    if (adm && adm.classList.contains("active")) {
+        closeHeAdminDashboard();
+    }
+    const pin = document.getElementById("hePinModal");
+    if (pin && pin.classList.contains("active")) {
+        closeHePinModal();
+    }
+}
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) forceCloseHeSecurityOnLeave();
+});
+window.addEventListener("pagehide", forceCloseHeSecurityOnLeave);
+
 // ===== HOOK LANGUAGE SWITCH, PHONE BACK / ESC & HOVER SOUNDS =====
 (function hookHeAdminSystem() {
     const _origToggleLang = window.toggleLang;
@@ -10089,6 +10623,7 @@ async function admChangePin() {
     }
     document.addEventListener("DOMContentLoaded", () => {
         loadHeLiveConfigOnBoot();
+        
         document.querySelectorAll("#hePinModal button, #heAdminDashboardModal button, #heAdminLockBtn").forEach(btn => {
             btn.addEventListener("mouseenter", () => { if (typeof SOUNDS !== "undefined" && SOUNDS.hover) SOUNDS.hover(); });
         });
