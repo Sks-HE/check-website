@@ -3536,6 +3536,210 @@ html.tab-hidden *, html.tab-hidden *::before, html.tab-hidden *::after { animati
     padding: 14px;
     transition: background 0.4s ease;
 }
+@keyframes hePinInputGlow {
+    0% { opacity: 0; transform: translateY(8px) scale(0.96); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* ===== PIN ENTRY BOX MARVELOUS ANIMATIONS ===== */
+@keyframes hePinBorderGlow {
+    0%, 100% { box-shadow: 0 22px 55px rgba(0,0,0,0.5), 0 0 22px var(--glow-color); }
+    50% { box-shadow: 0 26px 65px rgba(0,0,0,0.6), 0 0 42px var(--accent); }
+}
+@keyframes hePinItemSlide {
+    0% { opacity: 0; transform: translateY(14px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+#hePinModal.active .he-pin-card {
+    animation: heCardPop 0.42s cubic-bezier(0.22, 1, 0.36, 1), hePinBorderGlow 2.8s ease-in-out infinite 0.5s;
+}
+#hePinModal.active .he-pin-title { animation: hePinItemSlide 0.38s ease 0.08s both; }
+#hePinModal.active .he-pin-sub { animation: hePinItemSlide 0.38s ease 0.14s both; }
+#hePinModal.active .he-input-eye-wrap {
+    animation: hePinInputGlow 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+#hePinModal.active #heUnlockBtn { animation: hePinItemSlide 0.42s ease 0.28s both; }
+/* অ্যাডমিন প্যানেল একদম পুরো পেজ জুড়ে (কোনো ফাঁকা জায়গা ছাড়া) */
+#heAdminDashboardModal {
+    padding: 0 !important;
+    background: var(--bg-color) !important;
+    overflow: hidden;
+}
+.he-admin-bg-wallpaper {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 22%;
+    filter: blur(28px) saturate(1.25) brightness(0.65);
+    transform: scale(1.12);
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
+}
+body.light-mode .he-admin-bg-wallpaper {
+    filter: blur(28px) saturate(1.15) brightness(1.05);
+    opacity: 0.42;
+}
+body.honey-mode .he-admin-bg-wallpaper {
+    filter: blur(28px) saturate(1.2) brightness(0.95);
+    opacity: 0.48;
+}
+#heAdminDashboardModal .he-admin-panel {
+    position: relative;
+    z-index: 1;
+    width: 100% !important;
+    height: 100dvh !important;
+    max-width: 100% !important;
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+/* Add ও Preview বাটনের রেসপন্সিভ সারি (ফোনে নিচে, ল্যাপটপে পাশে) */
+.he-action-btn-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 12px;
+}
+.he-action-btn-row .he-btn-primary,
+@keyframes heBtnSweep {
+    0% { left: -120%; }
+    45%, 100% { left: 140%; }
+}
+@keyframes hePreviewPulse {
+    0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.22), 0 0 10px var(--glow-color); }
+    50% { box-shadow: 0 6px 22px rgba(0,0,0,0.3), 0 0 22px var(--accent); }
+}
+.he-draft-preview-btn {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding: 12px 18px;
+    border-radius: 14px;
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    background: linear-gradient(135deg, rgba(244, 114, 182, 0.22), rgba(251, 146, 60, 0.22));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text-color);
+    font-family: 'Hind Siliguri', 'Noto Sans Bengali', 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), background 0.28s ease, box-shadow 0.28s ease;
+    animation: hePreviewPulse 2.4s ease-in-out infinite;
+}
+.he-draft-preview-btn::before,
+.he-preview-toggle-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 75%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: skewX(-20deg);
+    animation: heBtnSweep 3.2s ease-in-out infinite;
+    pointer-events: none;
+}
+.he-draft-preview-btn.visible {
+    display: flex;
+    animation: heSecFadeIn 0.28s ease, hePreviewPulse 2.4s ease-in-out infinite;
+}
+.he-draft-preview-btn:hover {
+    transform: translateY(-2.5px) scale(1.015);
+    background: linear-gradient(135deg, var(--accent), #fb923c);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 10px 26px var(--glow-color);
+}
+.he-draft-preview-box {
+    display: none;
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.28);
+    border: 1.5px dashed var(--accent);
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: heSecFadeIn 0.25s ease;
+}
+body.light-mode .he-draft-preview-box,
+body.honey-mode .he-draft-preview-box {
+    background: rgba(255, 255, 255, 0.55);
+}
+.he-draft-preview-box.open {
+    display: flex;
+}
+.he-draft-preview-hint {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    text-align: center;
+}
+/* ফুলস্ক্রিন প্রিভিউ চলাকালে প্লেয়ার/গ্যালারি অ্যাডমিন প্যানেলের উপরে থাকবে */
+.he-preview-on-top {
+    z-index: 99995 !important;
+}
+.he-preview-menu-on-top {
+    z-index: 99997 !important;
+}
+/* একদম উপরে আলাদা প্রিভিউ লাইন/স্ট্রিপ — ক্যাপশন বা বাটন কিছুই ঢাকবে না */
+.he-preview-mode-banner {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    z-index: 99998;
+    background: linear-gradient(90deg, rgba(15,15,22,0.92), var(--accent), #fb923c, var(--accent), rgba(15,15,22,0.92));
+    color: #fff;
+    font-family: 'Hind Siliguri', 'Orbitron', sans-serif;
+    font-size: 14.5px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.45);
+    border-bottom: 2px solid rgba(255,255,255,0.65);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.45), 0 0 18px var(--glow-color);
+    pointer-events: none;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.he-preview-mode-banner.active {
+    display: flex;
+}
+/* প্রিভিউ লাইন চালু থাকলে নিচের ক্যাপশন, ক্লোজ ও মেনু বাটন একটু নিচে নামবে */
+body.he-preview-active #fullscreenOverlay .close-btn,
+body.he-preview-active #fullscreenOverlay .three-dot-btn {
+    top: 52px !important;
+}
+body.he-preview-active #fullscreenOverlay .caption-overlay {
+    top: 58px !important;
+}
+body.he-preview-active #fullscreenOverlay .top-decorative-bar {
+    top: 108px !important;
+}
+body.he-preview-active #videoOverlay,
+body.he-preview-active #baahubaliReelsOverlay,
+body.he-preview-active #welcomeVideoModal {
+    padding-top: 50px !important;
+}
+html[data-he-f-admin="1"] .he-preview-mode-banner,
+html[data-he-f-admin="1"] .he-draft-preview-btn,
+html[data-he-f-admin="1"] .he-preview-toggle-btn,
+html[data-he-f-admin="1"] .he-draft-preview-hint {
+    font-family: var(--he-f-admin) !important;
+}
 body.light-mode .he-sec-backdrop {
     background: rgba(255, 255, 255, 0.34);
 }
@@ -4312,7 +4516,7 @@ body.honey-mode #customToast {
     }
 }
 
-/* ===== SEARCHABLE FONT DROPDOWN UI ===== */
+/* ===== SEARCHABLE FONT DROPDOWN UI (SINGLE BOX + DOUBLE-TAP TO TYPE) ===== */
 .he-font-lang-bar {
     display: flex;
     align-items: center;
@@ -4353,76 +4557,79 @@ body.honey-mode .he-font-lang-pills {
     position: relative;
     width: 100%;
 }
-.he-font-trigger {
+.he-font-combo-wrap {
+    position: relative;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 8px;
+}
+.he-font-combo-input {
+    width: 100%;
     background: rgba(0, 0, 0, 0.32);
     border: 1.5px solid rgba(128, 128, 128, 0.28);
     border-radius: 12px;
-    padding: 10px 12px;
+    padding: 10px 32px 10px 12px;
     color: var(--text-color);
     font-size: 13.5px;
-    text-align: left;
+    outline: none;
     cursor: pointer;
-    transition: border-color 0.25s, box-shadow 0.25s;
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    user-select: text !important;
+    -webkit-user-select: text !important;
 }
-body.light-mode .he-font-trigger,
-body.honey-mode .he-font-trigger {
+.he-font-combo-input:not([readonly]) {
+    cursor: text;
+}
+body.light-mode .he-font-combo-input,
+body.honey-mode .he-font-combo-input {
     background: rgba(255, 255, 255, 0.65);
     border-color: rgba(0, 0, 0, 0.16);
 }
-.he-font-trigger:hover,
-.he-font-dropdown.open .he-font-trigger {
+.he-font-combo-input:focus,
+.he-font-dropdown.open .he-font-combo-input {
     border-color: var(--accent);
     box-shadow: 0 0 0 3px var(--glow-color);
+}
+.he-font-arrow {
+    position: absolute;
+    right: 12px;
+    pointer-events: none;
+    color: var(--text-color);
+    opacity: 0.75;
+    font-size: 13px;
+    transition: transform 0.2s ease;
+}
+.he-font-dropdown.open .he-font-arrow {
+    transform: rotate(180deg);
 }
 .he-font-menu {
     display: none;
     position: absolute;
     left: 0;
     right: 0;
-    top: calc(100% + 6px);
-    z-index: 200;
-    background: rgba(18, 18, 26, 0.96);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    top: calc(100% + 4px);
+    z-index: 250;
+    background: #141418;
     border: 1.5px solid var(--accent);
-    border-radius: 14px;
-    padding: 8px;
-    box-shadow: 0 16px 36px rgba(0,0,0,0.55);
+    border-radius: 12px;
+    padding: 5px;
+    box-shadow: 0 14px 32px rgba(0,0,0,0.55);
 }
 body.light-mode .he-font-menu,
 body.honey-mode .he-font-menu {
-    background: rgba(255, 255, 255, 0.97);
-    box-shadow: 0 14px 32px rgba(0,0,0,0.16);
+    background: #ffffff;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.16);
 }
 .he-font-dropdown.open .he-font-menu {
     display: block;
-    animation: heSecFadeIn 0.2s ease;
-}
-.he-font-search {
-    width: 100%;
-    background: rgba(128, 128, 128, 0.14);
-    border: 1px solid rgba(128, 128, 128, 0.3);
-    border-radius: 9px;
-    padding: 8px 10px;
-    color: var(--text-color);
-    font-size: 13px;
-    outline: none;
-    margin-bottom: 6px;
-}
-.he-font-search:focus {
-    border-color: var(--accent);
+    animation: heSecFadeIn 0.18s ease;
 }
 .he-font-list {
     max-height: 210px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 2px;
 }
 .he-font-option {
     width: 100%;
@@ -4434,10 +4641,7 @@ body.honey-mode .he-font-menu {
     color: var(--text-color);
     font-size: 13.5px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: background 0.2s;
+    transition: background 0.15s;
 }
 .he-font-option:hover,
 .he-font-option.selected {
@@ -4455,9 +4659,187 @@ body.honey-mode .he-font-menu {
     cursor: pointer;
     transition: all 0.25s ease;
 }
+
 .he-font-reset-btn:hover {
     background: #ef4444;
     color: #fff;
+}
+
+/* ===== PREVIEW & DELETE SYSTEM ===== */
+.he-preview-toggle-btn {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(244, 114, 182, 0.18), rgba(251, 146, 60, 0.18));
+    border: 1.5px solid var(--accent);
+    color: var(--text-color);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+    animation: hePreviewPulse 2.8s ease-in-out infinite;
+}
+.he-preview-toggle-btn:hover,
+.he-preview-toggle-btn.active {
+    background: linear-gradient(135deg, var(--accent), #fb923c);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 14px var(--glow-color);
+}
+.he-preview-drawer {
+    display: none;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(128, 128, 128, 0.35);
+    animation: heSecFadeIn 0.25s ease;
+}
+.he-preview-drawer.open {
+    display: block;
+}
+.he-preview-count {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+.he-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+.he-preview-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1.5px solid rgba(128, 128, 128, 0.28);
+    display: flex;
+    flex-direction: column;
+}
+body.light-mode .he-preview-item,
+body.honey-mode .he-preview-item {
+    background: rgba(255, 255, 255, 0.72);
+}
+.he-preview-item img {
+    width: 100%;
+    height: 78px;
+    object-fit: cover;
+    display: block;
+}
+.he-preview-cap {
+    padding: 5px 6px;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.he-preview-del-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    background: rgba(220, 38, 38, 0.92);
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    transition: transform 0.2s ease, background 0.2s ease;
+    z-index: 3;
+}
+.he-preview-del-btn:hover {
+    transform: scale(1.12);
+    background: #ef4444;
+}
+.he-btn-danger {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(239, 68, 68, 0.55);
+    background: rgba(239, 68, 68, 0.16);
+    color: #ef4444;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.he-btn-danger:hover {
+    background: #ef4444;
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.35);
+}
+
+/* ===== FONT ROW: INPUT + ALL + TICK ===== */
+.he-font-row-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+}
+.he-font-row-controls .he-font-dropdown {
+    flex: 1;
+    min-width: 0;
+}
+.he-font-all-btn,
+.he-font-tick-btn {
+    flex-shrink: 0;
+    height: 41px;
+    border-radius: 11px;
+    border: 1.5px solid rgba(128, 128, 128, 0.3);
+    background: rgba(0, 0, 0, 0.28);
+    color: var(--text-color);
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+body.light-mode .he-font-all-btn,
+body.honey-mode .he-font-all-btn,
+body.light-mode .he-font-tick-btn,
+body.honey-mode .he-font-tick-btn {
+    background: rgba(255, 255, 255, 0.72);
+    border-color: rgba(0, 0, 0, 0.18);
+}
+.he-font-all-btn {
+    padding: 0 11px;
+}
+.he-font-all-btn:hover {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, var(--accent), #fb923c);
+    color: #fff;
+}
+.he-font-tick-btn {
+    width: 38px;
+    font-size: 15px;
+    color: #22c55e;
+    border-color: rgba(34, 197, 94, 0.45);
+}
+.he-font-tick-btn:hover,
+.he-font-tick-btn.pending {
+    background: #22c55e;
+    color: #fff;
+    border-color: #22c55e;
+    box-shadow: 0 4px 14px rgba(34, 197, 94, 0.45);
 }
 </style>
 </head>
@@ -7932,14 +8314,27 @@ function applyFilter(filterType, btnElement) {
 }
 
 window.addEventListener('resize', updateSwipeHintPosition);
-window.addEventListener('load', () => {
-const loader = document.getElementById('pageLoader');
-setTimeout(() => {
-loader.classList.add('hidden');
-setTimeout(() => { loader.style.display = 'none'; }, 600);
-}, 400);
-setTimeout(initScrollReveal, 100);
-});
+(function fastHidePageLoader() {
+    let loaderHidden = false;
+    function hideNow() {
+        if (loaderHidden) return;
+        loaderHidden = true;
+        const loader = document.getElementById('pageLoader');
+        if (loader) {
+            loader.style.transition = 'opacity 0.3s ease, visibility 0.3s ease';
+            loader.classList.add('hidden');
+            setTimeout(() => { loader.style.display = 'none'; }, 320);
+        }
+        setTimeout(initScrollReveal, 50);
+    }
+    if (document.readyState === 'interactive' || document.readyState === 'complete') {
+        setTimeout(hideNow, 250);
+    } else {
+        document.addEventListener('DOMContentLoaded', () => setTimeout(hideNow, 250), { once: true });
+    }
+    // সর্বোচ্চ ০.৭ সেকেন্ডের মধ্যে যেকোনো অবস্থায় লোডার সরে যাবে (মোট ১ সেকেন্ডের কম)
+    setTimeout(hideNow, 700);
+})();
 document.addEventListener('DOMContentLoaded', () => {
     renderVideoFeed();
         renderWelcomeVideoGrid();
@@ -8461,7 +8856,7 @@ const baahubaliFbShortsList = [
 ];
 
 // ভবিষ্যতে ১৬:৯ ফুল এপিসোডের ফেসবুক ভিডিওর Embed Code (`<iframe ...></iframe>`) এই দুই ব্যাকটিকের ভেতরে বসাবেন:
-const BAAHUBALI_FULL_EPISODE_EMBED_CODE = ``;
+let BAAHUBALI_FULL_EPISODE_EMBED_CODE = ``;
 
 // কোথা থেকে বাহুবলী ট্যাবে আসা হয়েছে তা মনে রাখার ভেরিয়েবল ('home' অথবা 'photo')
 let baahubaliSourceContext = 'home';
@@ -9069,6 +9464,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </button>
     </div>
 </div>
+<div id="hePreviewModeBanner" class="he-preview-mode-banner">👁️ <span id="hePreviewModeBannerText">Preview Video</span></div>
 <!-- ===== PIN ENTRY MODAL ===== -->
 <div class="he-sec-backdrop" id="hePinModal">
     <div class="he-pin-card" id="hePinCard" onclick="event.stopPropagation()">
@@ -9093,6 +9489,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- ===== ADMIN CONTROL PANEL MODAL ===== -->
 <div class="he-sec-backdrop" id="heAdminDashboardModal">
+    <img id="heAdminBgWallpaper" class="he-admin-bg-wallpaper" src="" alt="" aria-hidden="true">
     <div class="he-admin-panel" onclick="event.stopPropagation()">
         <div class="he-admin-header">
             <div class="he-admin-header-left">
@@ -9171,11 +9568,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     <button type="button" class="he-btn-primary" id="admBtnSaveCover" onclick="admSaveCoverPhoto()">Update Cover Photo</button>
                 </div>
             </div>
-
-            <!-- TAB 2: VIDEOS -->
+<!-- TAB 2: VIDEOS -->
             <div class="he-tab-pane" id="hePaneVideos">
                 <div class="he-admin-card">
-                    <h3 class="he-admin-card-title" id="admTitleAddShort">4. Add New Short Video</h3>
+                    <div class="he-admin-card-title">
+                        <span id="admTitleAddShort">4. Add New Short Video</span>
+                        <button type="button" class="he-preview-toggle-btn" id="admBtnPrevShorts" onclick="toggleHePreview('shorts')">👁️ <span id="admPrevShortsTxt">Preview</span></button>
+                    </div>
                     <div class="he-field-grid two-col">
                         <div>
                             <label class="he-label" id="admLblShortYt">YouTube Video ID or Link</label>
@@ -9195,11 +9594,19 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                     <label class="he-check-row"><input type="checkbox" id="admShortIsNew" checked> <span id="admLblShortNew">Show "NEW" Badge</span></label>
-                    <button type="button" class="he-btn-primary" id="admBtnAddShort" onclick="admAddShortVideo()">Add Short Video</button>
+                    <div class="he-action-btn-row" id="heRowShortBtn">
+                        <button type="button" class="he-btn-primary" id="admBtnAddShort" onclick="admAddShortVideo()">Add Short Video</button>
+                        <button type="button" class="he-draft-preview-btn" id="admBtnDraftPrevShort" onclick="toggleHeDraftPreview('short')">👁️ <span class="he-draft-prev-lbl">Preview</span></button>
+                    </div>
+                    <div class="he-draft-preview-box" id="heDraftPreviewShort"></div>
+                    <div class="he-preview-drawer" id="hePreviewShorts"></div>
                 </div>
 
                 <div class="he-admin-card">
-                    <h3 class="he-admin-card-title" id="admTitleFullEp">5. Full Episode Videos (Always Added at Top-Left)</h3>
+                    <div class="he-admin-card-title">
+                        <span id="admTitleFullEp">5. Full Episode Videos (Always Added at Top-Left)</span>
+                        <button type="button" class="he-preview-toggle-btn" id="admBtnPrevFullEp" onclick="toggleHePreview('fullEp')">👁️ <span id="admPrevFullEpTxt">Preview</span></button>
+                    </div>
                     <div class="he-field-grid two-col">
                         <div>
                             <label class="he-label" id="admLblFullEpYt">YouTube Video ID or Link</label>
@@ -9211,7 +9618,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                     <label class="he-check-row"><input type="checkbox" id="admFullEpIsNew" checked> <span id="admLblFullEpNew">Show "NEW" Badge</span></label>
-                    <button type="button" class="he-btn-primary" id="admBtnAddFullEp" onclick="admAddFullEpisode()">Add Full Episode</button>
+                    <div class="he-action-btn-row" id="heRowFullEpBtn">
+                        <button type="button" class="he-btn-primary" id="admBtnAddFullEp" onclick="admAddFullEpisode()">Add Full Episode</button>
+                        <button type="button" class="he-draft-preview-btn" id="admBtnDraftPrevFullEp" onclick="toggleHeDraftPreview('fullEp')">👁️ <span class="he-draft-prev-lbl">Preview</span></button>
+                    </div>
+                    <div class="he-draft-preview-box" id="heDraftPreviewFullEp"></div>
+                    <div class="he-preview-drawer" id="hePreviewFullEp"></div>
 
                     <div style="margin-top:14px;">
                         <label class="he-label" id="admLblManageNew">Manage "NEW" Badge on Existing Full Episodes</label>
@@ -9223,7 +9635,10 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- TAB 3: BAAHUBALI 2D -->
             <div class="he-tab-pane" id="hePaneBaahubali">
                 <div class="he-admin-card">
-                    <h3 class="he-admin-card-title" id="admTitleBh">6. Baahubali 2D Manager</h3>
+                    <div class="he-admin-card-title">
+                        <span id="admTitleBh">6. Baahubali 2D Manager</span>
+                        <button type="button" class="he-preview-toggle-btn" id="admBtnPrevBh" onclick="toggleHePreview('baahubali')">👁️ <span id="admPrevBhTxt">Preview</span></button>
+                    </div>
                     <div class="he-field-grid two-col">
                         <div>
                             <label class="he-label" id="admLblBhThumb">Short Video Thumbnail URL</label>
@@ -9238,12 +9653,22 @@ document.addEventListener('DOMContentLoaded', function() {
                         <label class="he-label" id="admLblBhEmbed">Facebook Embed Code (&lt;iframe ...&gt;)</label>
                         <textarea id="admBhEmbed" class="he-textarea" rows="2" placeholder="Paste Facebook <iframe ...></iframe> code"></textarea>
                     </div>
-                    <button type="button" class="he-btn-primary" id="admBtnAddBhShort" onclick="admAddBaahubaliShort()">Add Baahubali 2D Short</button>
+                    <div class="he-action-btn-row" id="heRowBhShortBtn">
+                        <button type="button" class="he-btn-primary" id="admBtnAddBhShort" onclick="admAddBaahubaliShort()">Add Baahubali 2D Short</button>
+                        <button type="button" class="he-draft-preview-btn" id="admBtnDraftPrevBhShort" onclick="toggleHeDraftPreview('bhShort')">👁️ <span class="he-draft-prev-lbl">Preview</span></button>
+                    </div>
+                    <div class="he-draft-preview-box" id="heDraftPreviewBhShort"></div>
+                    <div class="he-preview-drawer" id="hePreviewBaahubali"></div>
 
                     <div style="margin-top:16px;padding-top:14px;border-top:1px dashed rgba(128,128,128,0.28);">
                         <label class="he-label" id="admLblBhFull">Baahubali 2D Full Episode Facebook Embed Code</label>
                         <textarea id="admBhFullEmbed" class="he-textarea" rows="2" placeholder="Paste 16:9 Facebook <iframe ...></iframe> code"></textarea>
-                        <button type="button" class="he-btn-primary" id="admBtnSaveBhFull" onclick="admSaveBaahubaliFullEp()">Save Baahubali Full Episode</button>
+                        <div class="he-action-btn-row" id="heRowBhFullBtn">
+                            <button type="button" class="he-btn-primary" id="admBtnSaveBhFull" onclick="admSaveBaahubaliFullEp()">Save Baahubali Full Episode</button>
+                            <button type="button" class="he-draft-preview-btn" id="admBtnDraftPrevBhFull" onclick="toggleHeDraftPreview('bhFull')">👁️ <span class="he-draft-prev-lbl">Preview</span></button>
+                        </div>
+                        <div class="he-draft-preview-box" id="heDraftPreviewBhFull"></div>
+                        <button type="button" class="he-btn-danger" id="admBtnDelBhFull" onclick="admDeleteBaahubaliFullEp()">🗑️ Delete Baahubali Full Episode</button>
                     </div>
                 </div>
             </div>
@@ -9251,7 +9676,10 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- TAB 4: GALLERY -->
             <div class="he-tab-pane" id="hePaneGallery">
                 <div class="he-admin-card">
-                    <h3 class="he-admin-card-title" id="admTitlePhoto">7. Add New Gallery Photo</h3>
+                    <div class="he-admin-card-title">
+                        <span id="admTitlePhoto">7. Add New Gallery Photo</span>
+                        <button type="button" class="he-preview-toggle-btn" id="admBtnPrevGallery" onclick="toggleHePreview('gallery')">👁️ <span id="admPrevGalleryTxt">Preview</span></button>
+                    </div>
                     <div class="he-field-grid two-col">
                         <div>
                             <label class="he-label" id="admLblPhotoImg">Photo Image URL</label>
@@ -9284,7 +9712,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="he-btn-primary" id="admBtnAddPhoto" onclick="admAddNewPhoto()">Add New Photo</button>
+                    <div class="he-action-btn-row" id="heRowPhotoBtn">
+                        <button type="button" class="he-btn-primary" id="admBtnAddPhoto" onclick="admAddNewPhoto()">Add New Photo</button>
+                        <button type="button" class="he-draft-preview-btn" id="admBtnDraftPrevPhoto" onclick="toggleHeDraftPreview('photo')">👁️ <span class="he-draft-prev-lbl">Preview</span></button>
+                    </div>
+                    <div class="he-draft-preview-box" id="heDraftPreviewPhoto"></div>
+                    <div class="he-preview-drawer" id="hePreviewGallery"></div>
                 </div>
             </div>
 
@@ -9344,7 +9777,6 @@ const HONEY_ADMIN_STORAGE_KEY = "he_admin_live_config_v1";
 const HONEY_LOCKOUT_STORAGE_KEY = "he_admin_pin_lockout_v1";
 const HONEY_DEFAULT_PIN = "633038sajeeb";
 const HONEY_MASTER_KEY = "SajeebSaha";
-
 let heLiveConfig = {
     pin: HONEY_DEFAULT_PIN,
     logoUrl: "",
@@ -9352,13 +9784,23 @@ let heLiveConfig = {
     siteNameLine2: "",
     coverUrl: "",
     addedShorts: [],
+    deletedShorts: [],
     addedFullEpisodes: [],
+    deletedFullEpisodes: [],
     fullEpNewOverrides: {},
     addedBaahubaliShorts: [],
+    deletedBaahubaliShorts: [],
     baahubaliFullEmbed: null,
     addedPhotos: [],
+    deletedPhotos: [],
     fonts: { EN: {}, BN: {} }
 };
+
+const HE_BASE_SHORTS = (typeof originalFeedData !== "undefined") ? originalFeedData.slice() : [];
+const HE_BASE_FULL_EPS = (typeof welcomeVideoData !== "undefined") ? welcomeVideoData.slice() : [];
+const HE_BASE_BH_SHORTS = (typeof baahubaliFbShortsList !== "undefined") ? baahubaliFbShortsList.slice() : [];
+const HE_BASE_GALLERY = (window.galleryItems) ? window.galleryItems.slice() : [];
+const hePendingFonts = { EN: {}, BN: {} };
 
 /* ===== ALL GOOGLE FONTS LIST (ENGLISH & BANGLA) ===== */
 const HE_BANGLA_FONTS = [
@@ -9393,14 +9835,14 @@ const HE_ENGLISH_FONTS = [
     "Patua One", "Concert One", "Titan One", "Luckiest Guy", "Boogaloo", "Chewy"
 ];
 const HE_FONT_CATEGORIES = [
-    { key: "brand", en: "Website Title (HONEY ENTERTAINMENT)", bn: "মূল টাইটেল (HONEY ENTERTAINMENT)" },
+    { key: "brand", en: "Website Title (HONEY ENTERTAINMENT)", bn: "মূল টাইটেল (HONEY ENTERTAINMENT)", enOnly: true },
     { key: "heading", en: "Section Headings (Shorts Video, Collections, etc.)", bn: "সেকশন হেডিং (Shorts ভিডিও, কালেকশন ইত্যাদি)" },
     { key: "topLabel", en: "Top Labels (Full episode / Baahubali 2D)", bn: "বাটনের উপরের লেখা (সম্পূর্ণ পর্ব / বাহুবলী 2D)" },
     { key: "button", en: "All Buttons (Watch, Filters, Menu, Subscribe)", bn: "সব বাটনের লেখা (Watch, ফিল্টার, মেনু, Subscribe)" },
     { key: "search", en: "Search Bar & Results", bn: "সার্চ বার ও ফলাফল" },
     { key: "subtext", en: "YouTube Subscribe Status Text", bn: "YouTube সাবস্ক্রাইব স্ট্যাটাস লেখা" },
     { key: "footer", en: "Follow Us, Thank You, Footer, Full Ep Title & Coming Soon", bn: "Follow Us, ধন্যবাদ, ফুটার, ফুল এপিসোড টাইটেল ও Coming Soon" },
-    { key: "baahubali", en: "Baahubali Epic Heading (BAAHUBALI)", bn: "বাহুবলী মূল টাইটেল (BAAHUBALI)" },
+    { key: "baahubali", en: "Baahubali Epic Heading (BAAHUBALI)", bn: "বাহুবলী মূল টাইটেল (BAAHUBALI)", enOnly: true },
     { key: "toast", en: "Notification & Toast Messages", bn: "নোটিফিকেশন ও মেসেজ (Toast)" },
     { key: "admin", en: "Admin Panel & PIN Box", bn: "অ্যাডমিন প্যানেল ও পিন বক্স" }
 ];
@@ -9419,11 +9861,13 @@ function loadHeGoogleFont(fontName) {
 
 function applyHeFontsToSite() {
     const activeLang = (typeof currentLang !== "undefined" && currentLang === "BN") ? "BN" : "EN";
-    const map = (heLiveConfig.fonts && heLiveConfig.fonts[activeLang]) ? heLiveConfig.fonts[activeLang] : {};
+    const enMap = (heLiveConfig.fonts && heLiveConfig.fonts.EN) ? heLiveConfig.fonts.EN : {};
+    const bnMap = (heLiveConfig.fonts && heLiveConfig.fonts.BN) ? heLiveConfig.fonts.BN : {};
     const root = document.documentElement;
 
     HE_FONT_CATEGORIES.forEach(cat => {
-        const fontName = (map[cat.key] || "").trim();
+        const sourceMap = (cat.enOnly || activeLang === "EN") ? enMap : bnMap;
+        const fontName = (sourceMap[cat.key] || "").trim();
         const attr = "data-he-f-" + cat.key.toLowerCase();
         const cssVar = "--he-f-" + cat.key.toLowerCase();
         if (fontName) {
@@ -9453,33 +9897,49 @@ function renderHeFontControls() {
     const isSiteBN = (typeof currentLang !== "undefined" && currentLang === "BN");
     if (!heLiveConfig.fonts) heLiveConfig.fonts = { EN: {}, BN: {} };
     if (!heLiveConfig.fonts[heFontEditLang]) heLiveConfig.fonts[heFontEditLang] = {};
+    if (!hePendingFonts[heFontEditLang]) hePendingFonts[heFontEditLang] = {};
 
     const selectedMap = heLiveConfig.fonts[heFontEditLang];
-    const fontList = (heFontEditLang === "BN") ? HE_BANGLA_FONTS : HE_ENGLISH_FONTS;
+    const pendingMap = hePendingFonts[heFontEditLang];
+    const visibleCategories = HE_FONT_CATEGORIES.filter(cat => !(heFontEditLang === "BN" && cat.enOnly));
 
-    grid.innerHTML = HE_FONT_CATEGORIES.map(cat => {
-        const curVal = selectedMap[cat.key] || "";
+    grid.innerHTML = visibleCategories.map(cat => {
+        const hasPending = Object.prototype.hasOwnProperty.call(pendingMap, cat.key);
+        const curVal = hasPending ? pendingMap[cat.key] : (selectedMap[cat.key] || "");
         const labelTxt = isSiteBN ? cat.bn : cat.en;
         const displayVal = curVal || t.fontDefault;
         if (curVal) loadHeGoogleFont(curVal);
         return `
             <div>
                 <label class="he-label">${labelTxt}</label>
-                <div class="he-font-dropdown" id="heFontDrop_${cat.key}">
-                    <button type="button" class="he-font-trigger" onclick="toggleHeFontDropdown('${cat.key}', event)" style="${curVal ? `font-family:'${curVal}',sans-serif;` : ''}">
-                        <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${displayVal}</span>
-                        <span>▾</span>
-                    </button>
-                    <div class="he-font-menu" onclick="event.stopPropagation()">
-                        <input type="text" class="he-font-search" id="heFontSearch_${cat.key}" placeholder="${t.fontSearchPh}" oninput="filterHeFontList('${cat.key}', this.value)">
-                        <div class="he-font-list" id="heFontList_${cat.key}"></div>
+                <div class="he-font-row-controls">
+                    <div class="he-font-dropdown" id="heFontDrop_${cat.key}">
+                        <div class="he-font-combo-wrap">
+                            <input type="text"
+                                   readonly
+                                   class="he-font-combo-input"
+                                   id="heFontInput_${cat.key}"
+                                   value="${displayVal.replace(/"/g, '&quot;')}"
+                                   data-saved="${displayVal.replace(/"/g, '&quot;')}"
+                                   placeholder="${t.fontSearchPh}"
+                                   autocomplete="off"
+                                   style="${curVal ? `font-family:'${curVal}',sans-serif;` : ''}"
+                                   onclick="handleHeFontBoxTap('${cat.key}', this, event)"
+                                   oninput="filterHeFontList('${cat.key}', this.value)">
+                            <span class="he-font-arrow">▾</span>
+                        </div>
+                        <div class="he-font-menu" onclick="event.stopPropagation()">
+                            <div class="he-font-list" id="heFontList_${cat.key}"></div>
+                        </div>
                     </div>
+                    <button type="button" class="he-font-all-btn" onclick="admApplyFontToAll('${cat.key}')" title="${isSiteBN ? 'সব ক্যাটাগরিতে এই ফন্ট দিন' : 'Apply to all categories'}">${isSiteBN ? 'সব' : 'All'}</button>
+                    <button type="button" class="he-font-tick-btn ${hasPending ? 'pending' : ''}" id="heFontTick_${cat.key}" onclick="admConfirmFont('${cat.key}')" title="${isSiteBN ? 'কনফার্ম ও সেভ করুন' : 'Confirm & Save'}">✓</button>
                 </div>
             </div>
         `;
     }).join("");
 
-    HE_FONT_CATEGORIES.forEach(cat => {
+    visibleCategories.forEach(cat => {
         populateHeFontOptions(cat.key, "");
     });
 }
@@ -9489,7 +9949,9 @@ function populateHeFontOptions(catKey, query) {
     if (!listEl) return;
     const t = getHeAdminLang();
     const fontList = (heFontEditLang === "BN") ? HE_BANGLA_FONTS : HE_ENGLISH_FONTS;
-    const curVal = (heLiveConfig.fonts && heLiveConfig.fonts[heFontEditLang] && heLiveConfig.fonts[heFontEditLang][catKey]) || "";
+    const pendingMap = hePendingFonts[heFontEditLang] || {};
+    const savedMap = (heLiveConfig.fonts && heLiveConfig.fonts[heFontEditLang]) || {};
+    const curVal = Object.prototype.hasOwnProperty.call(pendingMap, catKey) ? pendingMap[catKey] : (savedMap[catKey] || "");
     const q = (query || "").trim().toLowerCase();
 
     let matches = fontList.filter(f => !q || f.toLowerCase().includes(q));
@@ -9503,33 +9965,60 @@ function populateHeFontOptions(catKey, query) {
 
     let html = '';
     if (!q) {
-        html += `<button type="button" class="he-font-option ${curVal === '' ? 'selected' : ''}" onclick="admSelectFont('${catKey}', '')"><span>${t.fontDefault}</span></button>`;
+        html += `<button type="button" class="he-font-option ${curVal === '' ? 'selected' : ''}" onclick="admSelectFont('${catKey}', '')">${t.fontDefault}</button>`;
     }
     matches.slice(0, 60).forEach(f => {
         loadHeGoogleFont(f);
-        html += `<button type="button" class="he-font-option ${curVal === f ? 'selected' : ''}" style="font-family:'${f}',sans-serif;" onclick="admSelectFont('${catKey}', '${f.replace(/'/g, "\\'")}')"><span>${f}</span></button>`;
+        html += `<button type="button" class="he-font-option ${curVal === f ? 'selected' : ''}" style="font-family:'${f}',sans-serif;" onclick="admSelectFont('${catKey}', '${f.replace(/'/g, "\\'")}')">${f}</button>`;
     });
 
     const trimmedRaw = (query || "").trim();
     if (trimmedRaw && !fontList.some(f => f.toLowerCase() === q)) {
-        html += `<button type="button" class="he-font-option" onclick="admSelectFont('${catKey}', '${trimmedRaw.replace(/'/g, "\\'")}')"><span>✨ Use Google Font: "${trimmedRaw}"</span></button>`;
+        html += `<button type="button" class="he-font-option" onclick="admSelectFont('${catKey}', '${trimmedRaw.replace(/'/g, "\\'")}')">✨ "${trimmedRaw}"</button>`;
     }
     listEl.innerHTML = html;
 }
 
-function toggleHeFontDropdown(catKey, ev) {
+function closeAllHeFontDropdowns() {
+    document.querySelectorAll(".he-font-dropdown.open").forEach(el => {
+        el.classList.remove("open");
+        const inp = el.querySelector(".he-font-combo-input");
+        if (inp) {
+            inp.readOnly = true;
+            inp.value = inp.dataset.saved || "";
+            inp.blur();
+        }
+    });
+}
+
+function handleHeFontBoxTap(catKey, inp, ev) {
     if (ev) ev.stopPropagation();
     const target = document.getElementById("heFontDrop_" + catKey);
-    const wasOpen = target && target.classList.contains("open");
-    document.querySelectorAll(".he-font-dropdown.open").forEach(el => el.classList.remove("open"));
-    if (target && !wasOpen) {
+    if (!target || !inp) return;
+
+    const now = Date.now();
+    const lastTap = Number(inp.dataset.lastTap || 0);
+    inp.dataset.lastTap = String(now);
+
+    if (now - lastTap < 420) {
+        document.querySelectorAll(".he-font-dropdown.open").forEach(el => {
+            if (el !== target) el.classList.remove("open");
+        });
         target.classList.add("open");
-        const inp = document.getElementById("heFontSearch_" + catKey);
-        if (inp) {
-            inp.value = "";
-            populateHeFontOptions(catKey, "");
-            setTimeout(() => inp.focus(), 40);
-        }
+        inp.readOnly = false;
+        inp.value = "";
+        populateHeFontOptions(catKey, "");
+        inp.focus();
+        return;
+    }
+
+    if (!inp.readOnly) return;
+    inp.blur();
+    const wasOpen = target.classList.contains("open");
+    closeAllHeFontDropdowns();
+    if (!wasOpen) {
+        target.classList.add("open");
+        populateHeFontOptions(catKey, "");
     }
 }
 
@@ -9537,23 +10026,69 @@ function filterHeFontList(catKey, query) {
     populateHeFontOptions(catKey, query);
 }
 
-async function admSelectFont(catKey, fontName) {
+function admSelectFont(catKey, fontName) {
+    const t = getHeAdminLang();
+    if (!hePendingFonts[heFontEditLang]) hePendingFonts[heFontEditLang] = {};
+    hePendingFonts[heFontEditLang][catKey] = fontName;
+    if (fontName) loadHeGoogleFont(fontName);
+
+    const inp = document.getElementById("heFontInput_" + catKey);
+    if (inp) {
+        const displayVal = fontName || t.fontDefault;
+        inp.dataset.saved = displayVal;
+        inp.value = displayVal;
+        inp.style.fontFamily = fontName ? `'${fontName}',sans-serif` : "";
+    }
+    closeAllHeFontDropdowns();
+    const tickBtn = document.getElementById("heFontTick_" + catKey);
+    if (tickBtn) tickBtn.classList.add("pending");
+}
+
+async function admConfirmFont(catKey) {
     const t = getHeAdminLang();
     if (!heLiveConfig.fonts) heLiveConfig.fonts = { EN: {}, BN: {} };
     if (!heLiveConfig.fonts[heFontEditLang]) heLiveConfig.fonts[heFontEditLang] = {};
-    heLiveConfig.fonts[heFontEditLang][catKey] = fontName;
+    const pendingMap = hePendingFonts[heFontEditLang] || {};
+    const hasPending = Object.prototype.hasOwnProperty.call(pendingMap, catKey);
+    const fontName = hasPending ? pendingMap[catKey] : (heLiveConfig.fonts[heFontEditLang][catKey] || "");
 
-    document.querySelectorAll(".he-font-dropdown.open").forEach(el => el.classList.remove("open"));
+    heLiveConfig.fonts[heFontEditLang][catKey] = fontName;
+    delete pendingMap[catKey];
+
     applyHeFontsToSite();
     renderHeFontControls();
     const ok = await saveHeLiveConfig();
     showHeAdminFeedback(ok ? t.okFontSaved : t.syncFail, ok);
 }
 
+async function admApplyFontToAll(catKey) {
+    const t = getHeAdminLang();
+    const isSiteBN = (typeof currentLang !== "undefined" && currentLang === "BN");
+    if (!heLiveConfig.fonts) heLiveConfig.fonts = { EN: {}, BN: {} };
+    if (!heLiveConfig.fonts[heFontEditLang]) heLiveConfig.fonts[heFontEditLang] = {};
+    const pendingMap = hePendingFonts[heFontEditLang] || {};
+    const fontName = Object.prototype.hasOwnProperty.call(pendingMap, catKey)
+        ? pendingMap[catKey]
+        : (heLiveConfig.fonts[heFontEditLang][catKey] || "");
+
+    HE_FONT_CATEGORIES.forEach(cat => {
+        if (heFontEditLang === "BN" && cat.enOnly) return;
+        heLiveConfig.fonts[heFontEditLang][cat.key] = fontName;
+        delete pendingMap[cat.key];
+    });
+
+    applyHeFontsToSite();
+    renderHeFontControls();
+    const ok = await saveHeLiveConfig();
+    const msg = isSiteBN ? "✅ এই ফন্টটি সব ক্যাটাগরিতে সেট হয়েছে!" : "✅ Font applied to all categories!";
+    showHeAdminFeedback(ok ? msg : t.syncFail, ok);
+}
+
 async function admResetFontsForLang() {
     const t = getHeAdminLang();
     if (!heLiveConfig.fonts) heLiveConfig.fonts = { EN: {}, BN: {} };
     heLiveConfig.fonts[heFontEditLang] = {};
+    hePendingFonts[heFontEditLang] = {};
     applyHeFontsToSite();
     renderHeFontControls();
     const ok = await saveHeLiveConfig();
@@ -9562,10 +10097,9 @@ async function admResetFontsForLang() {
 
 document.addEventListener("click", (e) => {
     if (!e.target.closest(".he-font-dropdown")) {
-        document.querySelectorAll(".he-font-dropdown.open").forEach(el => el.classList.remove("open"));
+        closeAllHeFontDropdowns();
     }
 });
-
 const HE_ADMIN_I18N = {
     EN: {
         lockTip: "Admin Access",
@@ -10286,6 +10820,143 @@ function rerenderMainGalleryDom() {
         `);
     });
 }
+const getHeShortKey = s => `${s.ytId || ""}||${s.title || ""}`;
+const getHeBhKey = b => `${b.thumb || ""}||${b.caption || ""}`;
+const getHePhotoKey = p => `${p.img || ""}||${p.cap || ""}`;
+
+function toggleHePreview(type) {
+    const map = {
+        shorts: { box: "hePreviewShorts", btn: "admBtnPrevShorts" },
+        fullEp: { box: "hePreviewFullEp", btn: "admBtnPrevFullEp" },
+        baahubali: { box: "hePreviewBaahubali", btn: "admBtnPrevBh" },
+        gallery: { box: "hePreviewGallery", btn: "admBtnPrevGallery" }
+    };
+    const info = map[type];
+    if (!info) return;
+    const box = document.getElementById(info.box);
+    const btn = document.getElementById(info.btn);
+    if (!box) return;
+    const willOpen = !box.classList.contains("open");
+    box.classList.toggle("open", willOpen);
+    if (btn) btn.classList.toggle("active", willOpen);
+    if (willOpen) renderHePreviewGrid(type);
+}
+
+function renderHePreviewGrid(type) {
+    const isBN = (typeof currentLang !== "undefined" && currentLang === "BN");
+    const boxMap = { shorts: "hePreviewShorts", fullEp: "hePreviewFullEp", baahubali: "hePreviewBaahubali", gallery: "hePreviewGallery" };
+    const box = document.getElementById(boxMap[type]);
+    if (!box) return;
+
+    let items = [];
+    if (type === "shorts" && typeof originalFeedData !== "undefined") {
+        items = originalFeedData.map((s, idx) => ({ thumb: s.thumb, label: s.title || s.ytId, fn: `admDeleteShortVideo(${idx})` }));
+    } else if (type === "fullEp" && typeof welcomeVideoData !== "undefined") {
+        items = welcomeVideoData.map((v, idx) => ({
+            thumb: (typeof getWelcomeThumb === "function") ? getWelcomeThumb(v) : (v.thumb || ""),
+            label: `#${idx + 1} (${v.id})`,
+            fn: `admDeleteFullEpisode(${idx})`
+        }));
+    } else if (type === "baahubali" && typeof baahubaliFbShortsList !== "undefined") {
+        items = baahubaliFbShortsList.map((b, idx) => ({ thumb: b.thumb, label: b.caption || `Part ${idx + 1}`, fn: `admDeleteBaahubaliShort(${idx})` }));
+    } else if (type === "gallery" && window.galleryItems) {
+        items = window.galleryItems.map((p, idx) => ({ thumb: p.img, label: p.cap || `Photo #${idx + 1}`, fn: `admDeleteGalleryPhoto(${idx})` }));
+    }
+
+    const countTxt = isBN ? `মোট ${items.length}টি আইটেম` : `Total ${items.length} items`;
+    const delTitle = isBN ? "ডিলিট করুন" : "Delete";
+    const cardsHtml = items.map(it => `
+        <div class="he-preview-item">
+            <button type="button" class="he-preview-del-btn" onclick="${it.fn}; event.stopPropagation();" title="${delTitle}">🗑️</button>
+            <img src="${it.thumb}" alt="Preview" loading="lazy">
+            <div class="he-preview-cap" title="${(it.label || "").replace(/"/g, '&quot;')}">${it.label || ""}</div>
+        </div>
+    `).join("");
+
+    box.innerHTML = `<div class="he-preview-count">${countTxt}</div><div class="he-preview-grid">${cardsHtml}</div>`;
+}
+
+function refreshOpenHePreviews() {
+    if (document.getElementById("hePreviewShorts")?.classList.contains("open")) renderHePreviewGrid("shorts");
+    if (document.getElementById("hePreviewFullEp")?.classList.contains("open")) renderHePreviewGrid("fullEp");
+    if (document.getElementById("hePreviewBaahubali")?.classList.contains("open")) renderHePreviewGrid("baahubali");
+    if (document.getElementById("hePreviewGallery")?.classList.contains("open")) renderHePreviewGrid("gallery");
+}
+
+async function admDeleteShortVideo(idx) {
+    const isBN = (typeof currentLang !== "undefined" && currentLang === "BN");
+    const item = originalFeedData[idx];
+    if (!item) return;
+    const key = getHeShortKey(item);
+    heLiveConfig.addedShorts = (heLiveConfig.addedShorts || []).filter(s => getHeShortKey(s) !== key);
+    if (!heLiveConfig.deletedShorts) heLiveConfig.deletedShorts = [];
+    if (HE_BASE_SHORTS.some(s => getHeShortKey(s) === key) && !heLiveConfig.deletedShorts.includes(key)) {
+        heLiveConfig.deletedShorts.push(key);
+    }
+    applyHeLiveConfigToSite(heLiveConfig);
+    populateAdminControls();
+    refreshOpenHePreviews();
+    const ok = await saveHeLiveConfig();
+    showHeAdminFeedback(ok ? (isBN ? "✅ শর্টস ভিডিও ডিলিট হয়েছে!" : "✅ Short video deleted!") : getHeAdminLang().syncFail, ok);
+}
+
+async function admDeleteFullEpisode(idx) {
+    const isBN = (typeof currentLang !== "undefined" && currentLang === "BN");
+    const item = welcomeVideoData[idx];
+    if (!item) return;
+    heLiveConfig.addedFullEpisodes = (heLiveConfig.addedFullEpisodes || []).filter(v => v.id !== item.id);
+    if (!heLiveConfig.deletedFullEpisodes) heLiveConfig.deletedFullEpisodes = [];
+    if (HE_BASE_FULL_EPS.some(v => v.id === item.id) && !heLiveConfig.deletedFullEpisodes.includes(item.id)) {
+        heLiveConfig.deletedFullEpisodes.push(item.id);
+    }
+    applyHeLiveConfigToSite(heLiveConfig);
+    populateAdminControls();
+    refreshOpenHePreviews();
+    const ok = await saveHeLiveConfig();
+    showHeAdminFeedback(ok ? (isBN ? "✅ ফুল এপিসোড ডিলিট হয়েছে!" : "✅ Full Episode deleted!") : getHeAdminLang().syncFail, ok);
+}
+
+async function admDeleteBaahubaliShort(idx) {
+    const isBN = (typeof currentLang !== "undefined" && currentLang === "BN");
+    const item = baahubaliFbShortsList[idx];
+    if (!item) return;
+    const key = getHeBhKey(item);
+    heLiveConfig.addedBaahubaliShorts = (heLiveConfig.addedBaahubaliShorts || []).filter(b => getHeBhKey(b) !== key);
+    if (!heLiveConfig.deletedBaahubaliShorts) heLiveConfig.deletedBaahubaliShorts = [];
+    if (HE_BASE_BH_SHORTS.some(b => getHeBhKey(b) === key) && !heLiveConfig.deletedBaahubaliShorts.includes(key)) {
+        heLiveConfig.deletedBaahubaliShorts.push(key);
+    }
+    applyHeLiveConfigToSite(heLiveConfig);
+    refreshOpenHePreviews();
+    const ok = await saveHeLiveConfig();
+    showHeAdminFeedback(ok ? (isBN ? "✅ বাহুবলী শর্টস ডিলিট হয়েছে!" : "✅ Baahubali Short deleted!") : getHeAdminLang().syncFail, ok);
+}
+
+async function admDeleteBaahubaliFullEp() {
+    const isBN = (typeof currentLang !== "undefined" && currentLang === "BN");
+    heLiveConfig.baahubaliFullEmbed = "";
+    const ta = document.getElementById("admBhFullEmbed");
+    if (ta) ta.value = "";
+    applyHeLiveConfigToSite(heLiveConfig);
+    const ok = await saveHeLiveConfig();
+    showHeAdminFeedback(ok ? (isBN ? "✅ বাহুবলী ফুল এপিসোড ডিলিট হয়েছে!" : "✅ Baahubali Full Episode deleted!") : getHeAdminLang().syncFail, ok);
+}
+
+async function admDeleteGalleryPhoto(idx) {
+    const isBN = (typeof currentLang !== "undefined" && currentLang === "BN");
+    const item = window.galleryItems[idx];
+    if (!item) return;
+    const key = getHePhotoKey(item);
+    heLiveConfig.addedPhotos = (heLiveConfig.addedPhotos || []).filter(p => getHePhotoKey(p) !== key);
+    if (!heLiveConfig.deletedPhotos) heLiveConfig.deletedPhotos = [];
+    if (HE_BASE_GALLERY.some(p => getHePhotoKey(p) === key) && !heLiveConfig.deletedPhotos.includes(key)) {
+        heLiveConfig.deletedPhotos.push(key);
+    }
+    applyHeLiveConfigToSite(heLiveConfig);
+    refreshOpenHePreviews();
+    const ok = await saveHeLiveConfig();
+    showHeAdminFeedback(ok ? (isBN ? "✅ গ্যালারির ছবি ডিলিট হয়েছে!" : "✅ Gallery photo deleted!") : getHeAdminLang().syncFail, ok);
+}
 
 function applyHeLiveConfigToSite(cfg) {
     if (!cfg) return;
@@ -10304,13 +10975,19 @@ function applyHeLiveConfigToSite(cfg) {
         if (cov) cov.src = cfg.coverUrl;
     }
 
-    if (Array.isArray(cfg.addedShorts) && cfg.addedShorts.length && typeof originalFeedData !== "undefined") {
-        cfg.addedShorts.forEach(s => {
-            if (!originalFeedData.some(x => x.ytId === s.ytId && x.title === s.title)) {
-                const pos = Math.max(0, Math.min(originalFeedData.length, Number(s.pos) || 0));
-                originalFeedData.splice(pos, 0, { thumb: s.thumb, title: s.title, ytId: s.ytId, isNew: !!s.isNew });
-            }
-        });
+    if (typeof originalFeedData !== "undefined") {
+        const delShorts = new Set(cfg.deletedShorts || []);
+        const rebuiltShorts = HE_BASE_SHORTS.filter(s => !delShorts.has(getHeShortKey(s))).map(s => Object.assign({}, s));
+        if (Array.isArray(cfg.addedShorts)) {
+            cfg.addedShorts.forEach(s => {
+                if (!delShorts.has(getHeShortKey(s)) && !rebuiltShorts.some(x => getHeShortKey(x) === getHeShortKey(s))) {
+                    const pos = Math.max(0, Math.min(rebuiltShorts.length, Number(s.pos) || 0));
+                    rebuiltShorts.splice(pos, 0, { thumb: s.thumb, title: s.title, ytId: s.ytId, isNew: !!s.isNew });
+                }
+            });
+        }
+        originalFeedData.length = 0;
+        originalFeedData.push(...rebuiltShorts);
         if (typeof videoFeedData !== "undefined") {
             videoFeedData.length = 0;
             videoFeedData.push(...originalFeedData, ...originalFeedData, ...originalFeedData);
@@ -10319,55 +10996,95 @@ function applyHeLiveConfigToSite(cfg) {
     }
 
     if (typeof welcomeVideoData !== "undefined") {
-        if (Array.isArray(cfg.addedFullEpisodes) && cfg.addedFullEpisodes.length) {
+        const delFull = new Set(cfg.deletedFullEpisodes || []);
+        const rebuiltFull = HE_BASE_FULL_EPS.filter(v => !delFull.has(v.id)).map(v => Object.assign({}, v));
+        if (Array.isArray(cfg.addedFullEpisodes)) {
             for (let i = cfg.addedFullEpisodes.length - 1; i >= 0; i--) {
                 const ep = cfg.addedFullEpisodes[i];
-                if (!welcomeVideoData.some(x => x.id === ep.id)) {
-                    welcomeVideoData.unshift({ type: "youtube", id: ep.id, thumb: ep.thumb || "", isNew: !!ep.isNew });
+                if (!delFull.has(ep.id) && !rebuiltFull.some(x => x.id === ep.id)) {
+                    rebuiltFull.unshift({ type: "youtube", id: ep.id, thumb: ep.thumb || "", isNew: !!ep.isNew });
                 }
             }
         }
         if (cfg.fullEpNewOverrides) {
-            welcomeVideoData.forEach(v => {
+            rebuiltFull.forEach(v => {
                 if (Object.prototype.hasOwnProperty.call(cfg.fullEpNewOverrides, v.id)) {
                     v.isNew = !!cfg.fullEpNewOverrides[v.id];
                 }
             });
         }
+        welcomeVideoData.length = 0;
+        welcomeVideoData.push(...rebuiltFull);
         if (typeof renderWelcomeVideoGrid === "function") renderWelcomeVideoGrid();
     }
 
-    if (Array.isArray(cfg.addedBaahubaliShorts) && cfg.addedBaahubaliShorts.length && typeof baahubaliFbShortsList !== "undefined") {
-        cfg.addedBaahubaliShorts.forEach(b => {
-            if (!baahubaliFbShortsList.some(x => x.caption === b.caption && x.thumb === b.thumb)) {
-                baahubaliFbShortsList.push({ embedCode: b.embedCode, thumb: b.thumb, caption: b.caption });
-            }
-        });
+    if (typeof baahubaliFbShortsList !== "undefined") {
+        const delBh = new Set(cfg.deletedBaahubaliShorts || []);
+        const rebuiltBh = HE_BASE_BH_SHORTS.filter(b => !delBh.has(getHeBhKey(b))).map(b => Object.assign({}, b));
+        if (Array.isArray(cfg.addedBaahubaliShorts)) {
+            cfg.addedBaahubaliShorts.forEach(b => {
+                if (!delBh.has(getHeBhKey(b)) && !rebuiltBh.some(x => getHeBhKey(x) === getHeBhKey(b))) {
+                    rebuiltBh.push({ embedCode: b.embedCode, thumb: b.thumb, caption: b.caption });
+                }
+            });
+        }
+        baahubaliFbShortsList.length = 0;
+        baahubaliFbShortsList.push(...rebuiltBh);
         if (typeof renderDynamicBaahubaliShortsStack === "function") renderDynamicBaahubaliShortsStack();
     }
 
-    if (typeof cfg.baahubaliFullEmbed === "string" && cfg.baahubaliFullEmbed.trim() !== "") {
+    if (typeof cfg.baahubaliFullEmbed === "string") {
         BAAHUBALI_FULL_EPISODE_EMBED_CODE = cfg.baahubaliFullEmbed;
         if (typeof renderBaahubaliFullEpisodeSection === "function") renderBaahubaliFullEpisodeSection();
     }
 
-    if (Array.isArray(cfg.addedPhotos) && cfg.addedPhotos.length && window.galleryItems) {
-        let changed = false;
-        for (let i = cfg.addedPhotos.length - 1; i >= 0; i--) {
-            const p = cfg.addedPhotos[i];
-            if (!window.galleryItems.some(x => x.img === p.img && x.cap === p.cap)) {
-                window.galleryItems.unshift(p);
-                changed = true;
+    if (window.galleryItems) {
+        const delPhotos = new Set(cfg.deletedPhotos || []);
+        const rebuiltPhotos = HE_BASE_GALLERY.filter(p => !delPhotos.has(getHePhotoKey(p))).map(p => Object.assign({}, p));
+        if (Array.isArray(cfg.addedPhotos)) {
+            for (let i = cfg.addedPhotos.length - 1; i >= 0; i--) {
+                const p = cfg.addedPhotos[i];
+                if (!delPhotos.has(getHePhotoKey(p)) && !rebuiltPhotos.some(x => getHePhotoKey(x) === getHePhotoKey(p))) {
+                    rebuiltPhotos.unshift(p);
+                }
             }
         }
-        if (changed) rerenderMainGalleryDom();
+        window.galleryItems.length = 0;
+        window.galleryItems.push(...rebuiltPhotos);
+        rerenderMainGalleryDom();
     }
 
     applyHeFontsToSite();
+    refreshOpenHePreviews();
+}
+function normalizeHeConfig(raw) {
+    const r = (raw && typeof raw === "object") ? raw : {};
+    return {
+        pin: r.pin || HONEY_DEFAULT_PIN,
+        logoUrl: r.logoUrl || "",
+        siteNameLine1: r.siteNameLine1 || "",
+        siteNameLine2: r.siteNameLine2 || "",
+        coverUrl: r.coverUrl || "",
+        addedShorts: Array.isArray(r.addedShorts) ? r.addedShorts : [],
+        deletedShorts: Array.isArray(r.deletedShorts) ? r.deletedShorts : [],
+        addedFullEpisodes: Array.isArray(r.addedFullEpisodes) ? r.addedFullEpisodes : [],
+        deletedFullEpisodes: Array.isArray(r.deletedFullEpisodes) ? r.deletedFullEpisodes : [],
+        fullEpNewOverrides: (r.fullEpNewOverrides && typeof r.fullEpNewOverrides === "object") ? r.fullEpNewOverrides : {},
+        addedBaahubaliShorts: Array.isArray(r.addedBaahubaliShorts) ? r.addedBaahubaliShorts : [],
+        deletedBaahubaliShorts: Array.isArray(r.deletedBaahubaliShorts) ? r.deletedBaahubaliShorts : [],
+        baahubaliFullEmbed: typeof r.baahubaliFullEmbed === "string" ? r.baahubaliFullEmbed : "",
+        addedPhotos: Array.isArray(r.addedPhotos) ? r.addedPhotos : [],
+        deletedPhotos: Array.isArray(r.deletedPhotos) ? r.deletedPhotos : [],
+        fonts: {
+            EN: (r.fonts && r.fonts.EN && typeof r.fonts.EN === "object") ? r.fonts.EN : {},
+            BN: (r.fonts && r.fonts.BN && typeof r.fonts.BN === "object") ? r.fonts.BN : {}
+        }
+    };
 }
 
 async function saveHeLiveConfig() {
     const t = getHeAdminLang();
+    heLiveConfig = normalizeHeConfig(heLiveConfig);
     try { localStorage.setItem(HONEY_ADMIN_STORAGE_KEY, JSON.stringify(heLiveConfig)); } catch (e) {}
     const pill = document.getElementById("heSyncStatusPill");
     if (HONEY_FIREBASE_DB_URL && HONEY_FIREBASE_DB_URL.startsWith("http")) {
@@ -10382,7 +11099,7 @@ async function saveHeLiveConfig() {
                 if (pill) pill.textContent = t.syncCloud;
                 return true;
             }
-            if (pill) pill.textContent = t.syncFail;
+            if (pill) pill.textContent = `${t.syncFail} (${res.status})`;
             return false;
         } catch (e) {
             if (pill) pill.textContent = t.syncFail;
@@ -10396,30 +11113,33 @@ async function saveHeLiveConfig() {
 
 async function loadHeLiveConfigOnBoot() {
     const t = getHeAdminLang();
+    const pill = document.getElementById("heSyncStatusPill");
     try {
         const local = localStorage.getItem(HONEY_ADMIN_STORAGE_KEY);
-        if (local) heLiveConfig = Object.assign({}, heLiveConfig, JSON.parse(local));
+        if (local) heLiveConfig = normalizeHeConfig(JSON.parse(local));
     } catch (e) {}
 
     if (HONEY_FIREBASE_DB_URL && HONEY_FIREBASE_DB_URL.startsWith("http")) {
         try {
-            const url = HONEY_FIREBASE_DB_URL.replace(/\/$/, "") + "/honey_entertainment_config.json";
-            const res = await fetch(url);
+            const url = HONEY_FIREBASE_DB_URL.replace(/\/$/, "") + "/honey_entertainment_config.json?t=" + Date.now();
+            const res = await fetch(url, { cache: "no-store" });
             if (res.ok) {
                 const remote = await res.json();
                 if (remote && typeof remote === "object") {
-                    heLiveConfig = Object.assign({}, heLiveConfig, remote);
+                    heLiveConfig = normalizeHeConfig(remote);
                     try { localStorage.setItem(HONEY_ADMIN_STORAGE_KEY, JSON.stringify(heLiveConfig)); } catch (e) {}
-                    const pill = document.getElementById("heSyncStatusPill");
                     if (pill) pill.textContent = t.syncCloud;
                 }
+            } else {
+                if (pill) pill.textContent = `${t.syncFail} (${res.status})`;
             }
-        } catch (e) {}
+        } catch (e) {
+            if (pill) pill.textContent = t.syncFail;
+        }
     }
     applyHeLiveConfigToSite(heLiveConfig);
     applyHeAdminLanguageUI();
 }
-
 // ===== ADMIN ACTION HANDLERS =====
 async function admSaveLogo() {
     const t = getHeAdminLang();
@@ -10565,6 +11285,313 @@ async function admChangePin() {
         document.getElementById("admNewPin").value = "";
     }
 }
+
+/* ===== ADMIN FULL-PAGE WALLPAPER + DRAFT PREVIEW SYSTEM ===== */
+function syncHeAdminWallpaperBg() {
+    const bgImg = document.getElementById("heAdminBgWallpaper");
+    const mainCover = document.querySelector(".bottom-cover-photo-wrap img");
+    if (bgImg && mainCover && mainCover.src) {
+        bgImg.src = mainCover.src;
+    }
+}
+function showHePreviewBanner(isVideo) {
+    const banner = document.getElementById("hePreviewModeBanner");
+    const txt = document.getElementById("hePreviewModeBannerText");
+    const isBN = (typeof currentLang !== "undefined" && currentLang === "BN");
+    if (txt) {
+        txt.textContent = isVideo
+            ? (isBN ? "প্রিভিউ ভিডিও" : "Preview Video")
+            : (isBN ? "প্রিভিউ" : "Preview");
+    }
+    if (banner) banner.classList.add("active");
+    document.body.classList.add("he-preview-active");
+}
+
+function hideHePreviewBanner() {
+    const banner = document.getElementById("hePreviewModeBanner");
+    if (banner) banner.classList.remove("active");
+    document.body.classList.remove("he-preview-active");
+}
+function updateHeDraftPreviewButtonsVisibility() {
+    const check = (cond, btnId, rowId, boxId) => {
+        const btn = document.getElementById(btnId);
+        const row = document.getElementById(rowId);
+        const box = document.getElementById(boxId);
+        if (btn) btn.classList.toggle("visible", !!cond);
+        if (row) row.classList.toggle("has-preview", !!cond);
+        if (!cond && box) {
+            box.classList.remove("open");
+            box.innerHTML = "";
+        }
+    };
+
+    const sYt = extractYtIdSmart(document.getElementById("admShortYt")?.value || "");
+    const sTh = (document.getElementById("admShortThumb")?.value || "").trim();
+    const sTi = (document.getElementById("admShortTitle")?.value || "").trim();
+    check(sYt && sTh && sTi, "admBtnDraftPrevShort", "heRowShortBtn", "heDraftPreviewShort");
+
+    const fYt = extractYtIdSmart(document.getElementById("admFullEpYt")?.value || "");
+    const fTh = (document.getElementById("admFullEpThumb")?.value || "").trim();
+    check(fYt && fTh, "admBtnDraftPrevFullEp", "heRowFullEpBtn", "heDraftPreviewFullEp");
+
+    const bhTh = (document.getElementById("admBhThumb")?.value || "").trim();
+    const bhTi = (document.getElementById("admBhTitle")?.value || "").trim();
+    const bhEm = (document.getElementById("admBhEmbed")?.value || "").trim();
+    check(bhTh && bhTi && bhEm, "admBtnDraftPrevBhShort", "heRowBhShortBtn", "heDraftPreviewBhShort");
+
+    const bhFull = (document.getElementById("admBhFullEmbed")?.value || "").trim();
+    check(!!bhFull, "admBtnDraftPrevBhFull", "heRowBhFullBtn", "heDraftPreviewBhFull");
+
+    const pImg = (document.getElementById("admPhotoImg")?.value || "").trim();
+    const pCap = (document.getElementById("admPhotoCap")?.value || "").trim();
+    check(pImg && pCap, "admBtnDraftPrevPhoto", "heRowPhotoBtn", "heDraftPreviewPhoto");
+}
+
+function toggleHeDraftPreview(type) {
+    const map = {
+        short: "heDraftPreviewShort",
+        fullEp: "heDraftPreviewFullEp",
+        bhShort: "heDraftPreviewBhShort",
+        bhFull: "heDraftPreviewBhFull",
+        photo: "heDraftPreviewPhoto"
+    };
+    const box = document.getElementById(map[type]);
+    if (!box) return;
+    if (box.classList.contains("open")) {
+        box.classList.remove("open");
+        return;
+    }
+    renderHeDraftPreviewCard(type, box);
+    box.classList.add("open");
+}
+
+function renderHeDraftPreviewCard(type, box) {
+    const isBN = (typeof currentLang !== "undefined" && currentLang === "BN");
+    const clickHint = isBN ? "ফুলস্ক্রিন প্রিভিউ দেখতে ক্লিক করুন" : "Click to view fullscreen preview";
+
+    if (type === "short") {
+        const thumb = document.getElementById("admShortThumb").value.trim();
+        const title = document.getElementById("admShortTitle").value.trim();
+        const isNew = document.getElementById("admShortIsNew").checked;
+        box.innerHTML = `
+            <div class="he-draft-preview-hint">▶ ${clickHint}</div>
+            <div class="feed-item" style="margin:4px auto;transform:scale(1);opacity:1;" onclick="openHeDraftFullscreen('short')">
+                <img src="${thumb}" alt="Preview">
+                ${isNew ? '<div class="new-badge">NEW</div>' : ''}
+                <div class="feed-item-title">${title}</div>
+            </div>
+        `;
+    } else if (type === "fullEp") {
+        const thumb = document.getElementById("admFullEpThumb").value.trim();
+        const isNew = document.getElementById("admFullEpIsNew").checked;
+        box.innerHTML = `
+            <div class="he-draft-preview-hint">▶ ${clickHint}</div>
+            <div class="welcome-video-card" style="width:100%;max-width:300px;" onclick="openHeDraftFullscreen('fullEp')">
+                <img class="welcome-video-thumbnail" src="${thumb}" alt="Preview">
+                ${isNew ? '<div class="new-badge">NEW</div>' : ''}
+                <div class="welcome-video-play-icon" style="opacity:1;"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+        `;
+    } else if (type === "bhShort") {
+        const thumb = document.getElementById("admBhThumb").value.trim();
+        const title = document.getElementById("admBhTitle").value.trim();
+        box.innerHTML = `
+            <div class="he-draft-preview-hint">▶ ${clickHint}</div>
+            <div class="baahubali-stack-layer layer-1" style="position:relative;width:170px;height:260px;cursor:pointer;" onclick="openHeDraftFullscreen('bhShort')">
+                <img src="${thumb}" alt="Preview">
+                <div class="baahubali-stack-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <div class="baahubali-stack-footer">${title}</div>
+            </div>
+        `;
+    } else if (type === "bhFull") {
+        const embed = document.getElementById("admBhFullEmbed").value.trim();
+        box.innerHTML = `
+            <div class="he-draft-preview-hint">▶ ${clickHint}</div>
+            <div class="baahubali-full-ep-box has-video" style="max-width:360px;cursor:pointer;" onclick="openHeDraftFullscreen('bhFull')">
+                ${prepareFacebookEmbedHtml(embed)}
+            </div>
+            <button type="button" class="he-draft-preview-btn visible" style="max-width:260px;" onclick="openHeDraftFullscreen('bhFull')">⛶ ${isBN ? 'ফুলস্ক্রিনে দেখুন' : 'View Fullscreen'}</button>
+        `;
+    } else if (type === "photo") {
+        const img = document.getElementById("admPhotoImg").value.trim();
+        const cap = document.getElementById("admPhotoCap").value.trim();
+        const date = document.getElementById("admPhotoDate").value.trim();
+        const time = document.getElementById("admPhotoTime").value.trim();
+        const dateDisplay = date ? `<span class="post-date">${formatDate(date)}</span>` : "";
+        const timeDisplay = time ? `<span class="post-time">${time}</span>` : "";
+        const dtHtml = (dateDisplay || timeDisplay) ? `<div class="post-datetime">${dateDisplay}${timeDisplay}</div>` : "";
+        box.innerHTML = `
+            <div class="he-draft-preview-hint">🖼️ ${clickHint}</div>
+            <div class="flex flex-col gap-2" style="width:170px;cursor:pointer;" onclick="openHeDraftFullscreen('photo')">
+                <p class="post-caption" style="pointer-events:none;">${cap}</p>
+                ${dtHtml}
+                <div class="collection-card">
+                    <div class="inner-img"><img src="${img}" alt="Preview"></div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+let heActiveDraftPreviewType = null;
+
+function openHeDraftFullscreen(type) {
+    heActiveDraftPreviewType = type;
+
+    if (type === "short") {
+        const ytId = extractYtIdSmart(document.getElementById("admShortYt").value);
+        const title = document.getElementById("admShortTitle").value.trim();
+        const overlay = document.getElementById("videoOverlay");
+        if (!overlay) return;
+        overlay.classList.add("he-preview-on-top", "active");
+        const wrapper = overlay.querySelector(".short-player-wrapper");
+        if (wrapper) wrapper.classList.remove("is-paused");
+        const iframeContainer = document.getElementById("videoFeedIframeContainer");
+        if (iframeContainer) iframeContainer.innerHTML = `<div id="feedPlayerTarget" style="width:100%;height:100%;"></div>`;
+        if (typeof feedYtPlayer !== "undefined" && feedYtPlayer && typeof feedYtPlayer.destroy === "function") {
+            try { feedYtPlayer.destroy(); } catch (e) {}
+        }
+        feedYtPlayer = new YT.Player("feedPlayerTarget", {
+            height: "100%", width: "100%", videoId: ytId,
+            playerVars: { autoplay: 1, controls: 0, modestbranding: 1, rel: 0, playsinline: 1, loop: 1, playlist: ytId },
+            events: {
+                onReady: function(ev) { ev.target.playVideo(); try { ev.target.unMute(); ev.target.setVolume(100); } catch (e) {} }
+            }
+        });
+        if (typeof animateShortCaption === "function") animateShortCaption(title);
+        const counter = document.getElementById("shortVideoCounter");
+        if (counter) counter.textContent = "PREVIEW";
+        showHePreviewBanner(true);
+    } else if (type === "fullEp" || type === "bhFull") {
+        const modal = document.getElementById("welcomeVideoModal");
+        const content = document.getElementById("welcomeVideoModalContent");
+        const holder = document.getElementById("welcomeIframeHolder");
+        if (!modal || !content || !holder) return;
+        if (modal.parentElement !== document.body) document.body.appendChild(modal);
+        isWelcomePopupMode = false;
+        modal.classList.remove("popup-mode");
+        modal.classList.add("he-preview-on-top", "active");
+        content.classList.remove("fullscreen-mode");
+        if (typeof resetWelcomePopupInlineStyles === "function") resetWelcomePopupInlineStyles(content);
+        if (type === "fullEp") {
+            const ytId = extractYtIdSmart(document.getElementById("admFullEpYt").value);
+            holder.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${ytId}?rel=0&modestbranding=1&playsinline=1&autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+        } else {
+            const embed = document.getElementById("admBhFullEmbed").value.trim();
+            holder.innerHTML = prepareFacebookEmbedHtml(embed);
+        }
+        showHePreviewBanner(true);
+    } else if (type === "bhShort") {
+        const embedCode = document.getElementById("admBhEmbed").value.trim();
+        const thumb = document.getElementById("admBhThumb").value.trim();
+        const caption = document.getElementById("admBhTitle").value.trim();
+        const overlay = document.getElementById("baahubaliReelsOverlay");
+        if (!overlay) return;
+        overlay.classList.add("he-preview-on-top", "active");
+        isBhReelsOverlayOpen = true;
+        const counter = document.getElementById("bhReelCounter");
+        const capBar = document.getElementById("bhReelCaptionBar");
+        if (counter) counter.textContent = "PREVIEW";
+        if (capBar) capBar.textContent = caption;
+        if (typeof renderAndAutoplayBhReel === "function") renderAndAutoplayBhReel({ embedCode, thumb, caption });
+        showHePreviewBanner(true);
+    } else if (type === "photo") {
+        const draftItem = {
+            img: document.getElementById("admPhotoImg").value.trim(),
+            cap: document.getElementById("admPhotoCap").value.trim(),
+            date: document.getElementById("admPhotoDate").value.trim(),
+            time: document.getElementById("admPhotoTime").value.trim(),
+            ytId: extractYtIdSmart(document.getElementById("admPhotoYt").value),
+            start: Number(document.getElementById("admPhotoStart").value) || 0,
+            end: Number(document.getElementById("admPhotoEnd").value) || 30
+        };
+        window.galleryItems.unshift(draftItem);
+        const fo = document.getElementById("fullscreenOverlay");
+        const pm = document.getElementById("photoDetailsMenu");
+        if (fo) fo.classList.add("he-preview-on-top");
+        if (pm) pm.classList.add("he-preview-menu-on-top");
+        openFull(0);
+        showHePreviewBanner(false);
+    }
+}
+
+(function hookHeDraftPreviewSystem() {
+    const _origOpenAdm = window.openHeAdminDashboard;
+    if (typeof _origOpenAdm === "function") {
+        window.openHeAdminDashboard = function() {
+            syncHeAdminWallpaperBg();
+            _origOpenAdm();
+            updateHeDraftPreviewButtonsVisibility();
+        };
+    }
+    const _origApplyLang = window.applyHeAdminLanguageUI;
+    if (typeof _origApplyLang === "function") {
+        window.applyHeAdminLanguageUI = function() {
+            _origApplyLang();
+            const isBN = (typeof currentLang !== "undefined" && currentLang === "BN");
+            document.querySelectorAll(".he-draft-prev-lbl").forEach(el => {
+                el.textContent = isBN ? "প্রিভিউ" : "Preview";
+            });
+            if (heActiveDraftPreviewType) {
+                showHePreviewBanner(heActiveDraftPreviewType !== "photo");
+            }
+        };
+    }
+    const _origCloseShort = window.closeVideoFeed;
+    if (typeof _origCloseShort === "function") {
+        window.closeVideoFeed = function() {
+            _origCloseShort();
+            const vo = document.getElementById("videoOverlay");
+            if (vo) vo.classList.remove("he-preview-on-top");
+            if (heActiveDraftPreviewType === "short") { heActiveDraftPreviewType = null; hideHePreviewBanner(); }
+        };
+    }
+    const _origCloseWelcome = window.closeWelcomeVideoModal;
+    if (typeof _origCloseWelcome === "function") {
+        window.closeWelcomeVideoModal = function() {
+            _origCloseWelcome();
+            const wm = document.getElementById("welcomeVideoModal");
+            if (wm) wm.classList.remove("he-preview-on-top");
+            if (heActiveDraftPreviewType === "fullEp" || heActiveDraftPreviewType === "bhFull") { heActiveDraftPreviewType = null; hideHePreviewBanner(); }
+        };
+    }
+    const _origCloseBh = window.closeBaahubaliReels;
+    if (typeof _origCloseBh === "function") {
+        window.closeBaahubaliReels = function() {
+            _origCloseBh();
+            const bo = document.getElementById("baahubaliReelsOverlay");
+            if (bo) bo.classList.remove("he-preview-on-top");
+            if (heActiveDraftPreviewType === "bhShort") { heActiveDraftPreviewType = null; hideHePreviewBanner(); }
+        };
+    }
+    const _origCloseFull = window.closeFull;
+    if (typeof _origCloseFull === "function") {
+        window.closeFull = function() {
+            const wasPhotoDraft = (heActiveDraftPreviewType === "photo");
+            _origCloseFull();
+            const fo = document.getElementById("fullscreenOverlay");
+            const pm = document.getElementById("photoDetailsMenu");
+            if (fo) fo.classList.remove("he-preview-on-top");
+            if (pm) pm.classList.remove("he-preview-menu-on-top");
+            if (wasPhotoDraft) {
+                window.galleryItems.shift();
+                heActiveDraftPreviewType = null;
+                hideHePreviewBanner();
+            }
+        };
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        ["admShortYt", "admShortThumb", "admShortTitle", "admFullEpYt", "admFullEpThumb", "admBhThumb", "admBhTitle", "admBhEmbed", "admBhFullEmbed", "admPhotoImg", "admPhotoCap", "admPhotoDate", "admPhotoTime", "admPhotoYt"].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener("input", updateHeDraftPreviewButtonsVisibility);
+                el.addEventListener("change", updateHeDraftPreviewButtonsVisibility);
+            }
+        });
+        syncHeAdminWallpaperBg();
+    });
+})();
 
 /* ===== AUTO-CLOSE ADMIN PANEL & PIN MODAL ON TAB SWITCH / BROWSER CLOSE ===== */
 function forceCloseHeSecurityOnLeave() {
